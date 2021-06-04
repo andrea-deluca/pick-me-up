@@ -1,7 +1,6 @@
-import rect from 'react';
+import React from 'react';
 import Navbar from './Navbar';
 import HomeCarousel from './HomeCarousel';
-import React from 'react';
 
 export default function SchermataPrincipale() {
     return (

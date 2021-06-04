@@ -1,4 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+
+import "./Navbar.css"
 
 // Bootstrap Components
 import { Container } from 'react-bootstrap';
@@ -16,13 +20,20 @@ export default function Navbar() {
         <nav className="navbar navbar-dark bg-dark py-3">
             <Container className="d-flex justify-content-between">
                 <h2 className="logo">PickMeUp!</h2>
-                <FontAwesomeIcon icon={faHome} size="lg" color="white" />
-                <div className="buttonsGroup d-flex align-items-center justify-content-center">
+                <Link to="/">
+                    <FontAwesomeIcon className="homebutton" icon={faHome} size="lg" color="white" />
+                </Link>
+                <div className="buttonsGroup">
+
                     <div className="button">
-                        <Button text={"Registrati"} style={"Dark"} />
+                        <Link to="/signup">
+                            <Button text={"Registrati"} style={"Dark"} />
+                        </Link>
                     </div>
                     <div className="button">
-                        <Button text={"Accedi"} style={"Light"} />
+                        <Link to="/login">
+                            <Button text={"Accedi"} style={"Light"} />
+                        </Link>
                     </div>
                 </div>
             </Container>

@@ -8,6 +8,19 @@
   font-family: 'Poppins', sans-serif;
 }
 
+a{
+  text-decoration: none;
+  color: black;
+}
+
+.t-bold{
+  font-weight: 700;
+}
+
+.t-light{
+  font-weight: 300;
+}
+
 /* NAVBAR CUSTOM CSS */
 .navbar{
   width: 100%;
@@ -25,7 +38,13 @@
 /* BUTTONS CUSTOM CSS */
 .btn{
   border-radius: 25px;
-  font-weight: 600;
+  font-weight: 700;
+}
+
+.buttonsGroup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .buttonsGroup > .button{
@@ -59,5 +78,17 @@
   object-fit: cover;
   object-position: center;
   width: 100vw;
+  height: 100vh;
+}
+
+.carousel-h3{
+  font-weight: 700;
+}
+
+.carousel-p{
+  font-weight: 300;
+}
+
+.login{
   height: 100vh;
 }
