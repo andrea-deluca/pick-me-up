@@ -1,8 +1,12 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './Button.css'
+import React from 'react'
 
-export default function Button(props){
+// Button
+export default function Button(props) {
+    const mainButtonClass = "btn";
+    const buttonStyle = mainButtonClass + "-" + props.style.toLowerCase();
+    const buttonClasses = mainButtonClass + " " + buttonStyle;
+
     return (
-        <button className={"btn btn-" + props.style.toLowerCase()}>{props.text}</button>
+        <button className={buttonClasses}>{props.text}</button>
     );
 }

@@ -1,12 +1,15 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './Components/Navbar'
+import React from 'react';
 
+// Custom CSS
+import './App.css';
+
+// Schermate
+import SchermataPrincipale from './Components/SchermataPrincipale';
+
+// App
 function App() {
   return (
-    <div>
-      <Navbar />
-    </div>
+    <SchermataPrincipale />
   );
 }
 

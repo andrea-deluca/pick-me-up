@@ -1,5 +1,63 @@
+/* FONT */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+/* BOOTSTRAP CSS */
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 *{
   font-family: 'Poppins', sans-serif;
+}
+
+/* NAVBAR CUSTOM CSS */
+.navbar{
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}
+
+.logo{
+  font-weight: 900;
+  color: white;
+}
+
+/* BUTTONS CUSTOM CSS */
+.btn{
+  border-radius: 25px;
+  font-weight: 600;
+}
+
+.buttonsGroup > .button{
+  padding-right: 10px;
+}
+
+.button:last-child{
+  padding-right: 0px;
+}
+
+/* HOME CAROUSEL CUSTOM CSS */
+
+/* Fix for flickering carousel */                                                      
+.carousel-inner .carousel-item {
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  position: absolute;
+}
+.carousel-inner .carousel-item:first-of-type {
+  position: relative;
+}
+.carousel-inner .active {
+  opacity: 1;
+}
+/* End of fix */
+
+.carousel-img{
+  object-fit: cover;
+  object-position: center;
+  width: 100vw;
+  height: 100vh;
 }
