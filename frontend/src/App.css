@@ -1,16 +1,35 @@
-/* FONT */
+/* ========= FONT ========= */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
-/* BOOTSTRAP CSS */
+/* ========= BOOTSTRAP CSS ========= */
 @import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
-*{
+
+/* ========= TYPOGRAPHY ========= */
+body{
   font-family: 'Poppins', sans-serif;
 }
 
 a{
   text-decoration: none;
-  color: black;
+}
+
+.t-title{
+  font-size: 6vw;
+}
+
+.t-desc{
+  font-size: 1.5vw;
+}
+
+@media screen and (max-width: 575.98px) { 
+  .t-title{
+    font-size: 10vw;
+  }
+
+  .t-desc{
+    font-size: 3.5vw;
+  }
 }
 
 .t-bold{
@@ -21,21 +40,19 @@ a{
   font-weight: 300;
 }
 
-/* NAVBAR CUSTOM CSS */
-.navbar{
-  width: 100%;
-  position: absolute;
-  z-index: 100;
-  top: 0;
-  left: 0;
+.t-extralight{
+  font-weight: 200;
 }
 
-.logo{
-  font-weight: 900;
-  color: white;
+/* ========= VIEWS CSS ========= */
+.view{
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* BUTTONS CUSTOM CSS */
+/* ========= BUTTONS CUSTOM CSS ========= */
 .btn{
   border-radius: 25px;
   font-weight: 700;
@@ -47,15 +64,24 @@ a{
   align-items: center;
 }
 
-.buttonsGroup > .button{
-  padding-right: 10px;
+.button{
+  padding: 0 5px 0 5px;
 }
 
-.button:last-child{
-  padding-right: 0px;
+/* ========= SIDEBAR CUSTOM CSS ========= */
+.sidebar{
+  position: fixed;
+  top: 0%;
+  right: 0%;
+  z-index: 300;
+  height: 100vh;
+  width: 0;
+  overflow-x: hidden;
+  background-color: #f8f8f8;
+  transition: .5s;
 }
 
-/* HOME CAROUSEL CUSTOM CSS */
+/* ========= HOME CAROUSEL CUSTOM CSS ========= */
 
 /* Fix for flickering carousel */                                                      
 .carousel-inner .carousel-item {
@@ -66,29 +92,37 @@ a{
   display: block;
   position: absolute;
 }
+
 .carousel-inner .carousel-item:first-of-type {
   position: relative;
 }
+
 .carousel-inner .active {
   opacity: 1;
 }
 /* End of fix */
 
+.carousel{
+  height: 100%;
+}
+
+.carousel-inner{
+  height: 100%;
+}
+
 .carousel-img{
   object-fit: cover;
-  object-position: center;
+  object-position: center left;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
 }
 
-.carousel-h3{
-  font-weight: 700;
+.carousel-caption{
+  top: 40%;
+  z-index: 100;
 }
 
-.carousel-p{
-  font-weight: 300;
-}
-
-.login{
-  height: 100vh;
+/* ========= FORM CUSTOM CSS ========= */
+.form-control{
+  border-radius: 10px;
 }

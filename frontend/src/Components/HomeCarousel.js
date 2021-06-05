@@ -1,9 +1,8 @@
 import React from 'react';
-import ReactDOM from "react-dom";
 import { Link } from "react-router-dom";
 
 // Bootstrap Component
-import { Carousel } from "react-bootstrap";
+import { Row, Carousel } from "react-bootstrap";
 
 // Components
 import Button from './Button';
@@ -11,73 +10,43 @@ import Button from './Button';
 // Home Carousel
 export default function HomeCarousel() {
     return (
-        <Carousel pause={false} fade>
-            <Carousel.Item>
-                <img
-                    className="d-block w-100 carousel-img"
-                    src="/assets/carousel-1.jpg"
-                    alt="Fisrt slide" />
-                <Carousel.Caption>
-                    <h3 className="carousel-h3">Prenota il tuo prossimo noleggio</h3>
-                    <p className="carousel-p">Lorem ipsum</p>
+        <React.Fragment>
+            <Carousel pause={false} fade>
+                <Carousel.Item className="h-100">
+                    <img
+                        className="carousel-img"
+                        src="/assets/carousel-1.jpg"
+                        alt="Fisrt slide" />
+                </Carousel.Item>
+                <Carousel.Item className="h-100">
+                    <img
+                        className="carousel-img"
+                        src="/assets/carousel-2.jpg"
+                        alt="Fisrt slide" />
+                </Carousel.Item>
+                <Carousel.Item className="h-100">
+                    <img
+                        className="carousel-img"
+                        src="/assets/carousel-3.jpg"
+                        alt="Fisrt slide" />
+                </Carousel.Item>
+            </Carousel>
+            <Carousel.Caption>
+                <Row className="gy-3 gx-0">
+                    <Row className="row g-0">
+                        <h3 className="t-title t-bold">Prenota il tuo prossimo noleggio</h3>
+                        <p className="t-desc t-extralight">Accedi o registrati per prenotare auto, moto, biciclette o monopattini on demand</p>
+                    </Row>
                     <div className="buttonsGroup">
-                        <div className="button">
-                            <Link to="/signup">
-                                <Button text={"Registrati"} style={"Dark"} />
-                            </Link>
-                        </div>
-                        <div className="button">
-                            <Link to="/login">
-                                <Button text={"Accedi"} style={"Light"} />
-                            </Link>
-                        </div>
+                        <Link to="/signup">
+                            <Button text={"Registrati"} variant={"Dark"} />
+                        </Link>
+                        <Link to="/login">
+                            <Button text={"Accedi"} variant={"Light"} />
+                        </Link>
                     </div>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-                <img
-                    className="d-block w-100 carousel-img"
-                    src="/assets/carousel-2.jpg"
-                    alt="Fisrt slide" />
-                <Carousel.Caption>
-                    <h3>Prenota il tuo prossimo noleggio</h3>
-                    <p>Lorem ipsum</p>
-                    <div className="buttonsGroup">
-                        <div className="button">
-                            <Link to="/signup">
-                                <Button text={"Registrati"} style={"Dark"} />
-                            </Link>
-                        </div>
-                        <div className="button">
-                            <Link to="/login">
-                                <Button text={"Accedi"} style={"Light"} />
-                            </Link>
-                        </div>
-                    </div>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-                <img
-                    className="d-block w-100 carousel-img"
-                    src="/assets/carousel-3.jpg"
-                    alt="Fisrt slide" />
-                <Carousel.Caption>
-                    <h3>Prenota il tuo prossimo noleggio</h3>
-                    <p>Lorem ipsum</p>
-                    <div className="buttonsGroup">
-                        <div className="button">
-                            <Link to="/signup">
-                                <Button text={"Registrati"} style={"Dark"} />
-                            </Link>
-                        </div>
-                        <div className="button">
-                            <Link to="/login">
-                                <Button text={"Accedi"} style={"Light"} />
-                            </Link>
-                        </div>
-                    </div>
-                </Carousel.Caption>
-            </Carousel.Item>
-        </Carousel>
+                </Row>
+            </Carousel.Caption>
+        </React.Fragment>
     );
 }

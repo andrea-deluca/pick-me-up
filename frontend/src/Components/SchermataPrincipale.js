@@ -1,18 +1,15 @@
 import React from 'react';
+
+// Custom Components
 import Navbar from './Navbar';
 import HomeCarousel from './HomeCarousel';
 
+// Schermata Principale
 export default function SchermataPrincipale() {
     return (
-        <React.Fragment>
-            <div className="d-flex flex-column">
-                <div className="flex-grow-0 flex-shrink-1">
-                    <Navbar />
-                </div>
-                <div className="flex-grow-1 flex-shrink-1">
-                    <HomeCarousel />
-                </div>
-            </div>
-        </React.Fragment>
+        <div className="view">
+            <Navbar />
+            <HomeCarousel />
+        </div>
     );
 }

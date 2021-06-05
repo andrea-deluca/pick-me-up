@@ -1,0 +1,68 @@
+.iconButton{
+    transition: .2s;
+    transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);
+    
+}
+
+.iconButton:hover {
+    transform: scale(1.4);
+    -o-transform: scale(1.4);
+    -ms-transform: scale(1.4);
+    -moz-transform: scale(1.4);
+    -webkit-transform: scale(1.4);
+    transition: .2;    
+}
+
+
+.btn:hover{
+    transform: scale(1.1);
+    -o-transform: scale(11);
+    -ms-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transition: .2s;    
+}
+
+.btn {
+    transition: .2s;
+    transform: scale(1);
+    -o-transform: scale(1);
+    -ms-transform: scale(1);
+    -moz-transform: scale(1);
+    -webkit-transform: scale(1);   
+}
+
+/*
+.slide-enter, .slide-exit {
+  transition: transform .3s ease-out;
+  overflow: hidden;
+}
+
+.slide-enter {
+  transform: translateX(100%);
+  overflow: hidden;
+}
+
+.slide-enter.slide-enter-active {
+  transform: translateX(0%);
+  overflow: hidden;
+}
+
+.slide-exit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform: translateX(0%);
+  overflow: hidden;
+}
+
+.slide-exit-active {
+  transform: translateX(-100%);
+  overflow: hidden;
+}
+*/
