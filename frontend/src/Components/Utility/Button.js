@@ -12,7 +12,9 @@ export default function Button(props) {
 
     return (
         <div className="button">
-            <button type={props.submit ? "submit" : "button"} className={buttonClasses}>{props.text}</button>
+            <button type={props.submit ? "submit" : "button"} className={buttonClasses}>
+                {props.children}
+            </button>
         </div>
         
     );

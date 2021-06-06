@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 // Bootstrap Components
-import { Container } from 'react-bootstrap';
+import { Image, Container } from 'react-bootstrap';
 
 // FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -21,10 +21,10 @@ export default function Navbar(props) {
     }
 
     return (
-        <nav className="navbar py-3 shadow-lg">
+        <nav className="navbar py-3 shadow-sm">
             <Container fluid className="mx-md-5 d-flex justify-content-between">
                 <Link to="/">
-                    <img src="/logo.png" alt="Logo PickMeUp!" />
+                    <Image src="/logo.png" alt="Logo PickMeUp!" />
                 </Link>
                 <Link to="/">
                     <FontAwesomeIcon className="iconButton d-none d-md-block" icon={faHome} size="lg" color="black" />
@@ -33,10 +33,10 @@ export default function Navbar(props) {
                 <Sidebar />
                 <div className="buttonsGroup d-none d-md-flex">
                     <Link to="/signup">
-                        <Button text={"Registrati"} variant={"Light"} />
+                        <Button variant={"Light"} submit>Registrati</Button>
                     </Link>
                     <Link to="/login">
-                        <Button text={"Accedi"} variant={"Dark"} />
+                        <Button variant={"Dark"} submit>Accedi</Button>
                     </Link>
                 </div>
             </Container>

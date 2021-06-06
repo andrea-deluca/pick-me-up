@@ -18,8 +18,16 @@ a{
   font-size: 6vw;
 }
 
+.t-subtitle{
+  font-size: 3vw;
+}
+
 .t-desc{
   font-size: 1.5vw;
+}
+
+.t-para{
+  font-size: 1.2vw;
 }
 
 @media screen and (max-width: 575.98px) { 
@@ -27,7 +35,15 @@ a{
     font-size: 10vw;
   }
 
+  .t-subtitle{
+    font-size: 4.5vw;
+  }
+
   .t-desc{
+    font-size: 3.5vw;
+  }
+
+  .t-para{
     font-size: 3.5vw;
   }
 }

@@ -23,15 +23,15 @@ export default function Sidebar() {
         <div id="sidebar" className="sidebar shadow-lg">
             <div className="d-flex flex-column px-4 py-5">
                 <FontAwesomeIcon onClick={() => closeSidebar()} className="iconButton ms-3" icon={faTimes} size="lg" color="black" />
-                <Row className="my-3 gy-3">
-                    <Link onClick={() => closeSidebar()} to="/">
-                        <Button text={"Home"} variant={"Light"} />
+                <Row onClick={() => closeSidebar()} className="my-3 gy-3">
+                    <Link to="/">
+                        <Button variant={"Light"} submit>Home</Button>
                     </Link>
                     <Link to="/signup">
-                        <Button text={"Registrati"} variant={"Light"} />
+                        <Button variant={"Light"} submit>Registrati</Button>
                     </Link>
                     <Link to="/login">
-                        <Button text={"Accedi"} variant={"Dark"} />
+                        <Button variant={"Dark"} submit>Accedi</Button>
                     </Link>
                 </Row>
             </div>

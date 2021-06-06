@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // Bootstrap Component
 import { Row, Carousel } from "react-bootstrap";
 
-// Components
+// Custom Components
 import Button from './Utility/Button';
 
 // Home Carousel
@@ -39,10 +39,10 @@ export default function HomeCarousel() {
                     </Row>
                     <div className="buttonsGroup">
                         <Link to="/signup">
-                            <Button text={"Registrati"} variant={"Dark"} />
+                            <Button variant={"Dark"} submit>Registrati</Button>
                         </Link>
                         <Link to="/login">
-                            <Button text={"Accedi"} variant={"Light"} />
+                            <Button variant={"Light"} submit>Accedi</Button>
                         </Link>
                     </div>
                 </Row>
