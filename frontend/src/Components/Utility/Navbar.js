@@ -13,7 +13,7 @@ import Button from './Button';
 import Sidebar from './Sidebar';
 
 // Navbar
-export default function Navbar() {
+export default function Navbar(props) {
 
     function openSidebar() {
         let sidebar = document.querySelector("#sidebar");
@@ -29,7 +29,7 @@ export default function Navbar() {
                 <Link to="/">
                     <FontAwesomeIcon className="iconButton d-none d-md-block" icon={faHome} size="lg" color="black" />
                 </Link>
-                <FontAwesomeIcon onClick={() => openSidebar()} className="iconButton d-md-none" icon={faBars} size="lg" color="black" />
+                <FontAwesomeIcon onClick={openSidebar} className="iconButton d-md-none" icon={faBars} size="lg" color="black" />
                 <Sidebar />
                 <div className="buttonsGroup d-none d-md-flex">
                     <Link to="/signup">

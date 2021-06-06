@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Row, Carousel } from "react-bootstrap";
 
 // Components
-import Button from './Button';
+import Button from './Utility/Button';
 
 // Home Carousel
 export default function HomeCarousel() {

@@ -7,6 +7,7 @@ import './App.css';
 import './Components/Animations.css';
 
 // Schermate
+import View from './Components/Utility/View';
 import SchermataPrincipale from './Components/SchermataPrincipale';
 import SchermataLogin from './Components/SchermataLogin';
 
@@ -30,16 +31,17 @@ const AnimatedSwitch = withRouter(({ location }) => (
 // App
 function App() {
   return (
-    <React.Fragment>
+    <View>
       <Switch >
         <Route path="/login" component={SchermataLogin}>
           <SchermataLogin />
         </Route>
         <Route path="/" component={SchermataPrincipale} exact>
+          
           <SchermataPrincipale />
         </Route>
       </Switch>
-    </React.Fragment>
+    </View>
   );
 }
 

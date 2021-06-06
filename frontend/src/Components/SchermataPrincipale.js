@@ -1,15 +1,15 @@
 import React from 'react';
 
 // Custom Components
-import Navbar from './Navbar';
+import Navbar from './Utility/Navbar';
 import HomeCarousel from './HomeCarousel';
 
 // Schermata Principale
 export default function SchermataPrincipale() {
     return (
-        <div className="view">
-            <Navbar />
+        <React.Fragment>
+            <Navbar/>
             <HomeCarousel />
-        </div>
+        </React.Fragment>
     );
 }

@@ -1,3 +1,23 @@
+/* ========= BUTTONS ANIMATIONS ========= */
+.btn:hover{
+  transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  transition: .2s;    
+}
+
+.btn {
+  transition: .2s;
+  transform: scale(1);
+  -o-transform: scale(1);
+  -ms-transform: scale(1);
+  -moz-transform: scale(1);
+  -webkit-transform: scale(1);   
+}
+
+/* ========= ICON BUTTONS ANIMATIONS ========= */
 .iconButton{
     transition: .2s;
     transform: scale(1);
@@ -9,32 +29,20 @@
 }
 
 .iconButton:hover {
-    transform: scale(1.4);
-    -o-transform: scale(1.4);
-    -ms-transform: scale(1.4);
-    -moz-transform: scale(1.4);
-    -webkit-transform: scale(1.4);
+    transform: scale(1.3);
+    -o-transform: scale(1.3);
+    -ms-transform: scale(1.3);
+    -moz-transform: scale(1.3);
+    -webkit-transform: scale(1.3);
     transition: .2;    
 }
 
-
-.btn:hover{
-    transform: scale(1.1);
-    -o-transform: scale(11);
-    -ms-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -webkit-transform: scale(1.1);
-    transition: .2s;    
+/* ========= SIDEBAR ANIMATIONS ========= */
+.sidebar{
+  transition: .5s;  
 }
 
-.btn {
-    transition: .2s;
-    transform: scale(1);
-    -o-transform: scale(1);
-    -ms-transform: scale(1);
-    -moz-transform: scale(1);
-    -webkit-transform: scale(1);   
-}
+
 
 /*
 .slide-enter, .slide-exit {
