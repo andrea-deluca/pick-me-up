@@ -21,7 +21,7 @@ export default function RecuperoPasswordCompletato() {
                 </Col>
                 <Col className="d-flex flex-column align-items-center py-4">
                     <div className="d-flex align-items-center">
-                        <FontAwesomeIcon icon={faCheckCircle} size="2x" color="#198754" />
+                        <FontAwesomeIcon icon={faCheckCircle} size="2x" color="#17c3b2" />
                         <h1 className="ps-3 t-subtitle text-success t-bold text-center">Recupero password completato</h1>
                     </div>
                     <p className="text-center text-success t-light">Ti abbiamo inviato una email contenente una nuova password generata dal sistema.</p>

@@ -1,0 +1,22 @@
+// CUSTOM PALETTE
+$primary: #227c9d;
+$secondary: #6c757d;
+$success: #00bfa6;
+$danger: #fe6d73;
+$warning: #ffcb77;
+$info: #0dcaf0;
+$light: #f8f8f8;
+$dark: #011627;
+
+// CUSTOM THEME TO BOOTSTRAP COMPONENTS
+.btn {
+    border-radius: 25px !important;
+    font-weight: 700 !important;
+}
+
+.btn-success {
+    color: white !important;
+}
+
+// BOOTSTRAP THEME
+@import "../node_modules/bootstrap/scss/bootstrap.scss";

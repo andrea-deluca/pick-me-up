@@ -36,7 +36,7 @@ export default function Navbar(props) {
                         <Button variant={"Light"} submit>Registrati</Button>
                     </Link>
                     <Link to="/login">
-                        <Button variant={"Dark"} submit>Accedi</Button>
+                        <Button variant={"Primary"} submit>Accedi</Button>
                     </Link>
                 </div>
             </Container>

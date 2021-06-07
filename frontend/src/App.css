@@ -1,67 +1,63 @@
 /* ========= FONT ========= */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
-/* ========= BOOTSTRAP CSS ========= */
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 /* ========= TYPOGRAPHY ========= */
-body{
-  font-family: 'Poppins', sans-serif;
+body {
+  font-family: "Poppins", sans-serif;
 }
 
-a{
+a {
   text-decoration: none;
 }
 
-.t-title{
+.t-title {
   font-size: 6vw;
 }
 
-.t-subtitle{
+.t-subtitle {
   font-size: 3vw;
 }
 
-.t-desc{
+.t-desc {
   font-size: 1.5vw;
 }
 
-.t-para{
+.t-para {
   font-size: 1.2vw;
 }
 
-@media screen and (max-width: 575.98px) { 
-  .t-title{
+@media screen and (max-width: 575.98px) {
+  .t-title {
     font-size: 10vw;
   }
 
-  .t-subtitle{
+  .t-subtitle {
     font-size: 4.5vw;
   }
 
-  .t-desc{
+  .t-desc {
     font-size: 3.5vw;
   }
 
-  .t-para{
+  .t-para {
     font-size: 3.5vw;
   }
 }
 
-.t-bold{
+.t-bold {
   font-weight: 700;
 }
 
-.t-light{
+.t-light {
   font-weight: 300;
 }
 
-.t-extralight{
+.t-extralight {
   font-weight: 200;
 }
 
 /* ========= VIEWS CSS ========= */
-.view{
+.view {
   display: flex;
   flex-flow: column;
   height: 100vh;
@@ -69,23 +65,19 @@ a{
 }
 
 /* ========= BUTTONS CUSTOM CSS ========= */
-.btn{
-  border-radius: 25px;
-  font-weight: 700;
-}
-
-.buttonsGroup{
+.buttonsGroup {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.button{
+.button {
   padding: 0 5px 0 5px;
+  isolation: isolate;
 }
 
 /* ========= SIDEBAR CUSTOM CSS ========= */
-.sidebar{
+.sidebar {
   position: fixed;
   top: 0%;
   right: 0%;
@@ -98,7 +90,7 @@ a{
 
 /* ========= HOME CAROUSEL CUSTOM CSS ========= */
 
-/* Fix for flickering carousel */                                                      
+/* Fix for flickering carousel */
 .carousel-inner .carousel-item {
   opacity: 0;
   top: 0;
@@ -117,27 +109,27 @@ a{
 }
 /* End of fix */
 
-.carousel{
+.carousel {
   height: 100%;
 }
 
-.carousel-inner{
+.carousel-inner {
   height: 100%;
 }
 
-.carousel-img{
+.carousel-img {
   object-fit: cover;
   object-position: center left;
   width: 100vw;
   height: 100%;
 }
 
-.carousel-caption{
+.carousel-caption {
   top: 40%;
   z-index: 100;
 }
 
 /* ========= FORM CUSTOM CSS ========= */
-.form-control{
+.form-control {
   border-radius: 10px;
 }

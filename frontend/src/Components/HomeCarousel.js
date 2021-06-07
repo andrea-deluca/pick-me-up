@@ -39,10 +39,10 @@ export default function HomeCarousel() {
                     </Row>
                     <div className="buttonsGroup">
                         <Link to="/signup">
-                            <Button variant={"Dark"} submit>Registrati</Button>
+                            <Button variant={"Light"} submit>Registrati</Button>
                         </Link>
                         <Link to="/login">
-                            <Button variant={"Light"} submit>Accedi</Button>
+                            <Button variant={"Primary"} submit>Accedi</Button>
                         </Link>
                     </div>
                 </Row>

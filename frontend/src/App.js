@@ -2,7 +2,11 @@ import React from 'react';
 import { Switch, Route } from "react-router-dom";
 //import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
+// Plugin
+import Darkmode from './Plugin/Darkmode';
+
 // Custom CSS
+import "./Theme.scss";
 import './App.css';
 import './Components/Animations.css';
 

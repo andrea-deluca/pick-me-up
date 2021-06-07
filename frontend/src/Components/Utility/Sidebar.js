@@ -31,7 +31,7 @@ export default function Sidebar() {
                         <Button variant={"Light"} submit>Registrati</Button>
                     </Link>
                     <Link to="/login">
-                        <Button variant={"Dark"} submit>Accedi</Button>
+                        <Button variant={"Primary"} submit>Accedi</Button>
                     </Link>
                 </Row>
             </div>
