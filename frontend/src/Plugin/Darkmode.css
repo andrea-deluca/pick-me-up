@@ -19,6 +19,10 @@ img.darkmode--activated {
     mix-blend-mode: difference;
 }
 
+.darkmode--activated .sidebar{
+    background-color: #080808;
+}
+
 .darkmode--activated .sidebar .btn-light {
     background-color: rgb(10, 10, 10);
     border-color: rgb(10, 10, 10);

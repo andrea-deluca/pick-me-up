@@ -6,9 +6,7 @@ import { Image, Form, Container, Col } from "react-bootstrap";
 
 // Custom Components
 import Button from "../Utility/Button";
-
-// Custom Actions
-import validateEmailFormat from '../../Actions/validateForm';
+import InputEmail from '../Utility/InputEmail';
 
 // Login Form
 export default function LoginForm() {
@@ -17,11 +15,7 @@ export default function LoginForm() {
             <Col lg={4} xs={12} className="d-flex flex-column offset-lg-1 me-auto px-3 px-lg-0">
                 <h1 className="display-5 text-center t-bold">Accedi</h1>
                 <Form method="GET" className="row mx-auto gy-4 py-5">
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control required id="email" type="email" placeholder="Inserisci la tua email" onBlur={validateEmailFormat} />
-                        <Form.Text id="emailErr" className="text-danger d-none">Formato email non valido!</Form.Text>
-                    </Form.Group>
+                    <InputEmail/>
                     <Form.Group controlId="formBasicPassword">
                         <Form.Label >Password</Form.Label>
                         <Form.Control required type="password" placeholder="Inserisci la tua password" />

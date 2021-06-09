@@ -7,7 +7,7 @@ import { Image, Form, Container, Col } from 'react-bootstrap';
 import Button from '../Utility/Button'
 
 // Custom Action
-import validateEmailFormat from '../../Actions/validateForm';
+import InputEmail from '../Utility/InputEmail';
 
 // Recupero Password Form
 export default function RecuperoPasswordForm() {
@@ -17,12 +17,8 @@ export default function RecuperoPasswordForm() {
                 <h1 className="display-5 text-center t-bold">Recupero password</h1>
                 <p className="t-light text-center">Inserisci l'indirizzo email con cui ti sei registrato per continuare</p>
                 <Form method="GET" className="row mx-auto gy-4 py-5">
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control required id="email" type="email" placeholder="Inserisci la tua email" onBlur={validateEmailFormat} />
-                        <Form.Text id="emailErr" className="text-danger d-none">Formato email non valido!</Form.Text>
-                    </Form.Group>
-                    <Button  variant={"Primary"} submit >Continua</Button>
+                    <InputEmail/>
+                    <Button variant={"Primary"} submit >Continua</Button>
                 </Form>
             </Col>
             <Col lg={6} className="d-none d-lg-block me-auto">

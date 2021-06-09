@@ -14,6 +14,7 @@ import './Components/Animations.css';
 import View from './Components/Utility/View';
 import Navbar from './Components/Utility/Navbar';
 import SchermataPrincipale from './Components/SchermataPrincipale';
+import SchermataRegistrazione from './Components/SchermataRegistrazione';
 import SchermataLogin from './Components/SchermataLogin';
 import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
 import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPasswordCompletato';
@@ -43,14 +44,17 @@ function App() {
         <Route path="*">
           <Navbar />
           <Switch>
+            <Route exact path="/signup" component={SchermataRegistrazione}>
+              <SchermataRegistrazione />
+            </Route>
             <Route exact path="/login" component={SchermataLogin}>
               <SchermataLogin />
             </Route>
             <Route exact path="/recupero-password" component={SchermataRecuperoPassword}>
-              <SchermataRecuperoPassword/>
+              <SchermataRecuperoPassword />
             </Route>
             <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
-              <RecuperoPasswordCompletato/>
+              <RecuperoPasswordCompletato />
             </Route>
             <Route exact path="/" component={SchermataPrincipale}>
               <SchermataPrincipale />

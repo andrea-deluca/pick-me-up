@@ -24,7 +24,7 @@ export default function Navbar(props) {
         <nav className="navbar py-3 shadow-sm">
             <Container fluid className="mx-md-5 d-flex justify-content-between">
                 <Link to="/">
-                    <Image src="/logo.png" alt="Logo PickMeUp!" />
+                    <Image src="/logo.svg" alt="Logo PickMeUp!" />
                 </Link>
                 <Link to="/">
                     <FontAwesomeIcon className="iconButton d-none d-md-block" icon={faHome} size="lg" color="black" />
@@ -32,12 +32,8 @@ export default function Navbar(props) {
                 <FontAwesomeIcon onClick={openSidebar} className="iconButton d-md-none" icon={faBars} size="lg" color="black" />
                 <Sidebar />
                 <div className="buttonsGroup d-none d-md-flex">
-                    <Link to="/signup">
-                        <Button variant={"Light"} submit>Registrati</Button>
-                    </Link>
-                    <Link to="/login">
-                        <Button variant={"Primary"} submit>Accedi</Button>
-                    </Link>
+                    <Button to={"/signup"} variant={"Light"}>Registrati</Button>
+                    <Button to={"/login"} variant={"Primary"}>Accedi</Button>
                 </div>
             </Container>
         </nav>

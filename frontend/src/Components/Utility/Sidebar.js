@@ -24,15 +24,9 @@ export default function Sidebar() {
             <div className="d-flex flex-column px-4 py-5">
                 <FontAwesomeIcon onClick={() => closeSidebar()} className="iconButton ms-3" icon={faTimes} size="lg" color="black" />
                 <Row onClick={() => closeSidebar()} className="my-3 gy-3">
-                    <Link to="/">
-                        <Button variant={"Light"} submit>Home</Button>
-                    </Link>
-                    <Link to="/signup">
-                        <Button variant={"Light"} submit>Registrati</Button>
-                    </Link>
-                    <Link to="/login">
-                        <Button variant={"Primary"} submit>Accedi</Button>
-                    </Link>
+                    <Button to={"/"} variant={"Light"}>Home</Button>
+                    <Button to={"/signup"} variant={"Light"}>Registrati</Button>
+                    <Button to={"/login"} variant={"Primary"}>Accedi</Button>
                 </Row>
             </div>
         </div>

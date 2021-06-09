@@ -25,9 +25,7 @@ export default function RecuperoPasswordCompletato() {
                         <h1 className="ps-3 t-subtitle text-success t-bold text-center">Recupero password completato</h1>
                     </div>
                     <p className="text-center text-success t-light">Ti abbiamo inviato una email contenente una nuova password generata dal sistema.</p>
-                    <Link to="/login">
-                        <Button variant={"Success"}>Accedi</Button>
-                    </Link>
+                    <Button to={"login"} variant={"Success"}>Accedi</Button>
                 </Col>
             </div>
         </Container>
