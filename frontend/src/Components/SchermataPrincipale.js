@@ -2,12 +2,13 @@ import React from 'react';
 
 // Custom Components
 import HomeCarousel from './HomeCarousel';
+import View from './Utility/View';
 
 // Schermata Principale
 export default function SchermataPrincipale() {
     return (
-        <React.Fragment>
+        <View>
             <HomeCarousel />
-        </React.Fragment>
+        </View>
     );
 }

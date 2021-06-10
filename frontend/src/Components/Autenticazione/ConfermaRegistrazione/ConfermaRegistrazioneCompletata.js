@@ -6,12 +6,12 @@ import SchermataOperazioneCompletata from '../SchermataOperazioneCompletata';
 export default function RecuperoPasswordCompletato() {
     return (
         <SchermataOperazioneCompletata
-            imagePath={"/assets/svg/email-sent.svg"}
-            imageAlt={"Email sent"}
-            title={"Recupero passwod completato"}
+            imagePath={"/assets/svg/verifica-success.svg"}
+            imageAlt={"Verifica completata"}
+            title={"Account verificato con successo"}
             buttonTo={"/login"}
             buttonLabel={"Accedi"}>
-            Ti abbiamo inviato una email contenente una nuova password generata dal sistema.
+            La tua email e la tua registrazione sono stati verificati con successo<br/>Procedi con l'accesso.
         </SchermataOperazioneCompletata>
     );
 }

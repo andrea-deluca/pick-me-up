@@ -61,7 +61,7 @@ a {
   display: flex;
   flex-flow: column;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
 }
 
 /* ========= BUTTONS CUSTOM CSS ========= */

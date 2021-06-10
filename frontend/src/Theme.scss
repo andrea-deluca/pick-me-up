@@ -18,5 +18,9 @@ $dark: #011627;
     color: white !important;
 }
 
+.progress-bar{
+    border-radius: 25px !important; 
+}
+
 // BOOTSTRAP THEME
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

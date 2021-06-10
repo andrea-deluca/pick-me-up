@@ -3,7 +3,7 @@ import React from 'react';
 
 import { ProgressBar, Container, Col, Form } from 'react-bootstrap';
 
-import Button from '../Utility/Button';
+import Button from '../../Utility/Button';
 
 export default function DatiAnagraficiForm() {
     return (

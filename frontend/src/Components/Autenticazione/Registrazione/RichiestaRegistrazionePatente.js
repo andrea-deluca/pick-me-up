@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Container, Col, ProgressBar } from 'react-bootstrap';
-import Button from '../Utility/Button';
+import Button from '../../Utility/Button';
 
 
 export default function RichiestaRegistrazionePatente() {
