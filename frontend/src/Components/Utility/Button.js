@@ -7,13 +7,23 @@ export default function Button(props) {
     const buttonStyle = mainButtonClass + "-" + props.variant.toLowerCase();
     const buttonClasses = mainButtonClass + " " + buttonStyle;
 
-    return (
-        <Link to={props.to}>
+    if (props.to) {
+        return (
+            <div className="button">
+                <Link to={props.to}>
+                    <button type={props.submit ? "submit" : "button"} className={buttonClasses}>
+                        {props.children}
+                    </button>
+                </Link>
+            </div>
+        );
+    } else {
+        return (
             <div className="button">
                 <button type={props.submit ? "submit" : "button"} className={buttonClasses}>
                     {props.children}
                 </button>
             </div>
-        </Link>
-    );
+        );
+    }
 }

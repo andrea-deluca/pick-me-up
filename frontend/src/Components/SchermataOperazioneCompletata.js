@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 // Bootstrap Components
 import { Image, Container, Col } from 'react-bootstrap';

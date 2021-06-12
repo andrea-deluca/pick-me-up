@@ -24,7 +24,7 @@ export default function InputEmail() {
             }
         }
         setValidateFormat(false);
-    })
+    }, [validateFormat])
 
     return (
         <Col xs={12}>
