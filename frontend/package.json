@@ -5,6 +5,7 @@
   "author": "Gruppo Bytecoders",
   "private": true,
   "dependencies": {
+    "@barba/core": "^2.9.7",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
@@ -14,6 +15,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
+    "codice-fiscale-js": "^2.3.9",
     "darkmode-js": "^1.5.7",
     "jquery": "^3.6.0",
     "node-sass": "^6.0.0",
@@ -23,6 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "react-transition-group": "^4.4.2",
+    "swup": "^2.0.14",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -31,7 +34,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  
   "eslintConfig": {
     "extends": [
       "react-app",

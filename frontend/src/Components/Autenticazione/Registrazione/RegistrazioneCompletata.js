@@ -1,6 +1,6 @@
 import React from 'react';
 
-import SchermataOperazioneCompletata from '../../SchermataOperazioneCompletata';
+import SchermataOperazioneCompletata from '../../Utility/SchermataOperazioneCompletata';
 
 export default function RegistrazioneCompletata() {
     return (

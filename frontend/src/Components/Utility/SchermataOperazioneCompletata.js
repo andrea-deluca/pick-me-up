@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 
 // Custom Components
-import Button from './Utility/Button'
+import Button from './Button'
 
 export default function SchermataOperazioneCompletata(props) {
     return (

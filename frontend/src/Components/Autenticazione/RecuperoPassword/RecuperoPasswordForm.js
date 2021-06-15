@@ -4,8 +4,8 @@ import React from 'react';
 import { Image, Form, Container, Row, Col } from 'react-bootstrap';
 
 // Custom Components
-import Button from '../Utility/Button'
-import InputEmail from '../Utility/InputEmail';
+import Button from '../../Utility/Button'
+import InputEmail from '../../Utility/InputEmail';
 
 // Recupero Password Form
 export default function RecuperoPasswordForm() {

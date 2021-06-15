@@ -30,7 +30,11 @@ export default function Navbar(props) {
                     <FontAwesomeIcon className="iconButton d-none d-md-block" icon={faHome} size="lg" color="black" />
                 </Link>
                 <FontAwesomeIcon onClick={openSidebar} className="iconButton d-md-none" icon={faBars} size="lg" color="black" />
-                <Sidebar />
+                <Sidebar>
+                    <Button to={"/"} variant={"Light"}>Home</Button>
+                    <Button to={"/signup"} variant={"Light"}>Registrati</Button>
+                    <Button to={"/login"} variant={"Primary"}>Accedi</Button>
+                </Sidebar>
                 <div className="buttonsGroup d-none d-md-flex">
                     <Button to={"/signup"} variant={"Light"}>Registrati</Button>
                     <Button to={"/login"} variant={"Primary"}>Accedi</Button>

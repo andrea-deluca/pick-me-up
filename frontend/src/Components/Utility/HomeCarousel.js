@@ -4,7 +4,7 @@ import React from 'react';
 import { Row, Carousel } from "react-bootstrap";
 
 // Custom Components
-import Button from './Utility/Button';
+import Button from './Button';
 
 // Home Carousel
 export default function HomeCarousel() {
@@ -32,9 +32,9 @@ export default function HomeCarousel() {
             </Carousel>
             <Carousel.Caption>
                 <Row className="gy-3 gx-0">
-                    <Row className="row g-0">
-                        <h3 className="t-title t-bold">Prenota il tuo prossimo noleggio</h3>
-                        <p className="t-desc t-extralight">Accedi o registrati per prenotare auto, moto, biciclette o monopattini on demand</p>
+                    <Row className="g-0">
+                        <h3 className="display-4 t-bold">Prenota il tuo prossimo noleggio</h3>
+                        <p className="h3 t-extralight">Accedi o registrati per prenotare auto, moto, biciclette o monopattini on demand</p>
                     </Row>
                     <div className="buttonsGroup">
                         <Button to={"/signup"} variant={"Light"} submit>Registrati</Button>

@@ -12,7 +12,7 @@ import RegistrazioneCompletata from './Autenticazione/Registrazione/Registrazion
 export default function SchermataRegistrazione() {
     return (
         <View>
-            <RegistrazioneCompletata />
+            <DatiAnagraficiForm />
         </View>
     );
 }

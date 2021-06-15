@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Custom Components
-import RecuperoPasswordForm from './Autenticazione/RecuperoPasswordForm';
+import RecuperoPasswordForm from './Autenticazione/RecuperoPassword/RecuperoPasswordForm';
 import View from './Utility/View';
 
 // Schermata Recupero Password

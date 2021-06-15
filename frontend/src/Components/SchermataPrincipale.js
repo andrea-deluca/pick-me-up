@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Custom Components
-import HomeCarousel from './HomeCarousel';
+import HomeCarousel from './Utility/HomeCarousel';
 import View from './Utility/View';
 
 // Schermata Principale

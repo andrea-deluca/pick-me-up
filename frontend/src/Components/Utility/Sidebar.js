@@ -7,11 +7,8 @@ import { Row } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
-// Custom Components
-import Button from './Button';
-
 // Sidebar
-export default function Sidebar() {
+export default function Sidebar(props) {
 
     function closeSidebar() {
         let sidebar = document.querySelector("#sidebar");
@@ -23,9 +20,7 @@ export default function Sidebar() {
             <div className="d-flex flex-column px-4 py-5">
                 <FontAwesomeIcon onClick={() => closeSidebar()} className="iconButton ms-3" icon={faTimes} size="lg" color="black" />
                 <Row onClick={() => closeSidebar()} className="my-3 gy-3">
-                    <Button to={"/"} variant={"Light"}>Home</Button>
-                    <Button to={"/signup"} variant={"Light"}>Registrati</Button>
-                    <Button to={"/login"} variant={"Primary"}>Accedi</Button>
+                    {props.children}
                 </Row>
             </div>
         </div>

@@ -6,9 +6,9 @@ import axios from 'axios';
 import { Image, Form, Container, Row, Col } from "react-bootstrap";
 
 // Custom Components
-import Button from "../Utility/Button";
-import InputEmail from '../Utility/InputEmail';
-import InputPassword from '../Utility/InputPassword';
+import Button from "../../Utility/Button";
+import InputEmail from '../../Utility/InputEmail';
+import InputPassword from '../../Utility/InputPassword';
 
 // Login Form
 export default function LoginForm() {
@@ -20,7 +20,7 @@ export default function LoginForm() {
                 .then((res) => {
                     console.log(res.data);
                 }).catch((err) => {
-                    if (err.response.status == 400) {
+                    if (err.response.status === 400) {
                         console.log("400");
                     }
                 })

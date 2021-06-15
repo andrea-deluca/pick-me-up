@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Switch, Route } from "react-router-dom";
 //import { TransitionGroup, CSSTransition } from 'react-transition-group';
@@ -17,7 +18,8 @@ import SchermataPrincipale from './Components/SchermataPrincipale';
 import SchermataRegistrazione from './Components/SchermataRegistrazione';
 import SchermataLogin from './Components/SchermataLogin';
 import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
-import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPasswordCompletato';
+import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
+
 
 /*
 const AnimatedSwitch = withRouter(({ location }) => (
