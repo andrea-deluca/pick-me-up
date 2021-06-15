@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useReducer} from 'react';
 import { Switch, Route } from "react-router-dom";
 //import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -12,14 +12,31 @@ import './App.css';
 import './Components/Animations.css';
 
 // Custom Components
-import View from './Components/Utility/View';
 import Navbar from './Components/Utility/Navbar';
 import SchermataPrincipale from './Components/SchermataPrincipale';
-import SchermataRegistrazione from './Components/SchermataRegistrazione';
+import DatiAnafraficiForm from './Components/Autenticazione/Registrazione/DatiAnagraficiForm';
+import RichiestaRegistrazionePatente from './Components/Autenticazione/Registrazione/RichiestaRegistrazionePatente';
+import DatiPatenteForm from './Components/Autenticazione/Registrazione/DatiPatenteForm';
+import CredenzialiForm from './Components/Autenticazione/Registrazione/CredenzialiForm';
 import SchermataLogin from './Components/SchermataLogin';
 import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
 import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
 
+export const Controllo = React.createContext(null);
+const initialState = {
+  completato: false,
+}
+const reducer = (state, action) =>{
+  console.log(action)
+  switch (action.type){
+    case 'CONTINUA_CLICKATO':
+      return {
+        ...state, completato: true, user: action.payload
+      }
+    default:
+      return state;
+    }
+  }
 
 /*
 const AnimatedSwitch = withRouter(({ location }) => (
@@ -40,14 +57,24 @@ const AnimatedSwitch = withRouter(({ location }) => (
 
 // App
 function App() {
+  const [controllo, dispatch] = useReducer(reducer, initialState)
   return (
-    <View>
       <Switch >
+        <Controllo.Provider value = {{controllo, dispatch}}>
         <Route path="*">
           <Navbar />
           <Switch>
-            <Route exact path="/signup" component={SchermataRegistrazione}>
-              <SchermataRegistrazione />
+            <Route exact path="/signup" component={DatiAnafraficiForm}>
+              <DatiAnafraficiForm />
+            </Route>
+            <Route exact path="/signup/richiesta-patente" component={RichiestaRegistrazionePatente}>
+              <RichiestaRegistrazionePatente />
+            </Route>
+            <Route exact path="/signup/patente" component={DatiPatenteForm}>
+              <DatiPatenteForm />
+            </Route>
+            <Route exact path="/signup/credenziali" component={CredenzialiForm}>
+              <CredenzialiForm />
             </Route>
             <Route exact path="/login" component={SchermataLogin}>
               <SchermataLogin />
@@ -63,8 +90,8 @@ function App() {
             </Route>
           </Switch>
         </Route>
+        </Controllo.Provider>
       </Switch>
-    </View>
   );
 }
 

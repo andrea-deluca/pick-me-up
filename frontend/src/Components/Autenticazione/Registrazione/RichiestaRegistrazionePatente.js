@@ -1,10 +1,21 @@
-import React from 'react';
-
+import React, { useContext} from 'react';
+import { Controllo } from '../../../App';
 import { Container, Col, ProgressBar } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import Button from '../../Utility/Button';
 
 
 export default function RichiestaRegistrazionePatente() {
+    const stato = useContext(Controllo)
+   
+    console.log(stato)
+    const history = useHistory()
+    console.log(stato.controllo.user)
+    
+    if (!stato.controllo.completato){
+        history.push('/signup')
+    } 
+    
     return (
         <Container fluid className="d-flex align-items-center justify-content-center h-75">
             <div className="d-flex flex-column">

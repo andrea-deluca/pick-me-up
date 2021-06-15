@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { ProgressBar, Container, Col, Form } from 'react-bootstrap';
 
@@ -10,33 +10,33 @@ export default function DatiPatenteForm() {
             <Col lg={10} className="d-flex flex-column mx-auto">
                 <h1 className="display-5 text-center t-bold">Registrazione</h1>
                 <ProgressBar className="col-10 mx-auto" now={60} />
-                <Form method="GET" className="row gy-4 py-5">
+                <Form className="row gy-4 py-5">
                     <div className="d-flex justify-content-evenly">
-                        <Form.Group className="col-3" controlId="exampleForm.ControlSelect1">
+                        <Form.Group className="col-3" controlId="tipologiaPatente">
                             <Form.Label>Patente di guida</Form.Label>
-                            <Form.Control className="form-select" as="select">
-                                <option value="0" disabled selected>Seleziona...</option>
-                                <option>AM</option>
-                                <option>A1</option>
-                                <option>A2</option>
-                                <option>A</option>
-                                <option>B</option>
+                            <Form.Control className="form-select" as="select" required>
+                                <option value="" disabled selected>Seleziona...</option>
+                                <option value="AM">AM</option>
+                                <option value="A1">A1</option>
+                                <option value="A2">A2</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
                             </Form.Control>
                         </Form.Group>
-                        <Form.Group className="col-3" controlId="formBasicEmail">
+                        <Form.Group className="col-3" controlId="numeroPatente">
                             <Form.Label>Numero Patente</Form.Label>
-                            <Form.Control type="text" placeholder="Inserisci il numero di patente" />
+                            <Form.Control type="text" placeholder="Inserisci il numero di patente" pattern="[a-zA-Z]{2}\d{7}[a-zA-Z]{1}" required/>
                         </Form.Group>
                     </div>
                     <div className="d-flex justify-content-evenly">
-                        <Form.Group className="col-3" controlId="formBasicEmail">
+                        <Form.Group className="col-3" controlId="dataScadenza">
                             <Form.Label>Data di scadenza</Form.Label>
-                            <Form.Control type="date" placeholder="Inserisci data di scadenza" />
+                            <Form.Control type="date" placeholder="Inserisci data di scadenza" required/>
                         </Form.Group>
-                        <Form.Group className="col-3" controlId="exampleForm.ControlSelect1">
+                        <Form.Group className="col-3" controlId="ufficioRilascio">
                             <Form.Label>Ufficio di rilascio</Form.Label>
-                            <Form.Control className="form-select" as="select">
-                                <option value="0" disabled selected>Città</option>
+                            <Form.Control className="form-select" as="select" required>
+                                <option value="" disabled selected>Città</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>

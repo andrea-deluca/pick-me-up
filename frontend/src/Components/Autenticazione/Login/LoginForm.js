@@ -7,8 +7,8 @@ import { Image, Form, Container, Row, Col } from "react-bootstrap";
 
 // Custom Components
 import Button from "../../Utility/Button";
-import InputEmail from '../../Utility/InputEmail';
-import InputPassword from '../../Utility/InputPassword';
+import InputEmail from '../../Utility/FormsUtility/InputEmail';
+import InputPassword from '../../Utility/FormsUtility/InputPassword';
 
 // Login Form
 export default function LoginForm() {
