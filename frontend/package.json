@@ -16,6 +16,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "codice-fiscale-js": "^2.3.9",
+    "crypto-js": "^4.0.0",
     "darkmode-js": "^1.5.7",
     "jquery": "^3.6.0",
     "node-sass": "^6.0.0",
@@ -40,7 +41,7 @@
       "react-app/jest"
     ]
   },
-  "proxy": "http://localhost:9000/",
+  
   "browserslist": {
     "production": [
       ">0.2%",

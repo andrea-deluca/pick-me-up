@@ -74,7 +74,7 @@ export default function InputDataNascita() {
             >
                 <FontAwesomeIcon icon={faInfoCircle} />
             </OverlayTrigger>
-            <Form.Control type="date" placeholder="Inserisci data di nascita" onBlur={() => setCheckData(true)} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required/>
+            <Form.Control type="date" placeholder="Inserisci data di nascita" onBlur={() => setCheckData(true)} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" maxLength="10" required/>
             <Form.Text id="dataNascitaError" className="d-none text-danger">Devi avere almeno 14 anni per registrarti!</Form.Text>
         </Form.Group>
     );

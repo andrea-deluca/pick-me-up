@@ -11,7 +11,7 @@ export default function Button(props) {
         return (
             <div className="button">
                 <Link to={props.to}>
-                    <button type={props.submit ? "submit" : "button"} className={buttonClasses}>
+                    <button type={props.submit ? "submit" : "button"} className={buttonClasses} >
                         {props.children}
                     </button>
                 </Link>
@@ -20,7 +20,7 @@ export default function Button(props) {
     } else {
         return (
             <div className="button">
-                <button type={props.submit ? "submit" : "button"} className={buttonClasses}>
+                <button type={props.submit ? "submit" : "button"} className={buttonClasses} onSubmit={props.onSubmit}>
                     {props.children}
                 </button>
             </div>

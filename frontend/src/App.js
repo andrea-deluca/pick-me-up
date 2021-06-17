@@ -1,5 +1,4 @@
-
-import React, {useReducer} from 'react';
+import React, { useReducer } from 'react';
 import { Switch, Route } from "react-router-dom";
 //import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -21,22 +20,52 @@ import CredenzialiForm from './Components/Autenticazione/Registrazione/Credenzia
 import SchermataLogin from './Components/SchermataLogin';
 import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
 import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
+import SchermataPersonaleUtente from './Components/SchermataPersonaleUtente';
+import SchermataProfilo from './Components/SchermataProfilo';
 
-export const Controllo = React.createContext(null);
+export const Router = React.createContext(null);
 const initialState = {
-  completato: false,
+  registrazione: {
+    richiestaPatente: false,
+    patente: false,
+    credenziali: false
+  }
 }
-const reducer = (state, action) =>{
-  console.log(action)
-  switch (action.type){
-    case 'CONTINUA_CLICKATO':
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "RICHIESTA_PATENTE":
       return {
-        ...state, completato: true, user: action.payload
+        ...state, registrazione: { ...state.registrazione, richiestaPatente: true }, userData: action.payload
+      }
+    case "REGISTRAZIONE_PATENTE":
+      return {
+        ...state, registrazione: { ...state.registrazione, patente: true }, userData: action.payload
+      }
+    case "REGISTRAZIONE_CREDENZIALI":
+      return {
+        ...state, registrazione: { ...state.registrazione, credenziali: true }, userData: action.payload
       }
     default:
       return state;
-    }
   }
+}
+
+// export const Controllo = React.createContext(null);
+// const initialState = {
+//   completato: false,
+// }
+// const reducer = (state, action) =>{
+//   console.log(action)
+//   switch (action.type){
+//     case 'CONTINUA_CLICKATO':
+//       return {
+//         ...state, completato: true, user: action.payload
+//       }
+//     default:
+//       return state;
+//     }
+//   }
 
 /*
 const AnimatedSwitch = withRouter(({ location }) => (
@@ -57,10 +86,10 @@ const AnimatedSwitch = withRouter(({ location }) => (
 
 // App
 function App() {
-  const [controllo, dispatch] = useReducer(reducer, initialState)
+  const [router, dispatch] = useReducer(reducer, initialState)
   return (
-      <Switch >
-        <Controllo.Provider value = {{controllo, dispatch}}>
+    <Switch >
+      <Router.Provider value={{ router, dispatch }}>
         <Route path="*">
           <Navbar />
           <Switch>
@@ -85,13 +114,19 @@ function App() {
             <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
               <RecuperoPasswordCompletato />
             </Route>
+            <Route exact path="/home" component={SchermataPersonaleUtente}>
+              <SchermataPersonaleUtente />
+            </Route>
+            <Route exact path="/profilo" component={SchermataProfilo}>
+              <SchermataProfilo />
+            </Route>
             <Route exact path="/" component={SchermataPrincipale}>
               <SchermataPrincipale />
             </Route>
           </Switch>
         </Route>
-        </Controllo.Provider>
-      </Switch>
+      </Router.Provider>
+    </Switch>
   );
 }
 

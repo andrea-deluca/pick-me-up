@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 // Bootstrap Components
-import { Col, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 
 // Input Email
 export default function InputEmail() {
@@ -27,12 +27,10 @@ export default function InputEmail() {
     }, [validateFormat])
 
     return (
-        <Col xs={12}>
-            <Form.Group controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="Inserisci la tua email" onBlur={() => setValidateFormat(true)} required/>
-                <Form.Text id="emailFormatError" className="text-danger d-none">Formato email non valido!</Form.Text>
-            </Form.Group>
-        </Col>
+        <Form.Group controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" placeholder="Inserisci la tua email" onBlur={() => setValidateFormat(true)} required />
+            <Form.Text id="emailFormatError" className="text-danger d-none">Formato email non valido!</Form.Text>
+        </Form.Group>
     );
 }

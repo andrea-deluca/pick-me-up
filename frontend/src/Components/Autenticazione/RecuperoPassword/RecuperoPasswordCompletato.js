@@ -8,7 +8,7 @@ export default function RecuperoPasswordCompletato() {
         <SchermataOperazioneCompletata
             imagePath={"/assets/svg/email-sent.svg"}
             imageAlt={"Email sent"}
-            title={"Recupero passwod completato"}
+            title={"Recupero password completato"}
             buttonTo={"/login"}
             buttonLabel={"Accedi"}>
             Ti abbiamo inviato una email contenente una nuova password generata dal sistema.
