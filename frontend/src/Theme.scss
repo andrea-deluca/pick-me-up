@@ -22,5 +22,10 @@ $dark: #080808;
     border-radius: 25px !important; 
 }
 
+.card{
+    border-radius: 20px !important;
+    padding: 20px;
+}
+
 // BOOTSTRAP THEME
 @import "../node_modules/bootstrap/scss/bootstrap.scss";

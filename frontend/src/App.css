@@ -86,6 +86,12 @@ a {
   background-color: #f8f8f8;
 }
 
+.aside {
+  display: flex;
+  height: 100vh;
+  overflow: scroll initial;
+}
+
 /* ========= HOME CAROUSEL CUSTOM CSS ========= */
 
 /* Fix for flickering carousel */

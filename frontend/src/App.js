@@ -22,6 +22,12 @@ import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
 import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
 import SchermataPersonaleUtente from './Components/SchermataPersonaleUtente';
 import SchermataProfilo from './Components/SchermataProfilo';
+import SchermataWallet from './Components/SchermataWallet';
+import SchermataPatente from './Components/SchermataPatente';
+import SchermataPrenotazioniUtente from './Components/SchermataPrenotazioniUtente';
+import SchermataConfermaPrenotazione from './Components/SchermataConfermaPrenotazione';
+import SelezioneTipologiaVeicolo from './Components/SelezioneTipologiaVeicolo';
+import SelezioneVeicolo from './Components/SelezioneVeicolo';
 
 export const Router = React.createContext(null);
 const initialState = {
@@ -119,6 +125,24 @@ function App() {
             </Route>
             <Route exact path="/profilo" component={SchermataProfilo}>
               <SchermataProfilo />
+            </Route>
+            <Route exact path="/wallet" component={SchermataWallet}>
+              <SchermataWallet />
+            </Route>
+            <Route exact path="/patente" component={SchermataPatente}>
+              <SchermataPatente />
+            </Route>
+            <Route exact path="/prenotazioni" component={SchermataPrenotazioniUtente}>
+              <SchermataPrenotazioniUtente />
+            </Route>
+            <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>
+              <SelezioneTipologiaVeicolo />
+            </Route>
+            <Route exact path="/prenota/selezione-veicolo" component={SelezioneVeicolo}>
+              <SelezioneVeicolo />
+            </Route>
+            <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
+              <SchermataConfermaPrenotazione />
             </Route>
             <Route exact path="/" component={SchermataPrincipale}>
               <SchermataPrincipale />
