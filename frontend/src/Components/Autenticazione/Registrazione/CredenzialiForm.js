@@ -2,6 +2,8 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import { Router } from "../../../App";
 
+import axios from 'axios';
+
 // Bootstrap Components
 import { ProgressBar, Form, Container, Row, Col } from 'react-bootstrap';
 
@@ -17,27 +19,38 @@ export default function CredenzialiForm() {
     const router = useContext(Router)
     const history = useHistory()
 
-    if (!router.router.registrazione.richiestaPatente) {
+    if (router.router.registrazione.richiestaPatente) {
         history.push('/signup');
     }
 
-    function onSubmit(e){
-        e.preventDefault(); //password //confermapassword
-        if(document.querySelector("#password").value !== document.querySelector("#confermaPassword").value){
+    function onSubmit(e) {
+        e.preventDefault();
+        if (document.querySelector("#password").value !== document.querySelector("#confermaPassword").value) {
             document.querySelector("#confermaPasswordError").classList.remove("d-none");
             return
         }
         else {
             const encryptedPassword = CryptoJS.SHA256(document.querySelector("#password").value).toString();
             const userData = {
-            ...router.router.userData,
-            credenziali: {
-                email: document.querySelector("#email").value,
-                password: encryptedPassword,
-                cellulare: document.querySelector("#cellulare").value,
+                ...router.router.userData,
+                credenziali: {
+                    email: document.querySelector("#email").value,
+                    password: encryptedPassword,
+                    cellulare: document.querySelector("#cellulare").value,
+                }
+            }
+            try {
+                axios.post("/autenticazione/registraUtente", userData)
+                    .then((res) => {
+                        console.log(res.data);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            } catch (err) {
+                console.log(err.response.data.msg);
             }
         }
-        console.log(userData);}      
     }
 
     return (

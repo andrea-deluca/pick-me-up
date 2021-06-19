@@ -1,5 +1,8 @@
 import React, { useReducer } from 'react';
 import { Switch, Route } from "react-router-dom";
+
+import { Col } from 'react-bootstrap';
+import NavAside from './Components/GestioneAccount/NavAside';
 //import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 // Plugin
@@ -123,16 +126,16 @@ function App() {
             <Route exact path="/home" component={SchermataPersonaleUtente}>
               <SchermataPersonaleUtente />
             </Route>
-            <Route exact path="/profilo" component={SchermataProfilo}>
+            <Route exact path="/gestione-account/profilo" component={SchermataProfilo}>
               <SchermataProfilo />
             </Route>
-            <Route exact path="/wallet" component={SchermataWallet}>
+            <Route exact path="/gestione-account/wallet" component={SchermataWallet}>
               <SchermataWallet />
             </Route>
-            <Route exact path="/patente" component={SchermataPatente}>
+            <Route exact path="/gestione-account/patente" component={SchermataPatente}>
               <SchermataPatente />
             </Route>
-            <Route exact path="/prenotazioni" component={SchermataPrenotazioniUtente}>
+            <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
               <SchermataPrenotazioniUtente />
             </Route>
             <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>

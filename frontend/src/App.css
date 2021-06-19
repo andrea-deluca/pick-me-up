@@ -86,10 +86,16 @@ a {
   background-color: #f8f8f8;
 }
 
-.aside {
-  display: flex;
-  height: 100vh;
-  overflow: scroll initial;
+/* ========= ASIDENAV CUSTOM CSS ========= */
+#navAside {
+  height: 100%;
+  width: 75px;
+  background-color: #012f3f;
+  overflow: hidden;
+}
+
+.iconActive {
+  background-color: #227c9d;
 }
 
 /* ========= HOME CAROUSEL CUSTOM CSS ========= */

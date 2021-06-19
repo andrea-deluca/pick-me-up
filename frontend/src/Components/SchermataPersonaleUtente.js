@@ -23,8 +23,8 @@ export default function SchermataPersonaleUtente() {
                     <div className="d-flex flex-column align-items-start">
                         <h1 className="h1 t-bold">Bentornato, Mario!</h1>
                         <div className="d-none d-lg-flex buttonsGroup">
-                            <Button to="/profilo" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
-                            <Button to="/prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
+                            <Button to="/gestione-account/profilo" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
+                            <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
                         </div>
                     </div>
                 </Container >
@@ -53,7 +53,7 @@ export default function SchermataPersonaleUtente() {
                                             <h5 className="card-title">Wallet</h5>
                                             <p className="card-text">Accedi al tuo Wallet per gestire i tuoi metodi di pagamento.</p>
                                         </div>
-                                        <Button to="/wallet" variant={"Primary"}><FontAwesomeIcon className="me-2" icon={faWallet} fixedWidth />Visualizza Wallet</Button>
+                                        <Button to="/gestione-account/wallet" variant={"Primary"}><FontAwesomeIcon className="me-2" icon={faWallet} fixedWidth />Visualizza Wallet</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>
@@ -65,7 +65,7 @@ export default function SchermataPersonaleUtente() {
                                             <h5 className="card-title">Patente</h5>
                                             <p className="card-text">Gestisci la tua patente di guida oppure, se l'hai e se vuoi, aggiungila. Decidi tu!</p>
                                         </div>
-                                        <Button to="/patente" variant={"Primary"}><FontAwesomeIcon className="me-2" icon={faIdCard} fixedWidth /> Visualizza Patente</Button>
+                                        <Button to="/gestione-account/patente" variant={"Primary"}><FontAwesomeIcon className="me-2" icon={faIdCard} fixedWidth /> Visualizza Patente</Button>
                                     </Card.Body>
                                 </Card>
                             </Col>

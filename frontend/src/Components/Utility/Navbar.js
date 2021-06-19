@@ -21,7 +21,7 @@ export default function Navbar(props) {
     }
 
     return (
-        <nav className="navbar py-3 shadow-sm">
+        <nav className="navbar py-3 shadow">
             <Container fluid className="mx-md-5 d-flex justify-content-between">
                 <Link to="/">
                     <Image src="/logo.svg" alt="Logo PickMeUp!" />

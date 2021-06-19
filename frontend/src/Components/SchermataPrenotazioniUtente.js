@@ -67,12 +67,11 @@ export default function SchermataPrenotazioniUtente() {
 
                                                         <div className="d-flex flex-column col-6" >
                                                             <div className="d-flex align-items-center">
-                                                                
-                                                                <p className="card-text me-2"><FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />Ritiro</p>
+                                                                <p className="card-text ">Ritiro</p>
                                                             </div>
                                                             <h6>Parcheggio Nord</h6>
                                                         </div>
-                                            
+
                                                         <div className="d-flex flex-column col-6" >
                                                             <div className="d-flex align-items-center">
                                                                 <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
@@ -98,7 +97,7 @@ export default function SchermataPrenotazioniUtente() {
                                                             </div>
 
                                                         </div>
-                                                        
+
                                                         <Row>
                                                             <Col className="col-6">
                                                                 <Button variant="primary">Estendi noleggio</Button>
@@ -135,7 +134,7 @@ export default function SchermataPrenotazioniUtente() {
                                                             </div>
                                                             <h6>Parcheggio Nord</h6>
                                                         </div>
-                                            
+
                                                         <div className="d-flex flex-column col-6" >
                                                             <div className="d-flex align-items-center">
                                                                 <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
@@ -161,7 +160,7 @@ export default function SchermataPrenotazioniUtente() {
                                                             </div>
 
                                                         </div>
-                                                        
+
                                                         <Row>
                                                             <Col className="col-6">
                                                                 <Button variant="secondary">Estendi noleggio</Button>
@@ -198,7 +197,7 @@ export default function SchermataPrenotazioniUtente() {
                                                             </div>
                                                             <h6>Parcheggio Nord</h6>
                                                         </div>
-                                            
+
                                                         <div className="d-flex flex-column col-6" >
                                                             <div className="d-flex align-items-center">
                                                                 <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
@@ -223,7 +222,7 @@ export default function SchermataPrenotazioniUtente() {
                                                                 <h6>13:30</h6>
                                                             </div>
 
-                                                        </div>                                                  
+                                                        </div>
                                                     </Row>
                                                 </div>
                                             </div>

@@ -1,10 +1,10 @@
 /* ========= BUTTONS ANIMATIONS ========= */
 .btn:hover {
-  transform: scale(1.1);
   -o-transform: scale(1.1);
   -ms-transform: scale(1.1);
   -moz-transform: scale(1.1);
   -webkit-transform: scale(1.1);
+  transform: scale(1.1);
   transition: 0.2s;
 }
 
@@ -18,11 +18,11 @@
 }
 
 .iconButton:hover {
-  transform: scale(1.3);
   -o-transform: scale(1.3);
   -ms-transform: scale(1.3);
   -moz-transform: scale(1.3);
   -webkit-transform: scale(1.3);
+  transform: scale(1.3);
   transition: 0.2;
 }
 
@@ -30,17 +30,59 @@
 .sidebar {
   transition: 0.5s;
 }
+
+/* ========= CARD ANIMATIONS ========= */
 .animation-card {
   transition: 0.5s;
 }
 
 .animation-card:hover {
-  transform: scale(1.05);
   -o-transform: scale(1.05);
   -ms-transform: scale(1.05);
   -moz-transform: scale(1.05);
   -webkit-transform: scale(1.05);
+  transform: scale(1.05);
   transition: 0.5;
+}
+
+/* ========= ASIDENAV ANIMATIONS ========= */
+#navAside {
+  transition: 0.3s;
+}
+
+.asideIcon,
+asideIcon svg {
+  transition: 0.3s;
+}
+
+.asideIcon:hover,
+.arrowIcon:hover {
+  transition: 0.3s;
+  background-color: #00425b;
+}
+
+.arrowIcon svg:hover {
+  transition: 0.5s;
+  color: #f1f1f1;
+}
+
+.asideIcon svg:hover {
+  transition: 0.2s;
+  -o-transform: scale(1.3);
+  -ms-transform: scale(1.3);
+  -moz-transform: scale(1.3);
+  -webkit-transform: scale(1.3);
+  transform: scale(1.3);
+}
+
+.asideLink {
+  transition: 0.2s;
+  -o-transform: scale(0);
+  -ms-transform: scale(0);
+  -moz-transform: scale(0);
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  width: 300px;
 }
 
 /*

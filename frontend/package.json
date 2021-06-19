@@ -29,6 +29,7 @@
     "swup": "^2.0.14",
     "web-vitals": "^1.1.2"
   },
+  "proxy":"http://localhost:9000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
