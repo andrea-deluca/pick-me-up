@@ -1,241 +1,93 @@
 import React from 'react'
 
-import { Container, Row, Col, Image, Card, Nav, Tab, Tabs } from 'react-bootstrap';
+import { motion } from 'framer-motion';
+
+import { Container, Row, Col, Image, CardColumns, Card, Nav, Tab, Tabs } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faListUl, faAddressCard, faWallet, faIdCard, faEdit, faTrashAlt, faPlusCircle, faMapMarkerAlt, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faCar, faListUl, faAddressCard, faWallet, faIdCard, faMapMarkerAlt, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
-import View from "./Utility/View"
+import NavAside from "./GestioneAccount/NavAside"
+import CreditCard from "./GestioneAccount/Wallet/CreditCard"
 import Button from "./Utility/Button";
 
 export default function SchermataPrenotazioniUtente() {
     return (
-        <View>
-            <Container>
-                <Row>
-                    <Col className="col-3">
-                        <Row>
-                            <div className="col-12 d-flex justify-content-start align-items-baseline">
-                                <FontAwesomeIcon icon={faCar} />
-                                <p className="ms-3 t-bold">Prenota</p>
-                            </div>
-                            <div className="col-12 d-flex justify-content-start align-items-baseline">
-                                <FontAwesomeIcon icon={faListUl} />
-                                <p className="ms-3 t-bold">Le Mie Prenotazioni</p>
-                            </div>
-                            <div className="col-12 d-flex justify-content-start align-items-baseline">
-                                <FontAwesomeIcon icon={faAddressCard} />
-                                <p className="ms-3 t-bold">Visualizza Profilo</p>
-                            </div>
-                            <div className="col-12 d-flex justify-content-start align-items-baseline">
-                                <FontAwesomeIcon icon={faWallet} />
-                                <p className="ms-3 t-bold">Visualizza Wallet</p>
-                            </div>
-                            <div className="col-12 d-flex justify-content-start align-items-baseline">
-                                <FontAwesomeIcon icon={faIdCard} />
-                                <p className="ms-3 t-bold"> Visualizza Patente</p>
-                            </div>
-                        </Row>
-                    </Col>
-
-                    <Col className="col-6">
-                        <div className="col-12 mb-5 d-flex justify-content-start align-items-center">
-                            <Image className="col-3 me-3" fluid src="assets/svg/prenotazioni.svg"></Image>
+        <Container fluid className="p-0 h-100">
+            <Row className="g-0 h-100 align-items-start">
+                <NavAside />
+                <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 1 }} className="mx-lg-auto mt-5">
+                    <motion.div
+                        initial={{ translateY: 70, opacity: 0 }}
+                        animate={{ translateY: 0, opacity: 1 }}
+                        exit={{ translateY: 70, opacity: 0 }}
+                        transition={{ dÎuration: 0.3 }}>
+                        <div className="d-flex justify-content-start align-items-center mb-5">
+                            <Image fluid className="col-2 me-3" src="/assets/svg/prenotazioni.svg" />
                             <div className="d-flex flex-column">
                                 <p className="h6 t-light">USER ID #12345</p>
                                 <h1 className="h1 t-bold">Le mie prenotazioni</h1>
                             </div>
                         </div>
-
-                        <Row>
-
-                            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-
-                                <Tab eventKey="Attive" title="Attive">
-
-                                    <div className="card mb-3" >
-                                        <div className="row g-0">
-                                            <div className="col-md-4">
-                                                <img className="col-3 me-3" src="" />
-                                            </div>
-
-                                            <div className="col-md-8">
-                                                <div className="card-body">
-
-                                                    <h5 className="card-title">Volkswagen Up!</h5>
-                                                    <Row>
-
-                                                        <div className="d-flex flex-column col-6" >
-                                                            <div className="d-flex align-items-center">
-                                                                <p className="card-text ">Ritiro</p>
-                                                            </div>
-                                                            <h6>Parcheggio Nord</h6>
+                        <Tab.Container defaultActiveKey="attive" id="listaPrenotazioni">
+                            <Row>
+                                <Col sm={3}>
+                                    <Nav variant="pills" className="flex-column t-bold">
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="attive">Attive</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="programmate">Programmate</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link eventKey="passate">Passate</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                <Col sm={9}>
+                                    <Tab.Content eventKey="attive">
+                                        <Tab.Pane eventKey="attive">
+                                            <CardColumns>
+                                                <Card className="p-0 mb-4 shadow">
+                                                    <Card.Header className="t-bold">Prenotazione attiva</Card.Header>
+                                                    <Card.Body>
+                                                        <Card.Title className="t-bold mb-5">Volskwagen Up!</Card.Title>
+                                                        <Card.Text className="mb-4">
+                                                            <Row className="align-items-start">
+                                                                <Image fluid className="col-4" src="/assets/svg/prenotazioni.svg" />
+                                                                <Col xs={{ span: 3 }}>
+                                                                    <h6 className="t-bold">RITIRO</h6>
+                                                                    <p className="t-light">data</p>
+                                                                    <h6 className="t-bold">INIZIO</h6>
+                                                                    <p className="t-light ">data</p>
+                                                                </Col>
+                                                                <Col className="mt-3">
+                                                                    <FontAwesomeIcon icon={faArrowRight} />
+                                                                </Col>
+                                                                <Col xs={{ span: 3 }}>
+                                                                    <h6 className="t-bold">CONSEGNA</h6>
+                                                                    <p className="t-light ">data</p>
+                                                                    <h6 className="t-bold">INIZIO</h6>
+                                                                    <p className="t-light ">data</p>
+                                                                </Col>
+                                                            </Row>
+                                                        </Card.Text>
+                                                        <div className="buttonsGroup justify-content-end">
+                                                            <Button variant={"Light"}>Estendi noleggio</Button>
+                                                            <Button variant={"Primary"}>Inizia noleggio</Button>
                                                         </div>
-
-                                                        <div className="d-flex flex-column col-6" >
-                                                            <div className="d-flex align-items-center">
-                                                                <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
-                                                                <p className="card-text ">Consegna</p>
-                                                            </div>
-                                                            <h6>Parcheggio Sud</h6>
-                                                        </div>
-
-                                                        <div className="align-items-end d-flex">
-
-                                                            <div className="d-flex flex-column col-6" >
-                                                                <div className="d-flex align-items-center">
-                                                                    <FontAwesomeIcon className="me-2" icon={faCalendarAlt} />
-                                                                    <p className="card-text ">Periodo</p>
-                                                                </div>
-                                                                <h6>28 mag 2021</h6>
-                                                                <h6>21:00</h6>
-                                                            </div>
-
-                                                            <div className="d-flex flex-column col-6 " >
-                                                                <h6>31 mag 2021</h6>
-                                                                <h6>13:30</h6>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <Row>
-                                                            <Col className="col-6">
-                                                                <Button variant="primary">Estendi noleggio</Button>
-                                                            </Col>
-                                                            <Col className="col-6">
-                                                                <Button variant="primary">Inizia Noleggio</Button>
-                                                            </Col>
-                                                        </Row>
-                                                    </Row>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Tab>
-
-                                <Tab eventKey="Programmate" title="Programmate">
-
-                                    <div className="card mb-3" >
-                                        <div className="row g-0">
-                                            <div className="col-md-4">
-                                                <img className="col-3 me-3" src="" />
-                                            </div>
-
-                                            <div className="col-md-8">
-                                                <div className="card-body">
-
-                                                    <h5 className="card-title">Volkswagen Up!</h5>
-                                                    <Row>
-
-                                                        <div className="d-flex flex-column col-6" >
-                                                            <div className="d-flex align-items-center">
-                                                                <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
-                                                                <p className="card-text ">Ritiro</p>
-                                                            </div>
-                                                            <h6>Parcheggio Nord</h6>
-                                                        </div>
-
-                                                        <div className="d-flex flex-column col-6" >
-                                                            <div className="d-flex align-items-center">
-                                                                <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
-                                                                <p className="card-text ">Consegna</p>
-                                                            </div>
-                                                            <h6>Parcheggio Sud</h6>
-                                                        </div>
-
-                                                        <div className="align-items-end d-flex">
-
-                                                            <div className="d-flex flex-column col-6" >
-                                                                <div className="d-flex align-items-center">
-                                                                    <FontAwesomeIcon className="me-2" icon={faCalendarAlt} />
-                                                                    <p className="card-text ">Periodo</p>
-                                                                </div>
-                                                                <h6>28 mag 2021</h6>
-                                                                <h6>21:00</h6>
-                                                            </div>
-
-                                                            <div className="d-flex flex-column col-6 " >
-                                                                <h6>31 mag 2021</h6>
-                                                                <h6>13:30</h6>
-                                                            </div>
-
-                                                        </div>
-
-                                                        <Row>
-                                                            <Col className="col-6">
-                                                                <Button variant="secondary">Estendi noleggio</Button>
-                                                            </Col>
-                                                            <Col className="col-6">
-                                                                <Button variant="danger">Inizia Noleggio</Button>
-                                                            </Col>
-                                                        </Row>
-                                                    </Row>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Tab>
-
-                                <Tab eventKey="Passate" title="Passate">
-
-                                    <div className="card mb-3" >
-                                        <div className="row g-0">
-                                            <div className="col-md-4">
-                                                <img className="col-3 me-3" src="" />
-                                            </div>
-
-                                            <div className="col-md-8">
-                                                <div className="card-body">
-
-                                                    <h5 className="card-title">Volkswagen Up!</h5>
-                                                    <Row>
-
-                                                        <div className="d-flex flex-column col-6" >
-                                                            <div className="d-flex align-items-center">
-                                                                <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
-                                                                <p className="card-text ">Ritiro</p>
-                                                            </div>
-                                                            <h6>Parcheggio Nord</h6>
-                                                        </div>
-
-                                                        <div className="d-flex flex-column col-6" >
-                                                            <div className="d-flex align-items-center">
-                                                                <FontAwesomeIcon className="me-2" icon={faMapMarkerAlt} />
-                                                                <p className="card-text ">Consegna</p>
-                                                            </div>
-                                                            <h6>Parcheggio Sud</h6>
-                                                        </div>
-
-                                                        <div className="align-items-end d-flex">
-
-                                                            <div className="d-flex flex-column col-6" >
-                                                                <div className="d-flex align-items-center">
-                                                                    <FontAwesomeIcon className="me-2" icon={faCalendarAlt} />
-                                                                    <p className="card-text ">Periodo</p>
-                                                                </div>
-                                                                <h6>28 mag 2021</h6>
-                                                                <h6>21:00</h6>
-                                                            </div>
-
-                                                            <div className="d-flex flex-column col-6 " >
-                                                                <h6>31 mag 2021</h6>
-                                                                <h6>13:30</h6>
-                                                            </div>
-
-                                                        </div>
-                                                    </Row>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Tab>
-                            </Tabs>
-                        </Row>
-                    </Col>
-                </Row>
-            </Container>
-        </View>
-
-    )
+                                                    </Card.Body>
+                                                </Card>
+                                            </CardColumns>
+                                        </Tab.Pane>
+                                    </Tab.Content>
+                                </Col>
+                            </Row>
+                        </Tab.Container>
+                    </motion.div>
+                </Col>
+            </Row>
+        </Container>
+    );
 
 }

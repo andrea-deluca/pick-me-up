@@ -8,14 +8,12 @@ import { ProgressBar, Container, Row, Col, Form } from 'react-bootstrap';
 import InputDataNascita from '../../Utility/FormsUtility/InputDataNascita';
 import InputLuogoNascita from '../../Utility/FormsUtility/InputLuogoNascita';
 import Button from '../../Utility/Button';
-import { useHistory } from 'react-router-dom';
 
 // Codice Fiscale
 const CodiceFiscale = require("codice-fiscale-js");
 
 // Form Registrazione dati anagrafici
 export default function DatiAnagraficiForm() {
-    const hystory = useHistory();
     const router = useContext(Router)
     const [checkValidate, setCheckValidate] = useState({
         nome: false,
@@ -93,15 +91,18 @@ export default function DatiAnagraficiForm() {
             cognome: document.querySelector("#cognome").value,
             dataNascita: document.querySelector("#dataNascita").value,
             sesso: document.querySelector("#sesso").value,
-            cf: document.querySelector("#CF").value,
-            possessoPatente: document.querySelector("#possessoPatente").value
+            luogoNascita: {
+                nazione: document.querySelector("#nazionalita").value,
+                regione: document.querySelector("#regione").value,
+                provincia: document.querySelector("#provincia").value,
+                citta: document.querySelector("#comune").value,
+            },
+            codiceFiscale: document.querySelector("#CF").value,
         }
         if (document.querySelector("#possessoPatente").value === "Y") {
             router.dispatch({ type: 'RICHIESTA_PATENTE', payload: userData })
-            hystory.push("/signup/richiesta-patente");
         } else{
-            router.dispatch({ type: 'CREDENZIALI', payload: userData })
-            hystory.push("/signup/credenziali");
+            router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData })
         }
     }
 

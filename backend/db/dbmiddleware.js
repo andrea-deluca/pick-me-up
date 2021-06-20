@@ -1,22 +1,13 @@
-const mongoose = require("mongoose");
+const { MongoClient } = require("mongodb");
 
-// Connection URI
-const url = "mongodb+srv://pick-me-up:bytecoders2021!@cluster0.z1tlr.mongodb.net/pick-me-up?retryWrites=true&w=majority"
-
-const connectionParams = {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
+exports.makeDb = async function (config) {
+    const client = new MongoClient(config.uri, config.params)
+    try {
+        await client.connect();
+        const db = client.db(config.database);
+        console.log("Connected to database")
+        return db;
+    } catch (err) {
+        console.log(err)
+    } 
 }
-
-const makeDb = mongoose.connect(url, connectionParams)
-    .then(() => {
-        console.log("Connected to database ")
-        let connection = mongoose.connection;
-        console.log(connection.model("Utente"))
-    })
-    .catch((err) => {
-        console.error("Error connecting to the database\n" + err);
-    })
-
-

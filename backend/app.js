@@ -3,15 +3,14 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var cors = require('cors')
-const { makeDb } = require("./db/dbmiddleware");
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var autenticazioneRouter = require('./routes/autenticazione');
 
 var app = express();
 
-// view engine setup
+// view engine setup 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'ejs');
 

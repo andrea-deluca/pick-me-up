@@ -29,7 +29,7 @@ export default function SchermataWallet() {
                         initial={{ translateY: 70, opacity: 0 }}
                         animate={{ translateY: 0, opacity: 1 }}
                         exit={{ translateY: 70, opacity: 0 }}
-                        transition={{ dÎuration: 0.3 }}>
+                        transition={{ duration: 0.3 }}>
                         <div className="d-flex justify-content-start align-items-center mb-5">
                             <Image fluid className="col-2 me-3" src="/assets/svg/wallet.svg" />
                             <div className="d-flex flex-column">
@@ -37,7 +37,7 @@ export default function SchermataWallet() {
                                 <h1 className="h1 t-bold">Il mio Wallet</h1>
                             </div>
                         </div>
-                        <CardColumns className="test">
+                        <CardColumns>
                             <CreditCard
                                 numeroCarta={"1234 1234 1234 1234"}
                                 dataScadenza={"25/01/2022"}

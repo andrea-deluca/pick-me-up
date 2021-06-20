@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router';
 import { Router } from "../../../App";
 
 // Bootstrap Components
@@ -10,26 +9,20 @@ import Button from '../../Utility/Button';
 
 // Form dati patente
 export default function DatiPatenteForm() {
-    const router = useContext(Router)
-    const history = useHistory()
-
-    if (!router.router.registrazione.patente) {
-        history.push('/signup')
-    }
+    const router = useContext(Router);
 
     function onSubmit(e){
         e.preventDefault();
         const userData = {
             ...router.router.userData,
             patente: {
-                tipologia: document.querySelector("#tipologiaPatente").value,
-                codicePatente: document.querySelector("#numeroPatente").value,
+                numeroPatente: document.querySelector("#numeroPatente").value,
+                tipologiaPatente: document.querySelector("#tipologiaPatente").value,
                 dataScadenza: document.querySelector("#dataScadenza").value,
-                ufficiorilascio: document.querySelector("#ufficioRilascio").value
+                ufficioRilascio: document.querySelector("#ufficioRilascio").value
             }
         }
         router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData });
-        history.push('/signup/credenziali');
     }
 
     return (

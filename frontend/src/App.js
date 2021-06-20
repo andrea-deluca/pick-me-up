@@ -15,10 +15,7 @@ import './Components/Animations.css';
 // Custom Components
 import Navbar from './Components/Utility/Navbar';
 import SchermataPrincipale from './Components/SchermataPrincipale';
-import DatiAnafraficiForm from './Components/Autenticazione/Registrazione/DatiAnagraficiForm';
-import RichiestaRegistrazionePatente from './Components/Autenticazione/Registrazione/RichiestaRegistrazionePatente';
-import DatiPatenteForm from './Components/Autenticazione/Registrazione/DatiPatenteForm';
-import CredenzialiForm from './Components/Autenticazione/Registrazione/CredenzialiForm';
+import SchermataRegistrazione from './Components/SchermataRegistrazione';
 import SchermataLogin from './Components/SchermataLogin';
 import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
 import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
@@ -36,7 +33,8 @@ const initialState = {
   registrazione: {
     richiestaPatente: false,
     patente: false,
-    credenziali: false
+    credenziali: false,
+    completato: false
   }
 }
 
@@ -44,16 +42,20 @@ const reducer = (state, action) => {
   switch (action.type) {
     case "RICHIESTA_PATENTE":
       return {
-        ...state, registrazione: { ...state.registrazione, richiestaPatente: true }, userData: action.payload
+        ...state, registrazione: { ...state.registrazione, richiestaPatente: true }
       }
     case "REGISTRAZIONE_PATENTE":
       return {
-        ...state, registrazione: { ...state.registrazione, patente: true }, userData: action.payload
+        ...state, registrazione: { ...state.registrazione, patente: true }
       }
     case "REGISTRAZIONE_CREDENZIALI":
       return {
-        ...state, registrazione: { ...state.registrazione, credenziali: true }, userData: action.payload
+        ...state, registrazione: { ...state.registrazione, credenziali: true }
       }
+      case "COMPLETATO":
+        return{
+          ...state, registrazione: {...state.registrazione, completato: true}
+        }
     default:
       return state;
   }
@@ -104,17 +106,8 @@ function App() {
           <Navbar />
           <AnimatePresence exitBeforeEnter initial={true}>
             <Switch>
-              <Route exact path="/signup" component={DatiAnafraficiForm}>
-                <DatiAnafraficiForm />
-              </Route>
-              <Route exact path="/signup/richiesta-patente" component={RichiestaRegistrazionePatente}>
-                <RichiestaRegistrazionePatente />
-              </Route>
-              <Route exact path="/signup/patente" component={DatiPatenteForm}>
-                <DatiPatenteForm />
-              </Route>
-              <Route exact path="/signup/credenziali" component={CredenzialiForm}>
-                <CredenzialiForm />
+              <Route exact path="/signup" component={SchermataRegistrazione}>
+                <SchermataRegistrazione/>
               </Route>
               <Route exact path="/login" component={SchermataLogin}>
                 <SchermataLogin />

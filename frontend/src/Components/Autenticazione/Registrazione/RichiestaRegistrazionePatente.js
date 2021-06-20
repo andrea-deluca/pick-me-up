@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Router } from '../../../App';
-import { useHistory } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 // Bootstrap Components
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
@@ -12,20 +12,15 @@ export default function RichiestaRegistrazionePatente() {
     const router = useContext(Router)
     const history = useHistory()
 
-    if (!router.router.registrazione.richiestaPatente) {
-        history.push('/signup');
-    }
-
     function mostraRegistrazionePatente(e) {
         e.preventDefault();
-        router.dispatch({ type: 'REGISTRAZIONE_PATENTE', payload: router.router.userData });
-        history.push('/signup/patente');
+        console.log("click")
+        router.dispatch({ type: 'REGISTRAZIONE_PATENTE'});
     }
 
     function mostraRegistrazioneCredenziali(e) {
         e.preventDefault();
         router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: router.router.userData });
-        history.push('/signup/credenziali');
     }
 
     return (
@@ -38,8 +33,8 @@ export default function RichiestaRegistrazionePatente() {
                 <p className="h6 text-center t-light">Se desideri registrare la tua patente di guida in questo momento clicca il tasto
                     "Inserisci ora",<br /> altrimenti potrai farlo in seguito dalla gestione del tuo account.</p>
                 <div className="buttonsGroup">
-                    <div onClick={mostraRegistrazionePatente}>
-                        <Button variant={"Primary"}>Inserisci ora</Button>
+                    <div onSubmit={mostraRegistrazionePatente}>
+                        <Button submit variant={"Primary"}>Inserisci ora</Button>
                     </div>
                     <div onClick={mostraRegistrazioneCredenziali}>
                         <Button to={"login"} variant={"Secondary"}>Salta questo passaggio</Button>

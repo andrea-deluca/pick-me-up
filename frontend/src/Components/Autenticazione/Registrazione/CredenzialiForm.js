@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router';
 import { Router } from "../../../App";
-
 import axios from 'axios';
 
 // Bootstrap Components
@@ -17,11 +16,6 @@ var CryptoJS = require("crypto-js");
 // Form credenziali di accesso
 export default function CredenzialiForm() {
     const router = useContext(Router)
-    const history = useHistory()
-
-    if (router.router.registrazione.richiestaPatente) {
-        history.push('/signup');
-    }
 
     function onSubmit(e) {
         e.preventDefault();
@@ -34,15 +28,17 @@ export default function CredenzialiForm() {
             const userData = {
                 ...router.router.userData,
                 credenziali: {
+                    cellulare: document.querySelector("#cellulare").value,
                     email: document.querySelector("#email").value,
                     password: encryptedPassword,
-                    cellulare: document.querySelector("#cellulare").value,
                 }
             }
             try {
                 axios.post("/autenticazione/registraUtente", userData)
                     .then((res) => {
-                        console.log(res.data);
+                        if (res.status === 201) {
+                            router.dispatch({ type: 'COMPLETATO', payload: userData });
+                        }
                     })
                     .catch(err => {
                         console.log(err);
