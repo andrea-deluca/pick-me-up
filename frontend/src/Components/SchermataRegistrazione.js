@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { motion } from 'framer-motion';
 
 import View from './Utility/View';
 import DatiAnagraficiForm from './Autenticazione/Registrazione/DatiAnagraficiForm';
@@ -12,7 +13,13 @@ import RegistrazioneCompletata from './Autenticazione/Registrazione/Registrazion
 export default function SchermataRegistrazione() {
     return (
         <View>
-            <DatiAnagraficiForm />
+            <motion.div
+                initial={{ translateX: -100, opacity: 0 }}
+                animate={{ translateX: 0, opacity: 1 }}
+                exit={{ translateX: -100, opacity: 0 }}
+                transition={{ duration: 0.3 }}>
+                <DatiAnagraficiForm />
+            </motion.div>
         </View>
     );
 }

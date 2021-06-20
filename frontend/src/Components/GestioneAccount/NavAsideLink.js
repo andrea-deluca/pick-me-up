@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+// Aside Navigation Bar Links
 export default function NavAsideLink(props) {
     return (
         <Link to={props.to} className="p-0 m-0">

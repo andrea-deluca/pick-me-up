@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
 
+// Framer Motion Components
+import { motion } from 'framer-motion';
+
+// Bootstrap Components
 import { Row } from 'react-bootstrap';
 
+// FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight, faCar, faListUl, faAddressCard, faWallet, faIdCard } from '@fortawesome/free-solid-svg-icons';
 
+// Custom Components
 import NavAsideLink from './NavAsideLink';
 
+// AGGIUNGERE CONTROLLO SULLA LOCATION CORRENTE PER LINK ATTIVO
+
+// Aside Navigation Bar
 export default function NavAside() {
     const [open, setOpen] = useState(false);
     const [flipIcon, setFlipIcon] = useState("");
@@ -39,7 +47,12 @@ export default function NavAside() {
     }, [open]);
 
     return (
-        <div id="navAside" variant="pills" className="d-none d-lg-flex flex-column justify-content-center align-items-center shadow-lg">
+        <motion.div
+            initial={{ translateX: -100, opacity: 0 }}
+            animate={{ translateX: 0, opacity: 1 }}
+            exit={{ translateX: -100, opacity: 0 }}
+            transition={{ dÎuration: 0.1 }}
+            id="navAside" variant="pills" className="d-none d-lg-flex flex-column justify-content-center align-items-center shadow-lg">
             <Row className="mx-auto">
                 <div className="arrowIcon mb-5 p-4 d-flex justify-content-start" onClick={() => open ? setOpen(false) : setOpen(true)}>
                     <FontAwesomeIcon icon={faArrowRight} size={"lg"} color={"white"} flip={flipIcon} />
@@ -51,6 +64,6 @@ export default function NavAside() {
                 <NavAsideLink to={"/gestione-account/wallet"} icon={faWallet}>Visualizza Wallet</NavAsideLink>
                 <NavAsideLink to={"/gestione-account/patente"} icon={faIdCard}>Visualizza patente</NavAsideLink>
             </Row>
-        </div >
+        </motion.div >
     );
 }

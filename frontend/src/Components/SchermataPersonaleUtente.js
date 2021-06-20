@@ -1,6 +1,6 @@
 import React from 'react'
 
-// Bootstrap COmponents
+// Bootstrap Components
 import { Container, Row, Col, Image, Card, CardGroup } from 'react-bootstrap';
 
 // FontAwesome Components

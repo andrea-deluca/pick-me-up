@@ -1,8 +1,7 @@
 import React, { useReducer } from 'react';
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 
-import { Col } from 'react-bootstrap';
-import NavAside from './Components/GestioneAccount/NavAside';
+import { AnimatePresence, motion } from 'framer-motion';
 //import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 // Plugin
@@ -96,61 +95,65 @@ const AnimatedSwitch = withRouter(({ location }) => (
 // App
 function App() {
   const [router, dispatch] = useReducer(reducer, initialState)
+  const location = useLocation();
+
   return (
-    <Switch >
+    <Switch location={location} key={location.pathname}>
       <Router.Provider value={{ router, dispatch }}>
         <Route path="*">
           <Navbar />
-          <Switch>
-            <Route exact path="/signup" component={DatiAnafraficiForm}>
-              <DatiAnafraficiForm />
-            </Route>
-            <Route exact path="/signup/richiesta-patente" component={RichiestaRegistrazionePatente}>
-              <RichiestaRegistrazionePatente />
-            </Route>
-            <Route exact path="/signup/patente" component={DatiPatenteForm}>
-              <DatiPatenteForm />
-            </Route>
-            <Route exact path="/signup/credenziali" component={CredenzialiForm}>
-              <CredenzialiForm />
-            </Route>
-            <Route exact path="/login" component={SchermataLogin}>
-              <SchermataLogin />
-            </Route>
-            <Route exact path="/recupero-password" component={SchermataRecuperoPassword}>
-              <SchermataRecuperoPassword />
-            </Route>
-            <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
-              <RecuperoPasswordCompletato />
-            </Route>
-            <Route exact path="/home" component={SchermataPersonaleUtente}>
-              <SchermataPersonaleUtente />
-            </Route>
-            <Route exact path="/gestione-account/profilo" component={SchermataProfilo}>
-              <SchermataProfilo />
-            </Route>
-            <Route exact path="/gestione-account/wallet" component={SchermataWallet}>
-              <SchermataWallet />
-            </Route>
-            <Route exact path="/gestione-account/patente" component={SchermataPatente}>
-              <SchermataPatente />
-            </Route>
-            <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
-              <SchermataPrenotazioniUtente />
-            </Route>
-            <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>
-              <SelezioneTipologiaVeicolo />
-            </Route>
-            <Route exact path="/prenota/selezione-veicolo" component={SelezioneVeicolo}>
-              <SelezioneVeicolo />
-            </Route>
-            <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
-              <SchermataConfermaPrenotazione />
-            </Route>
-            <Route exact path="/" component={SchermataPrincipale}>
-              <SchermataPrincipale />
-            </Route>
-          </Switch>
+          <AnimatePresence exitBeforeEnter initial={true}>
+            <Switch>
+              <Route exact path="/signup" component={DatiAnafraficiForm}>
+                <DatiAnafraficiForm />
+              </Route>
+              <Route exact path="/signup/richiesta-patente" component={RichiestaRegistrazionePatente}>
+                <RichiestaRegistrazionePatente />
+              </Route>
+              <Route exact path="/signup/patente" component={DatiPatenteForm}>
+                <DatiPatenteForm />
+              </Route>
+              <Route exact path="/signup/credenziali" component={CredenzialiForm}>
+                <CredenzialiForm />
+              </Route>
+              <Route exact path="/login" component={SchermataLogin}>
+                <SchermataLogin />
+              </Route>
+              <Route exact path="/recupero-password" component={SchermataRecuperoPassword}>
+                <SchermataRecuperoPassword />
+              </Route>
+              <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
+                <RecuperoPasswordCompletato />
+              </Route>
+              <Route exact path="/home" component={SchermataPersonaleUtente}>
+                <SchermataPersonaleUtente />
+              </Route>
+              <Route exact path="/gestione-account/profilo" component={SchermataProfilo}>
+                <SchermataProfilo />
+              </Route>
+              <Route exact path="/gestione-account/wallet" component={SchermataWallet}>
+                <SchermataWallet />
+              </Route>
+              <Route exact path="/gestione-account/patente" component={SchermataPatente}>
+                <SchermataPatente />
+              </Route>
+              <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
+                <SchermataPrenotazioniUtente />
+              </Route>
+              <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>
+                <SelezioneTipologiaVeicolo />
+              </Route>
+              <Route exact path="/prenota/selezione-veicolo" component={SelezioneVeicolo}>
+                <SelezioneVeicolo />
+              </Route>
+              <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
+                <SchermataConfermaPrenotazione />
+              </Route>
+              <Route exact path="/" component={SchermataPrincipale}>
+                <SchermataPrincipale />
+              </Route>
+            </Switch>
+          </AnimatePresence>
         </Route>
       </Router.Provider>
     </Switch>

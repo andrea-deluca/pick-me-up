@@ -1,5 +1,6 @@
 // CUSTOM PALETTE
 $primary: #227c9d;
+$primary-dark: #012f3f;
 $secondary: #6c757d;
 $success: #00bfa6;
 $danger: #fe6d73;
@@ -25,6 +26,18 @@ $dark: #080808;
 .card{
     border-radius: 20px !important;
     padding: 20px;
+}
+
+.card-header{
+    border-radius: 20px 20px 0px 0px !important
+}
+
+.bg-primary-dark{
+    background-color: $primary-dark !important;
+}
+
+.text-primary-dark{
+    color: $primary-dark;
 }
 
 // BOOTSTRAP THEME
