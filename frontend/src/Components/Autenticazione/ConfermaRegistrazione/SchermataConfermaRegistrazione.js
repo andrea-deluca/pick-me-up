@@ -2,8 +2,8 @@ import React from 'react';
 
 import SchermataOperazioneCompletata from '../../Utility/SchermataOperazioneCompletata';
 
-// Schermata Recupero Password Completato
-export default function RecuperoPasswordCompletato() {
+// Schermata Conferma Registrazione
+export default function SchermataConfermaRegistrazione() {
     return (
         <SchermataOperazioneCompletata
             imagePath={"/assets/svg/verifica-success.svg"}

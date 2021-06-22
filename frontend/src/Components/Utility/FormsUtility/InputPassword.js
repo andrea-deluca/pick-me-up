@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Input Password
-export default function InputPassword() {
+export default function InputPassword(props) {
     const [showPassword, setShowPassoword] = useState(false);
 
     return (
@@ -28,7 +28,7 @@ export default function InputPassword() {
                 <FontAwesomeIcon icon={faInfoCircle} />
             </OverlayTrigger>
             <InputGroup >
-                <Form.Control id="password" type={showPassword ? "text" : "password"} placeholder="Inserisci la tua password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required />
+                <Form.Control id={props.controlId} type={showPassword ? "text" : "password"} placeholder="Inserisci la tua password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required />
                 <InputGroup.Append>
                     <InputGroup.Text className="h-100"><FontAwesomeIcon onClick={() => setShowPassoword(!showPassword)} icon={showPassword ? faEyeSlash : faEye} /></InputGroup.Text>
                 </InputGroup.Append>

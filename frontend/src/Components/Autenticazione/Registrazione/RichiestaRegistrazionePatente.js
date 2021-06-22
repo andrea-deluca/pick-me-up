@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
-import { Router } from '../../../App';
-import { Redirect, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Bootstrap Components
 import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
@@ -9,18 +8,24 @@ import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 import Button from '../../Utility/Button';
 
 export default function RichiestaRegistrazionePatente() {
-    const router = useContext(Router)
     const history = useHistory()
 
     function mostraRegistrazionePatente(e) {
         e.preventDefault();
-        console.log("click")
-        router.dispatch({ type: 'REGISTRAZIONE_PATENTE'});
+        //router.dispatch({ type: 'REGISTRAZIONE_PATENTE',  payload: router.router.userData});
+        history.push("/signup", {
+            payload: history.location.state.payload,
+            type: "PATENTE"
+        });
     }
 
     function mostraRegistrazioneCredenziali(e) {
         e.preventDefault();
-        router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: router.router.userData });
+        //router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: router.router.userData });
+        history.push("/signup", {
+            payload: history.location.state.payload,
+            type: "CREDENZIALI"
+        });
     }
 
     return (
@@ -33,11 +38,11 @@ export default function RichiestaRegistrazionePatente() {
                 <p className="h6 text-center t-light">Se desideri registrare la tua patente di guida in questo momento clicca il tasto
                     "Inserisci ora",<br /> altrimenti potrai farlo in seguito dalla gestione del tuo account.</p>
                 <div className="buttonsGroup">
-                    <div onSubmit={mostraRegistrazionePatente}>
-                        <Button submit variant={"Primary"}>Inserisci ora</Button>
+                    <div onClick={mostraRegistrazionePatente}>
+                        <Button variant={"Primary"}>Inserisci ora</Button>
                     </div>
                     <div onClick={mostraRegistrazioneCredenziali}>
-                        <Button to={"login"} variant={"Secondary"}>Salta questo passaggio</Button>
+                        <Button variant={"Secondary"}>Salta questo passaggio</Button>
                     </div>
                 </div>
             </Row>

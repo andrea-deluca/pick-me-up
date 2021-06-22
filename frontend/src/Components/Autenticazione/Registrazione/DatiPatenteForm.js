@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Router } from "../../../App";
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Bootstrap Components
 import { ProgressBar, Container, Row, Col, Form } from 'react-bootstrap';
@@ -9,12 +9,12 @@ import Button from '../../Utility/Button';
 
 // Form dati patente
 export default function DatiPatenteForm() {
-    const router = useContext(Router);
+    const history = useHistory();
 
     function onSubmit(e){
         e.preventDefault();
         const userData = {
-            ...router.router.userData,
+            ...history.location.state.payload,
             patente: {
                 numeroPatente: document.querySelector("#numeroPatente").value,
                 tipologiaPatente: document.querySelector("#tipologiaPatente").value,
@@ -22,7 +22,11 @@ export default function DatiPatenteForm() {
                 ufficioRilascio: document.querySelector("#ufficioRilascio").value
             }
         }
-        router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData });
+        //router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData });
+        history.push("/signup", {
+            payload: userData,
+            type: "CREDENZIALI"
+        });
     }
 
     return (

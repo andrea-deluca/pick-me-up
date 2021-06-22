@@ -1,8 +1,7 @@
 import React, { useReducer } from 'react';
 import { Switch, Route, useLocation } from "react-router-dom";
 
-import { AnimatePresence, motion } from 'framer-motion';
-//import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { AnimatePresence } from 'framer-motion';
 
 // Plugin
 import Darkmode from './Plugin/Darkmode';
@@ -16,6 +15,7 @@ import './Components/Animations.css';
 import Navbar from './Components/Utility/Navbar';
 import SchermataPrincipale from './Components/SchermataPrincipale';
 import SchermataRegistrazione from './Components/SchermataRegistrazione';
+import SchermataConfermaRegistrazione from './Components/Autenticazione/ConfermaRegistrazione/SchermataConfermaRegistrazione';
 import SchermataLogin from './Components/SchermataLogin';
 import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
 import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
@@ -28,38 +28,44 @@ import SchermataConfermaPrenotazione from './Components/SchermataConfermaPrenota
 import SelezioneTipologiaVeicolo from './Components/SelezioneTipologiaVeicolo';
 import SelezioneVeicolo from './Components/SelezioneVeicolo';
 
-export const Router = React.createContext(null);
-const initialState = {
-  registrazione: {
-    richiestaPatente: false,
-    patente: false,
-    credenziali: false,
-    completato: false
-  }
-}
+import SchermataMappa from './Components/SchermataMappa'
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "RICHIESTA_PATENTE":
-      return {
-        ...state, registrazione: { ...state.registrazione, richiestaPatente: true }
-      }
-    case "REGISTRAZIONE_PATENTE":
-      return {
-        ...state, registrazione: { ...state.registrazione, patente: true }
-      }
-    case "REGISTRAZIONE_CREDENZIALI":
-      return {
-        ...state, registrazione: { ...state.registrazione, credenziali: true }
-      }
-      case "COMPLETATO":
-        return{
-          ...state, registrazione: {...state.registrazione, completato: true}
-        }
-    default:
-      return state;
-  }
-}
+// export const Router = React.createContext(null);
+// const initialState = {
+//   registrazione: {
+//     richiestaPatente: false,
+//     patente: false,
+//     credenziali: false,
+//     completato: false
+//   }
+// }
+
+// const reducer = (state, action) => {
+//   switch (action.type) {
+//     case "RICHIESTA_PATENTE":
+//       return {
+//         ...state, registrazione: { ...state.registrazione, richiestaPatente: true }, userData: action.payload 
+//       }
+//     case "REGISTRAZIONE_PATENTE":
+//       return {
+//         ...state, registrazione: { ...state.registrazione, richiestaPatente: false, patente: true }, userData: action.payload
+//       }
+//     case "REGISTRAZIONE_CREDENZIALI":
+//       return {
+//         ...state, registrazione: { ...state.registrazione, richiestaPatente: false, patente: false, credenziali: true }, userData: action.payload
+//       }
+//     case "COMPLETATO":
+//       return {
+//         ...state, registrazione: { ...state.registrazione, credenziali: false, completato: true }, userData: action.payload
+//       }
+//       case "RESET_REGISTRAZIONE":
+//         return {
+//           ...state, registrazione: { ...state.registarzione, richiestaPatente: false, patente: false, credenziali: false, completato: false}
+//         }
+//     default:
+//       return state;
+//   }
+// }
 
 // export const Controllo = React.createContext(null);
 // const initialState = {
@@ -77,37 +83,23 @@ const reducer = (state, action) => {
 //     }
 //   }
 
-/*
-const AnimatedSwitch = withRouter(({ location }) => (
-  <TransitionGroup>
-    <CSSTransition key={location.key} classNames="slide" timeout={500}>
-      <Switch location={location}>
-        <Route path="/login" component={SchermataLogin}>
-          <SchermataLogin />
-        </Route>
-        <Route path="/" component={SchermataPrincipale} exact>
-          <SchermataPrincipale />
-        </Route>
-      </Switch>
-    </CSSTransition>
-  </TransitionGroup>
-));
-*/
-
 // App
 function App() {
-  const [router, dispatch] = useReducer(reducer, initialState)
+  //const [router, dispatch] = useReducer(reducer, initialState)
   const location = useLocation();
 
   return (
     <Switch location={location} key={location.pathname}>
-      <Router.Provider value={{ router, dispatch }}>
+      {/* <Router.Provider value={{ router, dispatch }}> */}
         <Route path="*">
           <Navbar />
           <AnimatePresence exitBeforeEnter initial={true}>
             <Switch>
               <Route exact path="/signup" component={SchermataRegistrazione}>
-                <SchermataRegistrazione/>
+                <SchermataRegistrazione />
+              </Route>
+              <Route exact path="/registrazione-confermata/" component={SchermataConfermaRegistrazione}>
+                <SchermataConfermaRegistrazione />
               </Route>
               <Route exact path="/login" component={SchermataLogin}>
                 <SchermataLogin />
@@ -142,13 +134,16 @@ function App() {
               <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
                 <SchermataConfermaPrenotazione />
               </Route>
+              <Route exact path="/maps" component={SchermataMappa}>
+                <SchermataMappa />
+              </Route>
               <Route exact path="/" component={SchermataPrincipale}>
                 <SchermataPrincipale />
               </Route>
             </Switch>
           </AnimatePresence>
         </Route>
-      </Router.Provider>
+      {/* </Router.Provider> */}
     </Switch>
   );
 }

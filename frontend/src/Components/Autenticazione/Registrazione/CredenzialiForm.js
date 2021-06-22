@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Router } from "../../../App";
 import axios from 'axios';
 
 // Bootstrap Components
@@ -10,26 +9,28 @@ import { ProgressBar, Form, Container, Row, Col } from 'react-bootstrap';
 import Button from '../../Utility/Button';
 import InputEmail from '../../Utility/FormsUtility/InputEmail';
 import InputPassword from '../../Utility/FormsUtility/InputPassword';
+import ErroreRegistrazione from './ErroreRegstrazione';
 
 var CryptoJS = require("crypto-js");
 
 // Form credenziali di accesso
 export default function CredenzialiForm() {
-    const router = useContext(Router)
+    const [error, setError] = useState(false);
+    const history = useHistory();
 
     function onSubmit(e) {
         e.preventDefault();
-        if (document.querySelector("#password").value !== document.querySelector("#confermaPassword").value) {
+        if (document.querySelector("#signupPassword").value !== document.querySelector("#confermaPassword").value) {
             document.querySelector("#confermaPasswordError").classList.remove("d-none");
             return
         }
         else {
-            const encryptedPassword = CryptoJS.SHA256(document.querySelector("#password").value).toString();
+            const encryptedPassword = CryptoJS.AES.encrypt(document.querySelector("#signupPassword").value, "pick-me-up").toString();
             const userData = {
-                ...router.router.userData,
+                ...history.location.state.payload,
                 credenziali: {
                     cellulare: document.querySelector("#cellulare").value,
-                    email: document.querySelector("#email").value,
+                    email: document.querySelector("#signupEmail").value,
                     password: encryptedPassword,
                 }
             }
@@ -37,11 +38,14 @@ export default function CredenzialiForm() {
                 axios.post("/autenticazione/registraUtente", userData)
                     .then((res) => {
                         if (res.status === 201) {
-                            router.dispatch({ type: 'COMPLETATO', payload: userData });
+                            //router.dispatch({ type: 'COMPLETATO' });
+                            history.push("/signup", {
+                                type: "COMPLETATO"
+                            });
                         }
                     })
                     .catch(err => {
-                        console.log(err);
+                        setError(true)
                     })
             } catch (err) {
                 console.log(err.response.data.msg);
@@ -51,14 +55,17 @@ export default function CredenzialiForm() {
 
     return (
         <Container fluid className="d-flex align-items-center justify-content-center h-100">
-            <Row>
+            <Row className="gy-5">
+                <Col xs={{ span: 10, offset: 1 }}>
+                    <ErroreRegistrazione show={error} />
+                </Col>
                 <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
                     <h1 className="h1 text-center t-bold mb-4">Registrazione</h1>
                     <ProgressBar now={80} className="mb-4" />
-                    <Form onSubmit={onSubmit}>
+                    <Form onSubmit={onSubmit} onClick={() => setError(false)}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputEmail />
+                                <InputEmail controlId={"signupEmail"}/>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                 <Form.Group controlId="cellulare">
@@ -67,7 +74,7 @@ export default function CredenzialiForm() {
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputPassword />
+                                <InputPassword controlId={"signupPassword"}/>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                 <Form.Group controlId="confermaPassword">

@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Router } from '../../../App';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 // Bootstrap Components
 import { ProgressBar, Container, Row, Col, Form } from 'react-bootstrap';
@@ -14,7 +14,7 @@ const CodiceFiscale = require("codice-fiscale-js");
 
 // Form Registrazione dati anagrafici
 export default function DatiAnagraficiForm() {
-    const router = useContext(Router)
+    const history = useHistory();
     const [checkValidate, setCheckValidate] = useState({
         nome: false,
         cognome: false,
@@ -25,6 +25,7 @@ export default function DatiAnagraficiForm() {
             valid: false
         }
     })
+
     useEffect(() => {
         let inputNome = document.querySelector("#nome");
         let inputCognome = document.querySelector("#cognome");
@@ -100,15 +101,20 @@ export default function DatiAnagraficiForm() {
             codiceFiscale: document.querySelector("#CF").value,
         }
         if (document.querySelector("#possessoPatente").value === "Y") {
-            router.dispatch({ type: 'RICHIESTA_PATENTE', payload: userData })
-        } else{
-            router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData })
+            //router.dispatch({ type: 'RICHIESTA_PATENTE', payload: userData })
+            history.push("/signup", {
+                payload: userData,
+                type: "RICHIESTA_PATENTE"
+            });
+        } else {
+            //router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData })
+            history.push("/signup", {
+                payload: userData,
+                type: "CREDENZIALI"
+            });
         }
     }
 
-    // FIX H1 REGISTRAZIONE //${checkNome ? 'text-danger' : 'text-black'} 
-    //inputPatente.classList.add("border-danger")
-    // per ora così è la rappresentazione identica no? con le ` ` 
     return (
         <Container fluid className="d-flex align-items-center justify-content-center h-100">
             <Row>

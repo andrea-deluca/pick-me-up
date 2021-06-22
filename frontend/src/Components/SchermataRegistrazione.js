@@ -1,8 +1,10 @@
-import React, { useContext } from 'react';
-import { Router } from '../App';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
+// Framer Motion Components
 import { motion } from 'framer-motion';
 
+// Custom Components
 import View from './Utility/View';
 import DatiAnagraficiForm from './Autenticazione/Registrazione/DatiAnagraficiForm';
 import RichiestaRegistrazionePatente from './Autenticazione/Registrazione/RichiestaRegistrazionePatente';
@@ -10,8 +12,9 @@ import DatiPatenteForm from './Autenticazione/Registrazione/DatiPatenteForm';
 import CredenzialiForm from './Autenticazione/Registrazione/CredenzialiForm';
 import RegistrazioneCompletata from './Autenticazione/Registrazione/RegistrazioneCompletata';
 
-function RegistrazioneContainer(props){
-    return(
+// Util Container
+function RegistrazioneContainer(props) {
+    return (
         <View>
             <motion.div
                 initial={{ translateX: -100, opacity: 0 }}
@@ -24,36 +27,41 @@ function RegistrazioneContainer(props){
     );
 }
 
+// Dynamic SchermataRegistrazione
 export default function SchermataRegistrazione() {
-    const router = useContext(Router);
-    if(router.router.registrazione.richiestaPatente){
-        return(
+    const history = useHistory();
+
+    if (history.location.state) {
+        switch (history.location.state.type) {
+            case "RICHIESTA_PATENTE":
+                return (
+                    <RegistrazioneContainer>
+                        <RichiestaRegistrazionePatente />
+                    </RegistrazioneContainer>
+                );
+            case "PATENTE":
+                return (
+                    <RegistrazioneContainer>
+                        <DatiPatenteForm />
+                    </RegistrazioneContainer>
+                );
+            case "CREDENZIALI":
+                return (
+                    <RegistrazioneContainer>
+                        <CredenzialiForm />
+                    </RegistrazioneContainer>
+                );
+            case "COMPLETATO":
+                return (
+                    <RegistrazioneContainer>
+                        <RegistrazioneCompletata />
+                    </RegistrazioneContainer>
+                );
+        }
+    } else {
+        return (
             <RegistrazioneContainer>
-                <RichiestaRegistrazionePatente/>
-            </RegistrazioneContainer>
-        );
-    } else if(router.router.registrazione.patente){
-        return(
-            <RegistrazioneContainer>
-                <DatiPatenteForm/>
-            </RegistrazioneContainer>
-        );
-    } else if(router.router.registrazione.credenziali){
-        return(
-            <RegistrazioneContainer>
-                <CredenzialiForm/>
-            </RegistrazioneContainer>
-        );
-    } else if(router.router.registrazione.completato){
-        return(
-            <RegistrazioneContainer>
-                <RegistrazioneCompletata/>
-            </RegistrazioneContainer>
-        );
-    } else{
-        return(
-            <RegistrazioneContainer>
-                <DatiAnagraficiForm/>
+                <DatiAnagraficiForm />
             </RegistrazioneContainer>
         );
     }
