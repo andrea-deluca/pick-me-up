@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { Container, Row, Col, Image, Card, Form } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faGasPump, faCarSide, faWind, faTools, faCog, faCalendarAlt, faMapMarkedAlt } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faGasPump, faCarSide, faWind, faTools, faCog } from '@fortawesome/free-solid-svg-icons';
 
 
-import View from './Utility/View';
-import Button from './Utility/Button';
+import View from '../Utility/View';
+import Button from '../Utility/Button';
 
 export default function SelezioneVeicolo() {
     return (
@@ -63,7 +63,7 @@ export default function SelezioneVeicolo() {
                                 <p className="h5 mt-2">Fiat 500 Cabrio</p>
                                 <p className="h6 t-light">Utilitaria</p>
                             </Card.Title>
-                            
+
                             <Card.Body>
                                 <Card.Text>
                                     <Row>

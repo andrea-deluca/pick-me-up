@@ -1,6 +1,4 @@
 const express = require('express');
-const session = require("express-session");
-const { ResumeToken } = require('mongodb');
 var router = express.Router();
 let autenticazioneModel = require("../models/Autenticazione");
 
@@ -29,12 +27,20 @@ router.get('/confermaRegistrazione/:key', function (req, res) {
 
 router.post('/accedi', function (req, res) {
   autenticazioneModel.accedi(req.body, function (status) {
-    res.status(status.code);
     if (status.code === 202) {
-      res.cookie("token", status.utente.token, { httpOnly: true });
+      res.status(status.code);
+      //res.cookie("token", status.utente.token, { httpOnly: true });
+      res.send(status)
+    } else{
+      res.status(status).send()
     }
-    res.send(status.utente)
   })
-})
+});
+
+router.post("/recupero-password", function (req, res){
+  autenticazioneModel.recuperaPassword(req.body, function(status){
+    res.status(status).send();
+  })
+});
 
 module.exports = router;

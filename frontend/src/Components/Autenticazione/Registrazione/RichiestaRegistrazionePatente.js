@@ -7,12 +7,13 @@ import { Container, Row, Col, ProgressBar } from 'react-bootstrap';
 // Custom Components
 import Button from '../../Utility/Button';
 
+// Schermata Richiesta Registrazione Patente
 export default function RichiestaRegistrazionePatente() {
     const history = useHistory()
 
     function mostraRegistrazionePatente(e) {
         e.preventDefault();
-        //router.dispatch({ type: 'REGISTRAZIONE_PATENTE',  payload: router.router.userData});
+        // Visualizza la schermata per inserire la patente
         history.push("/signup", {
             payload: history.location.state.payload,
             type: "PATENTE"
@@ -21,7 +22,7 @@ export default function RichiestaRegistrazionePatente() {
 
     function mostraRegistrazioneCredenziali(e) {
         e.preventDefault();
-        //router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: router.router.userData });
+        // Visualizza la schermata per registrare le credenziali
         history.push("/signup", {
             payload: history.location.state.payload,
             type: "CREDENZIALI"

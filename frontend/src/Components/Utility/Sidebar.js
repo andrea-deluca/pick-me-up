@@ -19,7 +19,7 @@ export default function Sidebar(props) {
         <div id="sidebar" className="sidebar shadow-lg">
             <div className="d-flex flex-column px-4 py-5">
                 <FontAwesomeIcon onClick={() => closeSidebar()} className="iconButton ms-3" icon={faTimes} size="lg" color="black" />
-                <Row onClick={() => closeSidebar()} className="my-3 gy-3">
+                <Row onClick={() => closeSidebar()} className="buttonsSidebar my-3 gy-3">
                     {props.children}
                 </Row>
             </div>

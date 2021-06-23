@@ -13,6 +13,7 @@ export default function DatiPatenteForm() {
 
     function onSubmit(e){
         e.preventDefault();
+        // Aggiorno i dati inseriti dall'utente
         const userData = {
             ...history.location.state.payload,
             patente: {
@@ -22,7 +23,7 @@ export default function DatiPatenteForm() {
                 ufficioRilascio: document.querySelector("#ufficioRilascio").value
             }
         }
-        //router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData });
+        // Visualizza la schermata per registrare le credenziali
         history.push("/signup", {
             payload: userData,
             type: "CREDENZIALI"
@@ -30,10 +31,10 @@ export default function DatiPatenteForm() {
     }
 
     return (
-        <Container fluid className="d-flex align-items-center justify-content-between h-100">
+        <Container fluid className="d-flex align-items-center justify-content-center h-100">
             <Row>
                 <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
-                    <h1 className="h1 text-center t-bold">Registrazione</h1>
+                    <h1 className="h1 text-center t-bold mb-4">Registrazione</h1>
                     <ProgressBar className="mb-4" now={60} />
                     <Form onSubmit={onSubmit}>
                         <Row className="gy-4">

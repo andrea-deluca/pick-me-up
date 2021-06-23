@@ -3,9 +3,9 @@ const tokenKey = "pick-me-up";
 const { makeDb } = require("../db/dbmiddleware");
 const createError = require("http-errors");
 let mailModel = require("../models/Mail");
-const { ObjectId, ObjectID } = require("mongodb");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
+const password = require("secure-random-password")
 
 module.exports = {
     registraUtente: async function (datiUtente, callback) {
@@ -63,22 +63,23 @@ module.exports = {
                 { "credenziali.email": credenziali.email },
                 (err, res) => {
                     if (err) throw createError(500);
-                    // Se ho trovato un utente 
+                    // Se ho trovato un utente
                     if (res) {
                         // Controllo lo stato dell'account
-                        if (!res.accountStatus.active) throw createError(400);
+                        if (!res.accountStatus.active) return callback(405);
                         const decryptedPassword = CryptoJS.AES.decrypt(res.credenziali.password, "pick-me-up").toString();
                         // Controllo la corrispondenza della password fornita
                         if (decryptedPassword !== CryptoJS.AES.decrypt(credenziali.encryptedPassword, "pick-me-up").toString()) {
-                            throw createError(400);
+                            return callback(400);
                         }
-                        const payload = {email: res.credenziali.email};
+                        const payload = { email: res.credenziali.email };
                         const token = jwt.sign(payload, tokenKey, {
                             expiresIn: "1h",
                         });
                         return (callback({
-                            utente: {
-                                token: token,
+                            token: token,
+                            code: 202,
+                            user: {
                                 nome: res.nome,
                                 cognome: res.cognome,
                                 dataNascita: res.dataNascita,
@@ -91,14 +92,44 @@ module.exports = {
                                 },
                                 cellulare: res.credenziali.cellulare,
                                 email: res.credenziali.email,
+                                codiceFiscale: res.codiceFiscale
                             },
-                            code: 202,
                         }))
                     } else {
-                        throw createError(404);
+                        return callback(404);
                     }
                 }
             )
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    recuperaPassword: async function (user, callback) {
+        const db = await makeDb(config);
+        try {
+            const randomPassword = password.randomPassword({
+                length: 12,
+                characters: [
+                    password.lower,
+                    password.upper,
+                    password.digits,
+                    password.symbols
+                ]
+            })
+            const encryptedRandomPassword = CryptoJS.AES.encrypt(randomPassword, "pick-me-up").toString();
+            db.collection("Utente").findOneAndUpdate(
+                { "credenziali.email": user.email },
+                { $set: { "credenziali.password": encryptedRandomPassword } }, { projection: {} }, (err, res) => {
+                    if (err) return callback(500)
+                    if (res.value) {
+                        mailModel.inviaRecuperoPassword({ email: user.email, password: randomPassword })
+                            .catch(err => { throw createError(500) })
+                        return (callback(201))
+                    } else {
+                        return (callback(404));
+                    }
+                })
         } catch (error) {
             console.log(error)
         }

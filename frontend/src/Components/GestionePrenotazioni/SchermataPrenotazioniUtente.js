@@ -2,14 +2,13 @@ import React from 'react'
 
 import { motion } from 'framer-motion';
 
-import { Container, Row, Col, Image, CardColumns, Card, Nav, Tab, Tabs } from 'react-bootstrap';
+import { Container, Row, Col, Image, CardColumns, Card, Nav, Tab } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faCar, faListUl, faAddressCard, faWallet, faIdCard, faMapMarkerAlt, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-import NavAside from "./GestioneAccount/NavAside"
-import CreditCard from "./GestioneAccount/Wallet/CreditCard"
-import Button from "./Utility/Button";
+import NavAside from "../GestioneAccount/NavAside"
+import Button from "../Utility/Button";
 
 export default function SchermataPrenotazioniUtente() {
     return (

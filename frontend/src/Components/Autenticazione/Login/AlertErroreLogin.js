@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Bootstrap Components
 import { Alert } from 'react-bootstrap';
@@ -7,16 +7,16 @@ import { Alert } from 'react-bootstrap';
 import Button from '../../Utility/Button';
 
 // Errore Registrazione
-export default function ErroreRegistrazione(props) {
+export default function AlertErroreLogin(props) {
     return (
         <Alert show={props.show} variant="danger">
-            <Alert.Heading className="t-bold">Registrazione fallita!</Alert.Heading>
+            <Alert.Heading className="t-bold">Accesso fallito!</Alert.Heading>
             <p className="t-light">
-                L'email fornita risulta essere già associata ad un account esistente.
+                {props.message}
             </p>
             <hr />
             <div className="d-flex justify-content-end">
-                <Button to="/login" variant="outline-danger">Login</Button>
+                <Button to="/signup" variant="outline-danger">Registrati</Button>
             </div>
         </Alert>
     );

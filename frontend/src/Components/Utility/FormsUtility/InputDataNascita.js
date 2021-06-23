@@ -62,7 +62,7 @@ export default function InputDataNascita() {
     }, [checkData])
 
     return (
-        <Form.Group className="col-6 col-lg-6" controlId="dataNascita">
+        <Form.Group controlId="dataNascita">
             <Form.Label className="pe-2">Data di nascita</Form.Label>
             <OverlayTrigger
                 placement={"top"}

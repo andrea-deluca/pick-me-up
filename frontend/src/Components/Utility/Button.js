@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+import { Spinner } from 'react-bootstrap';
+
 // Button
 export default function Button(props) {
     const mainButtonClass = "btn";
@@ -11,7 +13,7 @@ export default function Button(props) {
         return (
             <div className="button">
                 <Link to={props.to}>
-                    <button type={props.submit ? "submit" : "button"} className={buttonClasses} >
+                    <button type={props.submit ? "submit" : "button"} className={buttonClasses} onClick={props.onClick}>
                         {props.children}
                     </button>
                 </Link>
@@ -20,8 +22,14 @@ export default function Button(props) {
     } else {
         return (
             <div className="button">
-                <button type={props.submit ? "submit" : "button"} className={buttonClasses}>
-                    {props.children}
+                <button type={props.submit ? "submit" : "button"} className={buttonClasses} onClick={props.onClick}>
+                    <Spinner
+                        as="span"
+                        animation={props.spinner ? "border" : ""}
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                        className={props.spinner ? "me-2" : ""} />{props.children}
                 </button>
             </div>
         );

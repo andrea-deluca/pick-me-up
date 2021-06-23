@@ -1,6 +1,10 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { Switch, Route, useLocation } from "react-router-dom";
 
+// Custom Hooks
+import useToken from './Hooks/useToken'
+
+// Framer Motion Components
 import { AnimatePresence } from 'framer-motion';
 
 // Plugin
@@ -12,23 +16,30 @@ import './App.css';
 import './Components/Animations.css';
 
 // Custom Components
+import WithAuth from './WithAuth';
 import Navbar from './Components/Utility/Navbar';
-import SchermataPrincipale from './Components/SchermataPrincipale';
-import SchermataRegistrazione from './Components/SchermataRegistrazione';
-import SchermataConfermaRegistrazione from './Components/Autenticazione/ConfermaRegistrazione/SchermataConfermaRegistrazione';
-import SchermataLogin from './Components/SchermataLogin';
-import SchermataRecuperoPassword from './Components/SchermataRecuperoPassword';
-import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
-import SchermataPersonaleUtente from './Components/SchermataPersonaleUtente';
-import SchermataProfilo from './Components/SchermataProfilo';
-import SchermataWallet from './Components/SchermataWallet';
-import SchermataPatente from './Components/SchermataPatente';
-import SchermataPrenotazioniUtente from './Components/SchermataPrenotazioniUtente';
-import SchermataConfermaPrenotazione from './Components/SchermataConfermaPrenotazione';
-import SelezioneTipologiaVeicolo from './Components/SelezioneTipologiaVeicolo';
-import SelezioneVeicolo from './Components/SelezioneVeicolo';
 
-import SchermataMappa from './Components/SchermataMappa'
+// Schermate Principali
+import SchermataPrincipale from './Components/SchermataPrincipale';
+import SchermataPersonaleUtente from './Components/SchermataPersonaleUtente';
+// Schermate Autenticazione
+import SchermataRegistrazione from './Components/Autenticazione/SchermataRegistrazione';
+import SchermataConfermaRegistrazione from './Components/Autenticazione/ConfermaRegistrazione/SchermataConfermaRegistrazione';
+import SchermataLogin from './Components/Autenticazione/SchermataLogin';
+import SchermataRecuperoPassword from './Components/Autenticazione/SchermataRecuperoPassword';
+import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPassword/RecuperoPasswordCompletato';
+// Schermate Gestione Account
+import SchermataProfilo from './Components/GestioneAccount/SchermataProfilo';
+import SchermataWallet from './Components/GestioneAccount/SchermataWallet';
+import SchermataPatente from './Components/GestioneAccount/SchermataPatente';
+// Schermate Gestione Prenotazioni
+import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/SchermataPrenotazioniUtente';
+// Schermate Prenotazione
+import SelezioneTipologiaVeicolo from './Components/Prenotazione/SelezioneTipologiaVeicolo';
+import SchermataMappa from './Components/Prenotazione/SchermataMappa'
+import SchermataConfermaPrenotazione from './Components/Prenotazione/SchermataConfermaPrenotazione';
+import SelezioneVeicolo from './Components/Prenotazione/SelezioneVeicolo';
+
 
 // export const Router = React.createContext(null);
 // const initialState = {
@@ -67,6 +78,7 @@ import SchermataMappa from './Components/SchermataMappa'
 //   }
 // }
 
+
 // export const Controllo = React.createContext(null);
 // const initialState = {
 //   completato: false,
@@ -83,67 +95,66 @@ import SchermataMappa from './Components/SchermataMappa'
 //     }
 //   }
 
+
+
 // App
 function App() {
-  //const [router, dispatch] = useReducer(reducer, initialState)
   const location = useLocation();
 
   return (
     <Switch location={location} key={location.pathname}>
-      {/* <Router.Provider value={{ router, dispatch }}> */}
-        <Route path="*">
-          <Navbar />
+      <Route path="*">
+        <Navbar />
+        <Switch>
           <AnimatePresence exitBeforeEnter initial={true}>
-            <Switch>
-              <Route exact path="/signup" component={SchermataRegistrazione}>
-                <SchermataRegistrazione />
-              </Route>
-              <Route exact path="/registrazione-confermata/" component={SchermataConfermaRegistrazione}>
-                <SchermataConfermaRegistrazione />
-              </Route>
-              <Route exact path="/login" component={SchermataLogin}>
-                <SchermataLogin />
-              </Route>
-              <Route exact path="/recupero-password" component={SchermataRecuperoPassword}>
-                <SchermataRecuperoPassword />
-              </Route>
-              <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
-                <RecuperoPasswordCompletato />
-              </Route>
-              <Route exact path="/home" component={SchermataPersonaleUtente}>
-                <SchermataPersonaleUtente />
-              </Route>
-              <Route exact path="/gestione-account/profilo" component={SchermataProfilo}>
-                <SchermataProfilo />
-              </Route>
-              <Route exact path="/gestione-account/wallet" component={SchermataWallet}>
-                <SchermataWallet />
-              </Route>
-              <Route exact path="/gestione-account/patente" component={SchermataPatente}>
-                <SchermataPatente />
-              </Route>
-              <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
-                <SchermataPrenotazioniUtente />
-              </Route>
-              <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>
-                <SelezioneTipologiaVeicolo />
-              </Route>
-              <Route exact path="/prenota/selezione-veicolo" component={SelezioneVeicolo}>
-                <SelezioneVeicolo />
-              </Route>
-              <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
-                <SchermataConfermaPrenotazione />
-              </Route>
-              <Route exact path="/maps" component={SchermataMappa}>
-                <SchermataMappa />
-              </Route>
-              <Route exact path="/" component={SchermataPrincipale}>
-                <SchermataPrincipale />
-              </Route>
-            </Switch>
+            <Route exact path="/signup" component={SchermataRegistrazione}>
+              <SchermataRegistrazione />
+            </Route>
+            <Route exact path="/registrazione-confermata/" component={SchermataConfermaRegistrazione}>
+              <SchermataConfermaRegistrazione />
+            </Route>
+            <Route exact path="/login" component={SchermataLogin}>
+              <SchermataLogin />
+            </Route>
+            <Route exact path="/recupero-password" component={SchermataRecuperoPassword}>
+              <SchermataRecuperoPassword />
+            </Route>
+            <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
+              <RecuperoPasswordCompletato />
+            </Route>
+            <Route exact path="/" component={SchermataPrincipale}>
+              <SchermataPrincipale />
+            </Route>
+            <Route exact path="/home" component={SchermataPersonaleUtente}>
+              <SchermataPersonaleUtente />
+            </Route>
+            <Route exact path="/gestione-account/profilo" component={SchermataProfilo}>
+              <SchermataProfilo />
+            </Route>
+            <Route exact path="/gestione-account/wallet" component={SchermataWallet}>
+              <SchermataWallet />
+            </Route>
+            <Route exact path="/gestione-account/patente" component={SchermataPatente}>
+              <SchermataPatente />
+            </Route>
+            <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
+              <SchermataPrenotazioniUtente />
+            </Route>
+            <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>
+              <SelezioneTipologiaVeicolo />
+            </Route>
+            <Route exact path="/prenota/selezione-veicolo" component={SelezioneVeicolo}>
+              <SelezioneVeicolo />
+            </Route>
+            <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
+              <SchermataConfermaPrenotazione />
+            </Route>
+            <Route exact path="/maps" component={SchermataMappa}>
+              <SchermataMappa />
+            </Route>
           </AnimatePresence>
-        </Route>
-      {/* </Router.Provider> */}
+        </Switch>
+      </Route>
     </Switch>
   );
 }

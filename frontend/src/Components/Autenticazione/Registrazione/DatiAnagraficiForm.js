@@ -31,26 +31,31 @@ export default function DatiAnagraficiForm() {
         let inputCognome = document.querySelector("#cognome");
         let inputSesso = document.querySelector("#sesso");
         let inputPatente = document.querySelector("#possessoPatente");
+        // Controllo campo Nome
         if (checkValidate.nome) {
             inputNome.classList.remove("border-danger", "border-success");
             inputNome.value === "" ? inputNome.classList.add("border-danger") : inputNome.classList.add("border-success");
             setCheckValidate({ ...checkValidate, nome: false });
         }
+        // Controllo campo Cognome
         if (checkValidate.cognome) {
             inputCognome.classList.remove("border-danger", "border-success")
             inputCognome.value === "" ? inputCognome.classList.add("border-danger") : inputCognome.classList.add("border-success");
             setCheckValidate({ ...checkValidate, cognome: false });
         }
+        // Controllo campo Sesso
         if (checkValidate.sesso) {
             inputSesso.classList.remove("border-danger", "border-success")
             inputSesso.value === "" ? inputSesso.classList.add("border-danger") : inputSesso.classList.add("border-success");
             setCheckValidate({ ...checkValidate, sesso: false });
         }
+        // Controllo campo PossessoPatente
         if (checkValidate.possessoPatente) {
             inputPatente.classList.remove("border-danger", "border-success")
             inputPatente.value === "" ? inputPatente.classList.add("border-danger") : inputPatente.classList.add("border-success");
             setCheckValidate({ ...checkValidate, possessoPatente: false });
         }
+        // Controllo CF
         if (checkValidate.CF.check) {
             let cf;
             let dataNascita = new Date(document.querySelector("#dataNascita").value);
@@ -66,7 +71,7 @@ export default function DatiAnagraficiForm() {
                 birthplace: nazionalita === "ITALIA" ? document.querySelector("#comune").value : nazionalita,
                 birthplaceProvincia: nazionalita === "ITALIA" ? document.querySelector("#provincia").value : "EE"
             }
-            if ((data.gender === "M" || data.gender === "F") && (!isNaN(dataNascita.getTime())) && (nazionalita !== "") && (data.comune !== "")) {
+            if ((data.gender === "M" || data.gender === "F") && (!isNaN(dataNascita.getTime())) && (data.birthplace !== "") && (data.birthplaceProvincia !== "")) {
                 cf = CodiceFiscale.compute(data);
             }
             if (cf !== inputCF.value.toUpperCase()) {
@@ -87,6 +92,7 @@ export default function DatiAnagraficiForm() {
         if (!checkValidate.CF.valid) {
             return
         }
+        // Memorizzo i dati inseriti dall'utente
         const userData = {
             nome: document.querySelector("#nome").value,
             cognome: document.querySelector("#cognome").value,
@@ -101,13 +107,13 @@ export default function DatiAnagraficiForm() {
             codiceFiscale: document.querySelector("#CF").value,
         }
         if (document.querySelector("#possessoPatente").value === "Y") {
-            //router.dispatch({ type: 'RICHIESTA_PATENTE', payload: userData })
+            // Se possiede una patente, visualizzo la richiesta di registrazione della stessa
             history.push("/signup", {
                 payload: userData,
                 type: "RICHIESTA_PATENTE"
             });
         } else {
-            //router.dispatch({ type: 'REGISTRAZIONE_CREDENZIALI', payload: userData })
+            // Altrimenti, se non possiede una patente, passo direttamente alla credenziali
             history.push("/signup", {
                 payload: userData,
                 type: "CREDENZIALI"
@@ -116,43 +122,55 @@ export default function DatiAnagraficiForm() {
     }
 
     return (
-        <Container fluid className="d-flex align-items-center justify-content-center h-100">
+        <Container fluid className="d-flex align-items-center justify-content-center h-100 mt-5">
             <Row>
                 <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
                     <h1 className="h1 text-center t-bold mb-4">Registrazione</h1>
                     <ProgressBar className="mb-4" now={25} />
                     <Form onSubmit={onSubmit}>
                         <Row className="gy-4">
-                            <Form.Group className="col-6 col-lg-6" controlId="nome">
-                                <Form.Label>Nome</Form.Label>
-                                <Form.Control type="text" placeholder="Inserisci il tuo nome" pattern="[A-z]+\ [A-z]+" onBlur={() => setCheckValidate({ ...checkValidate, nome: true })} required />
-                            </Form.Group>
-                            <Form.Group className="col-6 col-lg-6" controlId="cognome">
-                                <Form.Label>Cognome</Form.Label>
-                                <Form.Control type="text" placeholder="Inserisci il tuo cognome" pattern="[A-z]+\ [A-z]+" onBlur={() => setCheckValidate({ ...checkValidate, cognome: true })} required />
-                            </Form.Group>
-                            <InputDataNascita />
-                            <Form.Group className="col-6 col-lg-6" controlId="sesso">
-                                <Form.Label>Sesso anagrafico </Form.Label>
-                                <Form.Control className="form-select" as="select" onBlur={() => setCheckValidate({ ...checkValidate, sesso: true })} required>
-                                    <option value="" disabled selected>Seleziona...</option>
-                                    <option value="M">M</option>
-                                    <option value="F">F</option>
-                                </Form.Control>
-                            </Form.Group>
+                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                <Form.Group controlId="nome">
+                                    <Form.Label>Nome</Form.Label>
+                                    <Form.Control type="text" placeholder="Inserisci il tuo nome" checked pattern="[A-z]+\ [A-z]+" onBlur={() => setCheckValidate({ ...checkValidate, nome: true })} required />
+                                </Form.Group>
+                            </Col>
+                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                <Form.Group controlId="cognome">
+                                    <Form.Label>Cognome</Form.Label>
+                                    <Form.Control type="text" placeholder="Inserisci il tuo cognome" pattern="[A-z]+\ [A-z]+" onBlur={() => setCheckValidate({ ...checkValidate, cognome: true })} required />
+                                </Form.Group>
+                            </Col>
+                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                <InputDataNascita />
+                            </Col>
+                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                <Form.Group controlId="sesso">
+                                    <Form.Label>Sesso anagrafico </Form.Label>
+                                    <Form.Control className="form-select" as="select" onBlur={() => setCheckValidate({ ...checkValidate, sesso: true })} required>
+                                        <option value="" disabled selected>Seleziona...</option>
+                                        <option value="M">M</option>
+                                        <option value="F">F</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
                             <InputLuogoNascita />
-                            <Form.Group className="col-6" controlId="CF">
-                                <Form.Label>Codice fiscale</Form.Label>
-                                <Form.Control type="text" placeholder="Inserisci il tuo codice fiscale" onBlur={() => setCheckValidate({ ...checkValidate, CF: { ...checkValidate.CF, check: true } })} required />
-                            </Form.Group>
-                            <Form.Group className="col-6" controlId="possessoPatente">
-                                <Form.Label>Hai la patente di guida? </Form.Label>
-                                <Form.Control className="form-select" as="select" onBlur={() => setCheckValidate({ ...checkValidate, possessoPatente: true })} required>
-                                    <option value="" disabled selected>Seleziona...</option>
-                                    <option value="Y">Si</option>
-                                    <option value="N">No</option>
-                                </Form.Control>
-                            </Form.Group>
+                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                <Form.Group controlId="CF">
+                                    <Form.Label>Codice fiscale</Form.Label>
+                                    <Form.Control type="text" placeholder="Inserisci il tuo codice fiscale" onBlur={() => setCheckValidate({ ...checkValidate, CF: { ...checkValidate.CF, check: true } })} required />
+                                </Form.Group>
+                            </Col>
+                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                <Form.Group controlId="possessoPatente">
+                                    <Form.Label>Hai la patente di guida? </Form.Label>
+                                    <Form.Control className="form-select" as="select" onBlur={() => setCheckValidate({ ...checkValidate, possessoPatente: true })} required>
+                                        <option value="" disabled selected>Seleziona...</option>
+                                        <option value="Y">Si</option>
+                                        <option value="N">No</option>
+                                    </Form.Control>
+                                </Form.Group>
+                            </Col>
                             <Button variant={"Primary"} submit >Continua</Button>
                         </Row>
                     </Form>

@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { Container, Row, Col, Image, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCar, faSearchPlus, faListUl, faAddressCard, faWallet, faIdCard, faMobileAlt, faEnvelope, faKey, faMapPin, faArrowRight, faTrashAlt, faCalendarAlt, faArrowCircleLeft, faUsers, faCarSide, faGasPump, faWind, faTools, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faSearchPlus, faMapPin, faArrowRight, faCalendarAlt, faArrowCircleLeft, faUsers, faCarSide, faGasPump, faWind, faTools, faCog } from '@fortawesome/free-solid-svg-icons';
 
-import View from "./Utility/View"
-import Button from "./Utility/Button";
+import View from "../Utility/View"
+import Button from "../Utility/Button";
 
 export default function SchermataConfermaPrenotazione() {
     return (
@@ -191,12 +191,12 @@ export default function SchermataConfermaPrenotazione() {
 
                         </Row>
                     </Col>
-                    
+
                     <div className="buttonsGroup d-none d-md-flex justify-content-center">
-                    <Button variant="secondary"> Annulla </Button>
-                    <Button variant="primary"> Conferma</Button>
+                        <Button variant="secondary"> Annulla </Button>
+                        <Button variant="primary"> Conferma</Button>
                     </div>
-                    
+
                 </Row>
 
             </Container>

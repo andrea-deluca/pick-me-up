@@ -30,5 +30,28 @@ module.exports = {
             `
         };
         await transporter.sendMail(mailOptions);
+    },
+
+    inviaRecuperoPassword: async function(userData){
+        const mailOptions = {
+            from: mailConfig.email,
+            to: userData.email,
+            subject: "Recupero password PickMeUp!",
+            html: `
+            <h1>Recupero password</h1>
+            <h3>Abbiamo generato una password per te!</h3>
+            <p>
+                Abbiamo ricevuto una richiesta di recupero password da parte tua e ne è stata una generata una dal sistema per te.
+                Utilizza la passoword sotto per accedere e ricordati di cambiarla al primo accesso.
+            </p>
+            <p>
+                La tua nuova passoword: ${userData.password}
+            </p>
+            <p>
+                Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+        `
+        };
+        await transporter.sendMail(mailOptions);
     }
 }

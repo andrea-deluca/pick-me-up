@@ -1,5 +1,8 @@
 import React from 'react';
 
+// Framer Motion Componets
+import { motion } from 'framer-motion';
+
 // Bootstrap Component
 import { Row, Carousel } from "react-bootstrap";
 
@@ -9,7 +12,11 @@ import Button from './Button';
 // Home Carousel
 export default function HomeCarousel() {
     return (
-        <React.Fragment>
+        <motion.div className="h-100"
+            initial={{ translateX: -100, opacity: 0 }}
+            animate={{ translateX: 0, opacity: 1 }}
+            exit={{ translateX: -100, opacity: 0 }}
+            transition={{ duration: 0.3 }}>
             <Carousel pause={false} fade>
                 <Carousel.Item className="h-100">
                     <img
@@ -37,11 +44,11 @@ export default function HomeCarousel() {
                         <p className="h3 t-extralight">Accedi o registrati per prenotare auto, moto, biciclette o monopattini on demand</p>
                     </Row>
                     <div className="buttonsGroup">
-                        <Button to={"/signup"} variant={"Light"} submit>Registrati</Button>
-                        <Button to={"/login"} variant={"Primary"} submit>Accedi</Button>
+                        <Button to={"/prenota"} variant={"primary"} submit>Prenota</Button>
+
                     </div>
                 </Row>
             </Carousel.Caption>
-        </React.Fragment>
+        </motion.div>
     );
 }

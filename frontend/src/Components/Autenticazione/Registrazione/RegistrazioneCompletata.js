@@ -1,7 +1,9 @@
 import React from 'react';
 
+// Custom Components
 import SchermataOperazioneCompletata from '../../Utility/SchermataOperazioneCompletata';
 
+// Schermata Registrazione Completata
 export default function RegistrazioneCompletata() {
     return (
         <SchermataOperazioneCompletata

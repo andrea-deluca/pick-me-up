@@ -42,7 +42,7 @@ export default function RiepilogoProfilo(props) {
                 <h6 className="t-bold">EMAIL</h6>
                 <p className="t-light">{props.email}</p>
             </Col>
-            <Col xs={{ span: 6 }}>
+            <Col xs={{ span: 6 }} className="d-none">
                 <h6 className="t-bold">PASSWORD</h6>
                 <p className="t-light">{props.password}</p>
             </Col>
