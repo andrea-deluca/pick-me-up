@@ -40,7 +40,6 @@ import SchermataMappa from './Components/Prenotazione/SchermataMappa'
 import SchermataConfermaPrenotazione from './Components/Prenotazione/SchermataConfermaPrenotazione';
 import SelezioneVeicolo from './Components/Prenotazione/SelezioneVeicolo';
 
-
 // export const Router = React.createContext(null);
 // const initialState = {
 //   registrazione: {

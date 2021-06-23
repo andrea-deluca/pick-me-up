@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router';
 import useToken from '../../Hooks/useToken';
+import useSession from '../../Hooks/useSession';
 
 // Framer Motion Components
 import { motion } from 'framer-motion';
@@ -16,14 +17,18 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import Button from "../Utility/Button";
 import NavAside from './NavAside';
 import CreditCard from './Wallet/CreditCard';
+import AggiungiMetodoModal from './Wallet/AggiungiMetodoModal';
 
 // Schermata Wallet
 export default function SchermataWallet() {
     const { token, setToken } = useToken();
-    const userData = {
-        userID: 12345
-    }
-
+    const { session, setSession } = useSession();
+    const [modals, setModals] = useState({
+        addModal: false,
+        updateModal: false,
+        deleteModal: false
+    })
+    
     if (!token) {
         return <Redirect to={"/login"} />
     } else {
@@ -40,7 +45,7 @@ export default function SchermataWallet() {
                             <div className="d-flex justify-content-start align-items-center mb-5">
                                 <Image fluid className="col-2 me-3" src="/assets/svg/wallet.svg" />
                                 <div className="d-flex flex-column">
-                                    <p className="h6 t-light">USER ID #{userData.userID}</p>
+                                    <p className="h6 t-light">USER ID #</p>
                                     <h1 className="h1 t-bold">Il mio Wallet</h1>
                                 </div>
                             </div>
@@ -62,11 +67,15 @@ export default function SchermataWallet() {
                             animate={{ translateY: 0, opacity: 1 }}
                             exit={{ translateY: 100, opacity: 0 }}
                             transition={{ dÎuration: 0.3 }}>
-                            <Button variant={"White"}><FontAwesomeIcon className="me-2" icon={faPlusCircle} fixedWidth />Inserisci metodo di pagamento</Button>
+                            <Button onClick={() => setModals({ ...modals, addModal: true })} variant={"White"}>
+                                <FontAwesomeIcon className="me-2" icon={faPlusCircle} fixedWidth />
+                                Inserisci metodo di pagamento
+                            </Button>
+                            <AggiungiMetodoModal show={modals.addModal} onHide={() => setModals({ ...modals, addModal: false })} />
                         </motion.div>
                     </Col>
                 </Row>
-            </Container>
+            </Container >
         );
     }
 }

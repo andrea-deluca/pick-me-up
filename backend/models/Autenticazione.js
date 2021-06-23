@@ -2,7 +2,7 @@ const { config } = require("../db/config");
 const tokenKey = "pick-me-up";
 const { makeDb } = require("../db/dbmiddleware");
 const createError = require("http-errors");
-let mailModel = require("../models/Mail");
+const mailModel = require("../models/Mail");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const password = require("secure-random-password")
@@ -22,7 +22,7 @@ module.exports = {
                     const activatorKey = CryptoJS.SHA256(datiUtente.credenziali.email).toString();
                     // Inserisco l'utente nel DB
                     db.collection("Utente").insertOne({
-                        ...datiUtente, accountStatus: { activatorKey: activatorKey, active: false }
+                        ...datiUtente, accountStatus: { activatorKey: activatorKey, active: false }, metodiPagamento: []
                     }, (err, res) => {
                         if (err) throw createError(500);
                         // invio email di conferma all'utente passando la sua chiave di attivazione e la sua email
@@ -80,6 +80,7 @@ module.exports = {
                             token: token,
                             code: 202,
                             user: {
+                                id: res._id,
                                 nome: res.nome,
                                 cognome: res.cognome,
                                 dataNascita: res.dataNascita,
@@ -92,7 +93,8 @@ module.exports = {
                                 },
                                 cellulare: res.credenziali.cellulare,
                                 email: res.credenziali.email,
-                                codiceFiscale: res.codiceFiscale
+                                codiceFiscale: res.codiceFiscale,
+                                metodiPagamento: res.metodiPagamento
                             },
                         }))
                     } else {
@@ -120,7 +122,8 @@ module.exports = {
             const encryptedRandomPassword = CryptoJS.AES.encrypt(randomPassword, "pick-me-up").toString();
             db.collection("Utente").findOneAndUpdate(
                 { "credenziali.email": user.email },
-                { $set: { "credenziali.password": encryptedRandomPassword } }, { projection: {} }, (err, res) => {
+                { $set: { "credenziali.password": encryptedRandomPassword } },
+                { projection: {} }, (err, res) => {
                     if (err) return callback(500)
                     if (res.value) {
                         mailModel.inviaRecuperoPassword({ email: user.email, password: randomPassword })

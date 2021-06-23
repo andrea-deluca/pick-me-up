@@ -49,7 +49,7 @@ export default function CredenzialiForm() {
                         }
                     })
                     .catch(err => {
-                        if(err.response.status === 400){
+                        if (err.response.status === 400) {
                             // Risposta 400 BAD REQUEST: visualizza messaggio di errore "Account già esistente"
                             setError(true)
                         }
@@ -82,14 +82,15 @@ export default function CredenzialiForm() {
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputPassword controlId={"signupPassword"} />
+                                <InputPassword tooltip controlId={"signupPassword"} placeholder={"Inserisci la password"}>
+                                    Password
+                                </InputPassword>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <Form.Group controlId="confermaPassword">
-                                    <Form.Label>Conferma password</Form.Label>
-                                    <Form.Control type="password" placeholder="Conferma la tua password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required />
-                                    <Form.Text id="confermaPasswordError" className="d-none text-danger">Le password non coincidono!</Form.Text>
-                                </Form.Group>
+                                <InputPassword controlId={"confermaPassword"} placeholder={"Conferma la tua password"}>
+                                    Conferma password
+                                </InputPassword>
+                                <Form.Text id="confermaPasswordError" className="d-none text-danger">Le password non coincidono!</Form.Text>
                             </Col>
                             <Button spinner={submit} variant={"Primary"} submit>Continua</Button>
                         </Row>

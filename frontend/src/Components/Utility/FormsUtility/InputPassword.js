@@ -13,8 +13,8 @@ export default function InputPassword(props) {
 
     return (
         <Form.Group >
-            <Form.Label className="pe-2">Password</Form.Label>
-            <OverlayTrigger
+            <Form.Label className="pe-2">{props.children}</Form.Label>
+            {props.tooltip ? <OverlayTrigger
                 placement={"top"}
                 overlay={
                     <Tooltip id="passwordInfo">
@@ -26,11 +26,13 @@ export default function InputPassword(props) {
                 }
             >
                 <FontAwesomeIcon icon={faInfoCircle} />
-            </OverlayTrigger>
+            </OverlayTrigger> : null}
             <InputGroup >
-                <Form.Control id={props.controlId} type={showPassword ? "text" : "password"} placeholder="Inserisci la tua password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required />
+                <Form.Control id={props.controlId} type={showPassword ? "text" : "password"} placeholder={props.placeholder} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required />
                 <InputGroup.Append>
-                    <InputGroup.Text className="h-100"><FontAwesomeIcon onClick={() => setShowPassoword(!showPassword)} icon={showPassword ? faEyeSlash : faEye} /></InputGroup.Text>
+                    <InputGroup.Text className="h-100">
+                        <FontAwesomeIcon onClick={() => setShowPassoword(!showPassword)} icon={showPassword ? faEyeSlash : faEye} />
+                    </InputGroup.Text>
                 </InputGroup.Append>
                 <Form.Text id="passwordFormatError" className="text-danger d-none">Formato password non valido!</Form.Text>
             </InputGroup>

@@ -15,6 +15,7 @@ import { faAddressCard, faListUl, faCar, faWallet, faIdCard } from '@fortawesome
 // Custom Components
 import View from "./Utility/View"
 import Button from "./Utility/Button";
+import useSession from '../Hooks/useSession';
 
 // Util Card
 function LinkCard(props) {
@@ -43,11 +44,11 @@ function LinkCard(props) {
 // Schermata personale utente
 export default function SchermataPersonaleUtente() {
     const { token, setToken } = useToken();
+    const { session, setSession } = useSession();
 
     if (!token) {
         return (<Redirect to={"/login"} />)
     } else {
-        const user = JSON.parse(window.localStorage.getItem("utente"))
         return (
             <React.Fragment>
                 <View>
@@ -58,10 +59,10 @@ export default function SchermataPersonaleUtente() {
                         transition={{ duration: 0.3 }}>
                         <Container fluid className="d-flex justify-content-center align-items-center my-5">
                             <Col xs={{ span: 2 }} lg={{ span: 1 }} className="me-3">
-                                <Image fluid className="" src={user.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
+                                <Image fluid className="" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
                             </Col>
                             <div className="d-flex flex-column align-items-start">
-                                <h1 className="h1 t-bold">{`Bentornato, ${user.nome}!`}</h1>
+                                <h1 className="h1 t-bold">{`Bentornato, ${session.nome}!`}</h1>
                                 <div className="d-none d-lg-flex buttonsGroup">
                                     <Button to="/gestione-account/profilo" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
                                     <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
@@ -82,8 +83,8 @@ export default function SchermataPersonaleUtente() {
                                     text={"Auto, moto, bici o monopattino? Scegli e prenota in un attimo."}
                                     icon={faCar}
                                     to={"/prenota"}
-                                    buttonLabel={"Prenota"} 
-                                    animationDuration={0.3}/>
+                                    buttonLabel={"Prenota"}
+                                    animationDuration={0.3} />
                                 <LinkCard
                                     imageSrc={"/assets/svg/wallet_card.svg"}
                                     imageAlt={"Carta Wallet"}
@@ -102,8 +103,8 @@ export default function SchermataPersonaleUtente() {
                                     text={"Gestisci la tua patente di guida oppure, se l'hai e se vuoi, aggiungila. Decidi tu!"}
                                     icon={faIdCard}
                                     to={"/gestione-account/patente"}
-                                    buttonLabel={"Visualizza Patente"} 
-                                    animationDuration={0.5}/>
+                                    buttonLabel={"Visualizza Patente"}
+                                    animationDuration={0.5} />
                             </Row>
                         </CardGroup>
                     </Container>

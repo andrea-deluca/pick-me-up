@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router';
 import useToken from '../../Hooks/useToken';
+import useSession from '../../Hooks/useSession';
 
 // Framer Motion Components
 import { motion } from 'framer-motion';
@@ -23,17 +24,16 @@ import PasswordModal from './Profilo/PasswordModal';
 // Schermata profilo
 export default function SchermataProfilo() {
     const { token, setToken } = useToken();
+    const { session, setSession } = useSession()
     const [modals, setModals] = useState({
         cellulareModal: false,
         emailModal: false,
         passwordModal: false
     })
 
-
     if (!token) {
         return (<Redirect to={"/login"} />);
     } else {
-        const user = JSON.parse(window.localStorage.getItem("utente"));
         return (
             <Container fluid className="p-0 h-100">
                 <Row className="g-0 h-100 align-items-center">
@@ -45,21 +45,13 @@ export default function SchermataProfilo() {
                             exit={{ translateY: 100, opacity: 0 }}
                             transition={{ duration: 0.3 }}>
                             <div className="d-flex justify-content-start align-items-center mb-5">
-                                <Image fluid className="col-2 me-3" src={user.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
+                                <Image fluid className="col-2 me-3" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
                                 <div className="d-flex flex-column">
-                                    <h6 className="t-light">USER ID #{user.userID}</h6>
-                                    <h1 className="t-bold">{user.nome + " " + user.cognome}</h1>
+                                    <h6 className="t-light">USER ID #</h6>
+                                    <h1 className="t-bold">{session.nome + " " + session.cognome}</h1>
                                 </div>
                             </div>
-                            <RiepilogoProfilo
-                                sesso={user.sesso}
-                                dataNascita={user.dataNascita}
-                                nazionalita={user.luogoNascita.nazione}
-                                luogoNascita={`${user.luogoNascita.regione} | ${user.luogoNascita.citta} (${user.luogoNascita.provincia})`}
-                                codiceFiscale={user.codiceFiscale}
-                                cellulare={user.cellulare}
-                                email={user.email}
-                                password={"••••••••••••"} />
+                            <RiepilogoProfilo/>
                         </motion.div>
                     </Col>
                     <Col lg={{ span: 3, offset: 1 }} className="d-none d-lg-block me-auto">

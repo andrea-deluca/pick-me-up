@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import useSession from '../../../Hooks/useSession';
+import useToken from '../../../Hooks/useToken';
 import axios from 'axios';
 
-import useToken from '../../../Hooks/useToken';
 
 // Bootstrap Components
 import { Image, Form, Container, Row, Col } from "react-bootstrap";
@@ -22,7 +23,8 @@ export default function LoginForm() {
     });
     const [submit, setSubmit] = useState(false);
     const history = useHistory();
-    const {token, setToken} = useToken();
+    const { session, setSession } = useSession()
+    const { token, setToken } = useToken();
 
     function onSubmit(e) {
         e.preventDefault();
@@ -37,7 +39,7 @@ export default function LoginForm() {
             axios.post("/autenticazione/accedi", credenziali)
                 .then((res) => {
                     if (res.status === 202) {
-                        window.localStorage.setItem("utente", JSON.stringify(res.data.user));
+                        setSession(res.data.user)
                         setToken(res.data.token);
                         history.push("/home");
                     }
@@ -79,7 +81,9 @@ export default function LoginForm() {
                     <Form onSubmit={onSubmit}>
                         <Row className="gy-4">
                             <InputEmail controlId={"loginEmail"} />
-                            <InputPassword controlId={"loginPassword"} />
+                            <InputPassword controlId={"loginPassword"} placeholder={"Inserisci la tua password"}>
+                                Password
+                            </InputPassword>
                             <Link to="/recupero-password" className="link-secondary">Hai dimenticato la password?</Link>
                             <Button spinner={submit} variant={"Primary"} submit>Accedi</Button>
                         </Row>

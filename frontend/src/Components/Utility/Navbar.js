@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useToken from '../../Hooks/useToken';
+import useSession from '../../Hooks/useSession';
 
 // Bootstrap Components
 import { Image, Container } from 'react-bootstrap';
@@ -16,6 +17,7 @@ import Sidebar from './Sidebar';
 // Navbar
 export default function Navbar(props) {
     const { token, setToken } = useToken();
+    const { session, setSession } = useSession()
     const history = useHistory();
 
     function openSidebar() {
@@ -24,7 +26,7 @@ export default function Navbar(props) {
     }
 
     function logout() {
-        window.localStorage.clear();
+        window.sessionStorage.clear();
         history.push("/")
     }
 
@@ -50,7 +52,7 @@ export default function Navbar(props) {
                         </div>
                     </Sidebar>
                     <div onClick={openSidebar}>
-                        <Button variant={"Primary"}>{JSON.parse(window.localStorage.getItem("utente")).nome}<FontAwesomeIcon className="ms-2" icon={faBars} fixedWidth /></Button>
+                        <Button variant={"Primary"}>{session.nome}<FontAwesomeIcon className="ms-2" icon={faBars} fixedWidth /></Button>
                     </div>
                 </Container>
             </nav>
