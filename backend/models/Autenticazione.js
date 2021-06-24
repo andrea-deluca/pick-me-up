@@ -15,7 +15,7 @@ module.exports = {
             db.collection("Utente").findOne({
                 "credenziali.email": datiUtente.credenziali.email
             }, (err, result) => {
-                if (err) throw createError(500);
+                if (err) return(callback(500));
                 // Se non esiste un account, effettuo registrazione
                 if (!result) {
                     // Calcolo un hash sull'email (univoca nel DB) per settare la chiave di attivazione dell'account
@@ -24,7 +24,7 @@ module.exports = {
                     db.collection("Utente").insertOne({
                         ...datiUtente, accountStatus: { activatorKey: activatorKey, active: false }, metodiPagamento: []
                     }, (err, res) => {
-                        if (err) throw createError(500);
+                        if (err) return(callback(500));
                         // invio email di conferma all'utente passando la sua chiave di attivazione e la sua email
                         mailModel.inviaConfermaRegistrazione({ "key": activatorKey, "email": datiUtente.credenziali.email })
                             .catch(err => { throw createError(500) })
@@ -47,7 +47,7 @@ module.exports = {
                 { "accountStatus.activatorKey": activatorKey },
                 { $set: { "accountStatus.activatorKey": null, "accountStatus.active": true } },
                 (err, res) => {
-                    if (err) throw createError(500);
+                    if (err) return(callback(500));
                     return (callback(202))
                 })
         } catch (error) {
@@ -62,7 +62,7 @@ module.exports = {
             db.collection("Utente").findOne(
                 { "credenziali.email": credenziali.email },
                 (err, res) => {
-                    if (err) throw createError(500);
+                    if (err) return(callback(500));
                     // Se ho trovato un utente
                     if (res) {
                         // Controllo lo stato dell'account
@@ -72,10 +72,12 @@ module.exports = {
                         if (decryptedPassword !== CryptoJS.AES.decrypt(credenziali.encryptedPassword, "pick-me-up").toString()) {
                             return callback(400);
                         }
+                        // Genero un token di accesso
                         const payload = { email: res.credenziali.email };
                         const token = jwt.sign(payload, tokenKey, {
                             expiresIn: "1h",
                         });
+                        // Ritorno il token di accesso e i dati associati all'utente
                         return (callback({
                             token: token,
                             code: 202,
@@ -110,6 +112,7 @@ module.exports = {
     recuperaPassword: async function (user, callback) {
         const db = await makeDb(config);
         try {
+            // Genero un password
             const randomPassword = password.randomPassword({
                 length: 12,
                 characters: [
@@ -119,6 +122,7 @@ module.exports = {
                     password.symbols
                 ]
             })
+            // Aggiorno nel db la password associata all'utente
             const encryptedRandomPassword = CryptoJS.AES.encrypt(randomPassword, "pick-me-up").toString();
             db.collection("Utente").findOneAndUpdate(
                 { "credenziali.email": user.email },
@@ -126,6 +130,7 @@ module.exports = {
                 { projection: {} }, (err, res) => {
                     if (err) return callback(500)
                     if (res.value) {
+                        // Invio all'utente una email contenente la nuova password
                         mailModel.inviaRecuperoPassword({ email: user.email, password: randomPassword })
                             .catch(err => { throw createError(500) })
                         return (callback(201))

@@ -21,7 +21,7 @@ router.get('/confermaRegistrazione/:key', function (req, res) {
   autenticazioneModel.confermaRegistrazione(req.params.key, function (status) {
     res.status(status);
     console.log(status);
-    res.redirect("http://localhost:3000/registrazione-confermata");
+    res.redirect("http://192.168.1.9:3000/registrazione-confermata");
   })
 })
 
@@ -31,14 +31,14 @@ router.post('/accedi', function (req, res) {
       res.status(status.code);
       //res.cookie("token", status.utente.token, { httpOnly: true });
       res.send(status)
-    } else{
+    } else {
       res.status(status).send()
     }
   })
 });
 
-router.post("/recupero-password", function (req, res){
-  autenticazioneModel.recuperaPassword(req.body, function(status){
+router.post("/recupero-password", function (req, res) {
+  autenticazioneModel.recuperaPassword(req.body, function (status) {
     res.status(status).send();
   })
 });

@@ -25,10 +25,8 @@ export default function SchermataWallet() {
     const { session, setSession } = useSession();
     const [modals, setModals] = useState({
         addModal: false,
-        updateModal: false,
-        deleteModal: false
     })
-    
+
     if (!token) {
         return <Redirect to={"/login"} />
     } else {
@@ -50,14 +48,16 @@ export default function SchermataWallet() {
                                 </div>
                             </div>
                             <CardColumns>
-                                <CreditCard
-                                    numeroCarta={"1234 1234 1234 1234"}
-                                    dataScadenza={"25/01/2022"}
-                                    codiceCVV={"123"} />
-                                <CreditCard
-                                    numeroCarta={"1234 1234 1234 1234"}
-                                    dataScadenza={"25/01/2022"}
-                                    codiceCVV={"123"} />
+                                {session.metodiPagamento.length === 0 ? <h4 className="t-light text-muted">Nessun metodo di pagamento trovato...</h4> :
+                                    session.metodiPagamento.map((key) => {
+                                        return (<CreditCard key={key}
+                                            idCarta={key.id}
+                                            numeroCarta={key.numeroCarta}
+                                            titolare={key.titolare}
+                                            dataScadenza={key.dataScadenzaCarta}
+                                            codiceCVV={key.cvv} />)
+                                    })}
+
                             </CardColumns>
                         </motion.div>
                     </Col>

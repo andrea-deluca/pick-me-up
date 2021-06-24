@@ -13,4 +13,10 @@ router.post("/aggiungiCarta", function(req, res){
     })
 })
 
+router.delete("/eliminaCarta", function(req, res){
+    walletModel.eliminaCarta(req.body, function(status){
+        res.status(status.code).send(status.metodiPagamento)
+    })
+})
+
 module.exports = router;

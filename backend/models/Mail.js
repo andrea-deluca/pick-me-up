@@ -21,12 +21,12 @@ module.exports = {
             to: userData.email,
             subject: "Benvenuto/a su PickMeUp!",
             html: `
-                <h1>Grazie per esserti registrato/a su PiackMeUp!</h1>
+                <h1>Grazie per esserti registrato/a su PickMeUp!</h1>
                 <h3>Conferma la tua registrazione prima di continuare</h3>
                 <p>
                     Clicca sul link sotto per confermare la tua registrazione a PickMeUp! e verificare la tua email.
                 </p>
-                <a id="${userData.key}" href="http://localhost:9000/autenticazione/confermaRegistrazione/${userData.key}">Conferma registrazione</a>
+                <a id="${userData.key}" href="http://192.168.1.9:9000/autenticazione/confermaRegistrazione/${userData.key}">Conferma registrazione</a>
             `
         };
         await transporter.sendMail(mailOptions);

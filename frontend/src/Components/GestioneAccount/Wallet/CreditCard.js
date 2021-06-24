@@ -9,9 +9,15 @@ import { faTrashAlt, faEdit, faCreditCard } from '@fortawesome/free-solid-svg-ic
 
 // Custom Components
 import Button from "../../Utility/Button";
+import RimuoviMetodoModal from './RimuoviMetodoModal';
 
 // Card metodo di pagamento
 export default function CreditCard(props) {
+    const [modals, setModals] = useState({
+        updateModal: false,
+        deleteModal: false
+    })
+
     return (
         <Card className="credit-card animation-card p-0 mb-4 shadow bg-primary-dark text-white">
             <Card.Header className="text-white t-bold">Metodo di Pagamento</Card.Header>
@@ -19,6 +25,10 @@ export default function CreditCard(props) {
                 <Card.Title className="t-bold mb-5"><FontAwesomeIcon className="me-2" icon={faCreditCard} size={"lg"} fixedWidth />{props.numeroCarta}</Card.Title>
                 <Card.Text className="mb-4">
                     <Row>
+                        <Col xs={{ span: 12 }}>
+                            <h6 className="t-bold">TITOLARE</h6>
+                            <p className="t-light">{props.titolare}</p>
+                        </Col>
                         <Col>
                             <h6 className="t-bold">DATA DI SCADENZA</h6>
                             <p className="t-light">{props.dataScadenza}</p>
@@ -30,8 +40,15 @@ export default function CreditCard(props) {
                     </Row>
                 </Card.Text>
                 <div className="buttonsGroup justify-content-start">
-                    <Button variant={"Light"}><FontAwesomeIcon className="me-2" icon={faEdit} fixedWidth />Modifica</Button>
-                    <Button variant={"Danger"}> <FontAwesomeIcon className="me-2" icon={faTrashAlt} fixedWidth />Elimina</Button>
+                    <Button variant={"Light"}>
+                        <FontAwesomeIcon className="me-2" icon={faEdit} fixedWidth />
+                        Modifica
+                    </Button>
+                    <Button onClick={() => setModals({ ...modals, deleteModal: true })} variant={"Danger"}>
+                        <FontAwesomeIcon className="me-2" icon={faTrashAlt} fixedWidth />
+                        Elimina
+                    </Button>
+                    <RimuoviMetodoModal idCarta={props.idCarta} show={modals.deleteModal} onHide={() => setModals({ ...modals, deleteModal: false })} />
                 </div>
             </Card.Body>
         </Card>
