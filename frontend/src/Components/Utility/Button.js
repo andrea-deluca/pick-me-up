@@ -22,7 +22,7 @@ export default function Button(props) {
     } else {
         return (
             <div className="button">
-                <button type={props.submit ? "submit" : "button"} className={buttonClasses} onClick={props.onClick}>
+                <button disabled={props.disabled} type={props.submit ? "submit" : "button"} className={buttonClasses} onClick={props.onClick}>
                     <Spinner
                         as="span"
                         animation={props.spinner ? "border" : ""}

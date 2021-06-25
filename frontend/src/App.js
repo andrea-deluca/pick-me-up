@@ -34,10 +34,7 @@ import SchermataPatente from './Components/GestioneAccount/SchermataPatente';
 // Schermate Gestione Prenotazioni
 import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/SchermataPrenotazioniUtente';
 // Schermate Prenotazione
-import SelezioneTipologiaVeicolo from './Components/Prenotazione/SelezioneTipologiaVeicolo';
-import SchermataMappa from './Components/Prenotazione/SchermataMappa'
-import SchermataConfermaPrenotazione from './Components/Prenotazione/SchermataConfermaPrenotazione';
-import SelezioneVeicolo from './Components/Prenotazione/SelezioneVeicolo';
+import SchermataPrenotazione from './Components/Prenotazione/SchermataPrenotazione';
 
 // export const Router = React.createContext(null);
 // const initialState = {
@@ -138,17 +135,8 @@ function App() {
             <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
               <SchermataPrenotazioniUtente />
             </Route>
-            <Route exact path="/prenota/selezione-tipologia" component={SelezioneTipologiaVeicolo}>
-              <SelezioneTipologiaVeicolo />
-            </Route>
-            <Route exact path="/prenota/selezione-veicolo" component={SelezioneVeicolo}>
-              <SelezioneVeicolo />
-            </Route>
-            <Route exact path="/prenota/conferma" component={SchermataConfermaPrenotazione}>
-              <SchermataConfermaPrenotazione />
-            </Route>
-            <Route exact path="/maps" component={SchermataMappa}>
-              <SchermataMappa />
+            <Route exact path="/prenota" component={SchermataPrenotazione}>
+              <SchermataPrenotazione />
             </Route>
           </AnimatePresence>
         </Switch>

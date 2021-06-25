@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Container, Form } from 'react-bootstrap'
-import Maps from './Maps';
-import Button from '../Utility/Button';
+import Maps from './Map';
+import Button from '../../Utility/Button';
 
 
 export default function SchermataMappa() {

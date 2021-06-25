@@ -1,6 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
-import { Popover, OverlayTrigger } from 'react-bootstrap'
 import 'leaflet/dist/leaflet.css';
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";

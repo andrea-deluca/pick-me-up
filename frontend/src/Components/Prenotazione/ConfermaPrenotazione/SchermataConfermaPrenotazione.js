@@ -5,8 +5,8 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearchPlus, faMapPin, faArrowRight, faCalendarAlt, faArrowCircleLeft, faUsers, faCarSide, faGasPump, faWind, faTools, faCog } from '@fortawesome/free-solid-svg-icons';
 
-import View from "../Utility/View"
-import Button from "../Utility/Button";
+import View from "../../Utility/View"
+import Button from "../../Utility/Button";
 
 export default function SchermataConfermaPrenotazione() {
     return (

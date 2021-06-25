@@ -5,8 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faGasPump, faCarSide, faWind, faTools, faCog } from '@fortawesome/free-solid-svg-icons';
 
 
-import View from '../Utility/View';
-import Button from '../Utility/Button';
+import View from '../../Utility/View';
+import Button from '../../Utility/Button';
 
 export default function SelezioneVeicolo() {
     return (

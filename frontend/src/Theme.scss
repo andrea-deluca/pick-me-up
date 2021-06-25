@@ -40,5 +40,9 @@ $dark: #080808;
     color: $primary-dark;
 }
 
+.react-datetime-picker__wrapper{
+    border: 0px !important
+}
+
 // BOOTSTRAP THEME
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
