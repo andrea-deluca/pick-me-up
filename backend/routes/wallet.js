@@ -13,7 +13,7 @@ router.post("/aggiungiCarta", function (req, res) {
             res.status(result.status).send({
                 metodoPagamento: result.carta,
                 message: `La registrazione del tuo metodo di pagamento
-                è andato a buon fine.`
+                è andata a buon fine.`
             })
         }
     })
@@ -47,7 +47,7 @@ router.delete("/eliminaCarta", function (req, res) {
             res.status(result.status).send({
                 metodiPagamento: result.metodiPagamento,
                 message: `La cancellazione del tuo metodo di pagamento
-                non è andata a buon fine.`
+                è andata a buon fine.`
             })
         }
     })

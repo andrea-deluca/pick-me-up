@@ -20,7 +20,7 @@ export default function CreditCard(props) {
     })
 
     return (
-        <Card className="credit-card animation-card p-0 mb-4 shadow bg-primary-dark text-white">
+        <Card className="credit-card animation-card p-0 my-4 col-10 offset-1 shadow bg-primary-dark text-white">
             <Card.Header className="text-white t-bold">Metodo di Pagamento</Card.Header>
             <Card.Body>
                 <Card.Title className="t-bold mb-5"><FontAwesomeIcon className="me-2" icon={faCreditCard} size={"lg"} fixedWidth />{props.numeroCarta}</Card.Title>

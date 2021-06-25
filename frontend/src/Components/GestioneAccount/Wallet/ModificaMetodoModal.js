@@ -58,10 +58,10 @@ export default function ModificaMetodoModal(props) {
         <Modal
             {...props}
             size="lg"
-            aria-labelledby="modificaCellulareModal"
+            aria-labelledby="modificaMetodoModal"
             centered>
             <Modal.Header>
-                <Modal.Title className="t-bold" id="modificaCellulareModal">
+                <Modal.Title className="t-bold" id="modificaMetodoModal">
                     Modifica metodo di pagamento
                 </Modal.Title>
             </Modal.Header>

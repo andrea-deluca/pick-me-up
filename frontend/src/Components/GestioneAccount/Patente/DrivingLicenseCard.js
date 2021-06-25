@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Bootstrap Components
 import { Row, Col, Card } from 'react-bootstrap';
@@ -9,9 +9,15 @@ import { faTrashAlt, faEdit, faIdCard } from '@fortawesome/free-solid-svg-icons'
 
 // Custom Components
 import Button from "../../Utility/Button";
+import RimuoviPatenteModal from './RimuoviPatenteModal';
+import ModificaPatenteModal from './ModificaPatenteModal';
 
 // Card Patente di guida
 export default function DrivingLicenseCard(props) {
+    const [modals, setModals] = useState({
+        updateModal: false,
+        deleteModal: false
+    })
     return (
         <Card className="driving-license-card text-primary animation-card p-0 mb-4 shadow">
             <Card.Header className="t-bold">Patente di guida</Card.Header>
@@ -34,8 +40,16 @@ export default function DrivingLicenseCard(props) {
                     </Row>
                 </Card.Text>
                 <div className="buttonsGroup justify-content-start">
-                    <Button variant={"Light"}><FontAwesomeIcon className="me-2" icon={faEdit} fixedWidth />Modifica</Button>
-                    <Button variant={"Danger"}> <FontAwesomeIcon className="me-2" icon={faTrashAlt} fixedWidth />Elimina</Button>
+                    <Button onClick={() => setModals({ ...modals, updateModal: true })} variant={"Light"}>
+                        <FontAwesomeIcon className="me-2" icon={faEdit} fixedWidth />
+                        Modifica
+                    </Button>
+                    <Button onClick={() => setModals({ ...modals, deleteModal: true })} variant={"Danger"}>
+                        <FontAwesomeIcon className="me-2" icon={faTrashAlt} fixedWidth />
+                        Elimina
+                    </Button>
+                    <RimuoviPatenteModal show={modals.deleteModal} onHide={() => setModals({ ...modals, deleteModal: false })} />
+                    <ModificaPatenteModal show={modals.updateModal} onHide={() => setModals({ ...modals, updateModal: false })} />
                 </div>
             </Card.Body>
         </Card>

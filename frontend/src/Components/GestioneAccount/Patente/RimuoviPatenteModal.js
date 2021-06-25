@@ -27,14 +27,13 @@ export default function RimuoviMetodoModal(props) {
         e.preventDefault();
         const data = {
             id: session.id,
-            idCarta: props.idCarta
         }
         setState({ ...state, submit: true });
         try {
-            axios.delete("/wallet/eliminaCarta", { data: data })
+            axios.delete("/patente/eliminaPatente", { data: data })
                 .then(res => {
-                    setSession({ ...session, metodiPagamento: res.data.metodiPagamento })
-                    setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
+                    setSession({ ...session, patente: null })
+                    setState({ ...state, submit: false, success: { show: true, message: res.data } })
                 })
                 .catch(err => {
                     setState({ ...state, submit: false, error: { show: true, message: err.response.data } })
@@ -48,11 +47,11 @@ export default function RimuoviMetodoModal(props) {
         <Modal
             {...props}
             size="lg"
-            aria-labelledby="eliminaMetodoModal"
+            aria-labelledby="eliminaPatenteModal"
             centered>
             <Modal.Header>
-                <Modal.Title className="t-bold" id="eliminaMetodoModal">
-                    Elimina metodo di pagamento
+                <Modal.Title className="t-bold" id="eliinaPatenteModal">
+                    Elimina patente
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>

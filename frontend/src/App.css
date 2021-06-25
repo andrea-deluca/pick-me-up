@@ -86,7 +86,7 @@ a {
   background-color: #f8f8f8;
 }
 
-.buttonsSidebar{
+.buttonsSidebar {
   width: 300px !important;
 }
 
@@ -160,10 +160,11 @@ a {
 }
 
 .driving-license-card {
- 
   background-color: rgb(255, 255, 255);
   background-image: url("https://webartdevelopers.com/blog/wp-content/uploads/2019/02/CSS-Background-Animation-1.gif");
 }
 
-
- 
+.scrollable {
+  overflow:auto;
+  height: 70vh;
+}

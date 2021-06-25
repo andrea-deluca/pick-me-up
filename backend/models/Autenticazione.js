@@ -79,6 +79,12 @@ module.exports = {
                         const token = jwt.sign(payload, tokenKey, {
                             expiresIn: "1h",
                         });
+                        let datiPatente;
+                        if (res.patente) {
+                            datiPatente = res.patente;
+                        } else{
+                            datiPatente = null;
+                        }
                         // Ritorno il token di accesso e i dati associati all'utente
                         return (callback({
                             token: token,
@@ -92,9 +98,7 @@ module.exports = {
                                 luogoNascita: {
                                     ...res.luogoNascita
                                 },
-                                patente: {
-                                    ...res.patente
-                                },
+                                patente: datiPatente,
                                 cellulare: res.credenziali.cellulare,
                                 email: res.credenziali.email,
                                 codiceFiscale: res.codiceFiscale,

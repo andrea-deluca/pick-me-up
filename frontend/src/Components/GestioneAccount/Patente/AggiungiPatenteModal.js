@@ -25,24 +25,25 @@ export default function AggiungiMetodoModal(props) {
 
     function onSubmit(e) {
         e.preventDefault();
-        const titolareInput = document.getElementById("titolareCarta");
-        const numeroCartaInput = document.getElementById("numeroCarta");
-        const dataScadenzaCarta = document.getElementById("dataScadenzaCarta");
-        const cvvInput = document.getElementById("codiceCVV");
+        const tipologiaPatenteInput = document.getElementById("tipologiaPatente");
+        const numeroPatenteInput = document.getElementById("numeroPatente");
+        const dataScadenzaPatente = document.getElementById("dataScadenzaPatente");
+        const ufficioRilascioInput = document.getElementById("ufficioRilascio");
         const data = {
             id: session.id,
-            metodoPagamento: {
-                titolare: titolareInput.value,
-                numeroCarta: numeroCartaInput.value,
-                dataScadenzaCarta: dataScadenzaCarta.value,
-                cvv: cvvInput.value,
+            patente: {
+                numeroPatente: numeroPatenteInput.value,
+                tipologiaPatente: tipologiaPatenteInput.value,
+                dataScadenza: dataScadenzaPatente.value,
+                ufficioRilascio: ufficioRilascioInput.value,
             }
         }
         setState({ ...state, submit: true });
         try {
-            axios.post("/wallet/aggiungiCarta", data)
+            axios.post("/patente/aggiungiPatente", data)
                 .then(res => {
-                    setSession({ ...session, metodiPagamento: [...session.metodiPagamento, res.data.metodoPagamento] })
+                    console.log(res.data.patente)
+                    setSession({ ...session, patente: res.data.patente })
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {
@@ -56,11 +57,11 @@ export default function AggiungiMetodoModal(props) {
         <Modal
             {...props}
             size="lg"
-            aria-labelledby="aggiungiMetodoModal"
+            aria-labelledby="aggiungiPatenteModal"
             centered>
             <Modal.Header>
-                <Modal.Title className="t-bold" id="aggiungiMetodoModal">
-                    Aggiungi metodo di pagamento
+                <Modal.Title className="t-bold" id="aggiungiPatenteModal">
+                    Aggiungi patente
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -75,27 +76,39 @@ export default function AggiungiMetodoModal(props) {
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 5, offset: 1 }}>
-                                <Form.Group controlId="titolareCarta">
-                                    <Form.Label>Titolare</Form.Label>
-                                    <Form.Control type="text" placeholder="Nome e cognome del titolare" required />
+                                <Form.Group controlId="tipologiaPatente">
+                                    <Form.Label>Patente di guida</Form.Label>
+                                    <Form.Control className="form-select" as="select" required>
+                                        <option value="" disabled selected>Seleziona...</option>
+                                        <option value="AM">AM</option>
+                                        <option value="A1">A1</option>
+                                        <option value="A2">A2</option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                    </Form.Control>
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5 }}>
-                                <Form.Group controlId="numeroCarta">
-                                    <Form.Label>Numero Carta</Form.Label>
-                                    <Form.Control type="text" placeholder="Inserisci il numero della carta" required />
+                                <Form.Group controlId="numeroPatente">
+                                    <Form.Label>Numero Patente</Form.Label>
+                                    <Form.Control type="text" placeholder="Inserisci il numero di patente" pattern="[a-zA-Z]{2}\d{7}[a-zA-Z]{1}" required />
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5, offset: 1 }} >
-                                <Form.Group controlId="dataScadenzaCarta">
+                                <Form.Group controlId="dataScadenzaPatente">
                                     <Form.Label>Data di scadenza</Form.Label>
                                     <Form.Control type="date" placeholder="Inserisci data di scadenza" required />
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5 }}>
-                                <Form.Group controlId="codiceCVV">
-                                    <Form.Label>CVV</Form.Label>
-                                    <Form.Control type="text" placeholder="Inserisci CVV" pattern="\d{3}" required />
+                                <Form.Group controlId="ufficioRilascio">
+                                    <Form.Label>Ufficio di rilascio</Form.Label>
+                                    <Form.Control className="form-select" as="select" required>
+                                        <option value="" disabled selected>Seleziona...</option>
+                                        <option value="Ufficio competente">Ufficio competente</option>
+                                        <option value="Questura">Questura</option>
+                                        <option value="Motorizzazione">Motorizzazione</option>
+                                    </Form.Control>
                                 </Form.Group>
                             </Col>
                             <div className="buttonsGroup col-10 offset-1 justify-content-end">
