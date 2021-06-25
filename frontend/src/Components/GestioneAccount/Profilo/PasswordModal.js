@@ -14,15 +14,17 @@ import InputPassword from '../../Utility/FormsUtility/InputPassword';
 const CryptoJS = require("crypto-js");
 
 export default function PasswordModal(props) {
-    const [state, setState] = useState({
-        error: {
-            show: false,
-        },
-        success: false,
-        submit: false
-    })
     const { session, setSession } = useSession();
     const history = useHistory()
+    const [state, setState] = useState({
+        error: {
+            show: false
+        },
+        success: {
+            show: false
+        },
+        submit: false
+    })
 
     function onSubmit(e) {
         e.preventDefault();
@@ -44,16 +46,10 @@ export default function PasswordModal(props) {
         try {
             axios.put("/profilo/modificaPassword", data)
                 .then(res => {
-                    if (res.status === 200) {
-                        setState({ ...state, submit: false, success: true })
-                    }
+                    setState({ ...state, submit: false, success: { show: true, message: res.data } })
                 })
                 .catch(err => {
-                    if (err.response.status === 400) {
-                        setState({ ...state, error: { show: true, message: "Password errata. Riprova." }, submit: false });
-                    } else {
-                        setState({ ...state, error: { show: true, message: "La modifica della password non è andata a buon fine." }, submit: false });
-                    }
+                    setState({ ...state, submit: false, error: { show: true, message: err.responde.data } });
                 })
         } catch (error) {
             console.log(error.response.data.msg)
@@ -72,12 +68,12 @@ export default function PasswordModal(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {state.success || state.error.show ?
+                {state.success.show || state.error.show ?
                     <AlertMessage
-                        show={state.success || state.error.show}
-                        variant={state.success ? "success" : "danger"}
-                        header={state.success ? "Operazione completata con successo" : "Operazione fallita!"}
-                        body={state.success ? "La modifica della tua email è andata a buon fine." : state.error.message}
+                        show={state.success.show || state.error.show}
+                        variant={state.success.show ? "success" : "danger"}
+                        header={state.success.show ? "Operazione completata con successo" : "Operazione fallita!"}
+                        body={state.success.show ? state.success.message : state.error.message}
                         button={"Indietro"}
                         onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Form onSubmit={onSubmit}>

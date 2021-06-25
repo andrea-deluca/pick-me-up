@@ -49,8 +49,9 @@ export default function SchermataWallet() {
                             </div>
                             <CardColumns>
                                 {session.metodiPagamento.length === 0 ? <h4 className="t-light text-muted">Nessun metodo di pagamento trovato...</h4> :
-                                    session.metodiPagamento.map((key) => {
+                                    session.metodiPagamento.map((key, index) => {
                                         return (<CreditCard key={key}
+                                            index={index}
                                             idCarta={key.id}
                                             numeroCarta={key.numeroCarta}
                                             titolare={key.titolare}

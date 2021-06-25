@@ -17,7 +17,7 @@ module.exports = {
                     if (res.value) {
                         // Ritorno il nuovo numero di cellulare
                         return (callback({
-                            code: 200,
+                            status: 200,
                             cellulare: res.value.credenziali.cellulare
                         }));
                     } else {
@@ -25,7 +25,8 @@ module.exports = {
                     }
                 });
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            return callback(500);
         }
     },
 
@@ -41,7 +42,7 @@ module.exports = {
                     if (res.value) {
                         // Ritorno la nuova email
                         return (callback({
-                            code: 200,
+                            status: 200,
                             email: res.value.credenziali.email
                         }));
                     } else {
@@ -49,7 +50,8 @@ module.exports = {
                     }
                 });
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            return callback(500);
         }
     },
 
@@ -77,10 +79,11 @@ module.exports = {
                                     return (callback(400));
                                 }
                             });
-                    } else return callback(400)
+                    } else return callback(403)
                 })
         } catch (error) {
             console.log(error)
+            return callback(500)
         }
     },
 
@@ -90,14 +93,11 @@ module.exports = {
             db.collection("Utente").deleteOne(
                 { _id: ObjectId(user.id) }, (err, res) => {
                     if (err) return callback(500)
-                    if (res) {
-                        return callback(200)
-                    } else {
-                        return callback(404)
-                    }
+                    return callback(200)
                 })
         } catch (error) {
             console.log(error)
+            return callback(500)
         }
     }
 }

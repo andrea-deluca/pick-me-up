@@ -62,7 +62,7 @@ export default function SchermataPersonaleUtente() {
                                 <Image fluid className="" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
                             </Col>
                             <div className="d-flex flex-column align-items-start">
-                                <h1 className="h1 t-bold">{`Bentornato, ${session.nome}!`}</h1>
+                                <h1 className="t-bold">{`Bentornato, ${session.nome}!`}</h1>
                                 <div className="d-none d-lg-flex buttonsGroup">
                                     <Button to="/gestione-account/profilo" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
                                     <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>

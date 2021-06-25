@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Container, Row, Col, Image, Card, CardDeck } from 'react-bootstrap';
+import { Container, Row, Col, Image, Card, CardGroup, CardDeck } from 'react-bootstrap';
 
 
 import View from "../Utility/View"
@@ -9,87 +9,60 @@ import Button from "../Utility/Button";
 export default function SelezioneTipologiaVeicolo() {
     return (
         <View>
-            <Container>
-                <Row>
-                    <Col className="col-12">
-                        <div className="col-12 d-flex justify-content-center align-items-center">
-                            <div className="d-flex flex-column">
-                                <h1 className="h1 t-bold">Prenotazione</h1>
-                                <h6>Seleziona la tipologia di veicolo che vuoi noleggiare e continua</h6>
-                            </div>
-                        </div>
-                    </Col>
-
-                    <Col className="col-12 mt-5">
-                        <CardDeck className="d-flex flex-row">
-
-
-                            <Card className="bg-dark text-white col-3 ">
-                                <Card.Img src="/assets/auto.jpg" alt="..." />
-                                <Card.ImgOverlay>
+            <Container className="d-flex flex-column justify-content-center align-items-center">
+                <div className="d-flex flex-column align-items-center my-5">
+                    <h1 className="t-bold">Prenotazione</h1>
+                    <h6 className="t-light">Seleziona la tipologia di veicolo che vuoi noleggiare e continua</h6>
+                </div>
+                <CardGroup >
+                    <Row className="gy-5">
+                        <Card className="animation-card border-0 shadow col-5 mx-auto offset-1">
+                                <Image fluid className="col-6 align-self-start" src="/assets/svg/auto.svg" />
+                                <Card.Body >
                                     <Card.Title>Automobile</Card.Title>
                                     <Card.Text>
                                         Scegli di noleggiare un auto utilitaria,una berlina o un SUV.
                                         Inoltre puoi sceglieredi richiedere la presenza di un autista.
                                     </Card.Text>
-
-                                </Card.ImgOverlay>
-                            </Card>
-
-                            <Card className="bg-dark text-white col-3 ">
-                                <Card.Img src="/assets/moto.jpg" alt="..." />
-                                <Card.ImgOverlay>
-                                    <Card.Title>Motore</Card.Title>
-                                    <Card.Text>
-                                        Scegli di noleggiare un auto utilitaria,una berlina o un SUV.
-                                        Inoltre puoi sceglieredi richiedere la presenza di un autista.
-                                    </Card.Text>
-
-                                </Card.ImgOverlay>
-                            </Card>
-
-                            <Card className="bg-dark text-white col-3 ">
-                                <Image src="/assets/bici.jpg" alt="..." />
-                                <Card.ImgOverlay>
-                                    <Card.Title>Bicicletta</Card.Title>
-                                    <Card.Text>
-                                        Scegli di noleggiare un auto utilitaria,una berlina o un SUV.
-                                        Inoltre puoi sceglieredi richiedere la presenza di un autista.
-                                    </Card.Text>
-
-                                </Card.ImgOverlay>
-                            </Card>
-
-                            <Card className="bg-dark text-white col-3 ">
-                                <Card.Img src="/assets/monopattino.jpg" alt="..." />
-                                <Card.ImgOverlay>
-                                    <Card.Title>Monopattino</Card.Title>
-                                    <Card.Text>
-                                        Scegli di noleggiare un auto utilitaria,una berlina o un SUV.
-                                        Inoltre puoi sceglieredi richiedere la presenza di un autista.
-                                    </Card.Text>
-
-                                </Card.ImgOverlay>
-                            </Card>
-
-
-                        </CardDeck>
-
-
-
-                    </Col>
-
-                    <Col className="col-12 ms-7 mt-3">
-
-                        <div className="buttonsGroup d-none d-md-flex justify-content-end">
-                            <Button variant="primary"> Continua </Button>
-                        </div>
-
-                    </Col>
-                </Row>
+                                    <Button variant="primary">Go somewhere</Button>
+                                </Card.Body>
+                        </Card>
+                        <Card className="animation-card border-0 shadow col-5 mx-auto">
+                            <Image className="col-8 align-self-start" src="/assets/svg/motore.svg" />
+                            <Card.Body >
+                                <Card.Title>Motore</Card.Title>
+                                <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                </Card.Text>
+                                <Button variant="primary">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
+                        <Card className="animation-card border-0 shadow col-5 mx-auto offset-1">
+                            <Image className="col-6 align-self-start" src="/assets/svg/bici.svg" />
+                            <Card.Body>
+                                <Card.Title>Bicicletta</Card.Title>
+                                <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                </Card.Text>
+                                <Button variant="primary">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
+                        <Card className="animation-card border-0 shadow col-5 mx-auto">
+                            <Image className="col-6 align-self-start" src="/assets/svg/monopattino.svg" />
+                            <Card.Body>
+                                <Card.Title>Monopattino</Card.Title>
+                                <Card.Text>
+                                    Some quick example text to build on the card title and make up the bulk of
+                                    the card's content.
+                                </Card.Text>
+                                <Button variant="primary">Go somewhere</Button>
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                </CardGroup>
             </Container>
         </View>
-
-    )
-
+    );
 }

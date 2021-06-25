@@ -9,15 +9,19 @@ import { ProgressBar, Form, Container, Row, Col } from 'react-bootstrap';
 import Button from '../../Utility/Button';
 import InputEmail from '../../Utility/FormsUtility/InputEmail';
 import InputPassword from '../../Utility/FormsUtility/InputPassword';
-import AlertErroreRegistrazione from './AlertErroreRegstrazione';
+import AlertMessage from '../../Utility/AlertMessage';
 
 const CryptoJS = require("crypto-js");
 
 // Form credenziali di accesso
 export default function CredenzialiForm() {
-    const [error, setError] = useState(false);
-    const [submit, setSubmit] = useState(false);
     const history = useHistory();
+    const [state, setState] = useState({
+        error: {
+            show: false,
+        },
+        submit: false
+    });
 
     function onSubmit(e) {
         e.preventDefault();
@@ -36,24 +40,25 @@ export default function CredenzialiForm() {
                     password: encryptedPassword,
                 }
             }
-            setSubmit(true);
+            setState({...state, submit: true});
             try {
                 // Mando una richiesta al server per registrare l'utente, passando i dati inseriti
                 axios.post("/autenticazione/registraUtente", userData)
                     .then((res) => {
-                        if (res.status === 201) {
-                            // Risposta 201 CREATED: visualizza la schermata di registrazione completata
-                            history.push("/signup", {
-                                type: "COMPLETATO"
-                            });
-                        }
+                        // 201 CREATED: visualizza la schermata di registrazione completata
+                        history.push("/signup", {
+                            type: "COMPLETATO"
+                        });
                     })
                     .catch(err => {
-                        if (err.response.status === 400) {
-                            // Risposta 400 BAD REQUEST: visualizza messaggio di errore "Account già esistente"
-                            setError(true)
-                        }
-                        setSubmit(false)
+                        // 400 BAD REQUEST: visualizza messaggio di errore "Account già esistente"
+                        setState({
+                            error: {
+                                show: true,
+                                message: err.response.data
+                            },
+                            submit: false
+                        })
                     })
             } catch (err) {
                 console.log(err.response.data.msg);
@@ -65,12 +70,18 @@ export default function CredenzialiForm() {
         <Container fluid className="d-flex align-items-center justify-content-center h-100">
             <Row className="gy-5">
                 <Col xs={{ span: 10, offset: 1 }}>
-                    <AlertErroreRegistrazione show={error} />
+                    <AlertMessage
+                        show={state.error.show}
+                        variant={"danger"}
+                        header={"Registrazione fallita!"}
+                        body={state.error.message}
+                        to={"/login"}
+                        button={"Accedi"} />
                 </Col>
                 <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
                     <h1 className="h1 text-center t-bold mb-4">Registrazione</h1>
                     <ProgressBar now={80} className="mb-4" />
-                    <Form onSubmit={onSubmit} onClick={() => setError(false)}>
+                    <Form onSubmit={onSubmit} onClick={() => setState({ ...state, error: { show: false } })}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                 <InputEmail controlId={"signupEmail"} />
@@ -92,7 +103,7 @@ export default function CredenzialiForm() {
                                 </InputPassword>
                                 <Form.Text id="confermaPasswordError" className="d-none text-danger">Le password non coincidono!</Form.Text>
                             </Col>
-                            <Button spinner={submit} variant={"Primary"} submit>Continua</Button>
+                            <Button spinner={state.submit} variant={"Primary"} submit>Continua</Button>
                         </Row>
                     </Form>
                 </Col>

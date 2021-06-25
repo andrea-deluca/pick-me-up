@@ -22,7 +22,7 @@ module.exports = {
                         // Ritorno il metodo di pagamento appena inserito (incluso l'id)
                         callback({
                             carta: metodoPagamento,
-                            code: 201
+                            status: 201
                         })
                     } else {
                         return callback(400)
@@ -30,7 +30,44 @@ module.exports = {
                 }
             )
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            return callback(500)
+        }
+    },
+
+    modificaCarta: async function (data, callback) {
+        const db = await makeDb(config);
+        const metodoPagamento = {
+            ...data.metodoPagamento,
+            id: new ObjectId()
+        }
+        try {
+            db.collection("Utente").updateOne(
+                { "_id": ObjectId(data.id) },
+                { $pull: { "metodiPagamento": { id: ObjectId(data.idCarta) } } },
+                (err, res) => {
+                    if (err) return callback(500);
+                    if (res) {
+                        db.collection("Utente").findOneAndUpdate(
+                            { "_id": ObjectId(data.id) },
+                            { $push: { "metodiPagamento": metodoPagamento } },
+                            {projecton: { "metodiPagamento": 1 }, returnOriginal: false},
+                            (err, res) => {
+                                if (err) return callback(500)
+                                if (res) {
+                                    return callback({
+                                        status: 200,
+                                        metodiPagamento: res.value.metodiPagamento
+                                    });
+                                }
+                            }
+                        )
+                    }
+                }
+            )
+        } catch (error) {
+            console.log(error);
+            return callback(500);
         }
     },
 
@@ -50,11 +87,14 @@ module.exports = {
                             { "_id": ObjectId(data.id) },
                             { projecton: { "metodiPagamento": 1 } },
                             (err, res) => {
-                                // Ritorno l'array dei metodi di pagamento aggiornato
-                                callback({
-                                    code: 200,
-                                    metodiPagamento: res.metodiPagamento
-                                })
+                                if (err) return callback(500)
+                                if (res) {
+                                    // Ritorno l'array dei metodi di pagamento aggiornato
+                                    callback({
+                                        status: 200,
+                                        metodiPagamento: res.metodiPagamento
+                                    })
+                                } else return callback(400)
                             }
                         )
                     }
@@ -62,6 +102,7 @@ module.exports = {
             )
         } catch (error) {
             console.log(error)
+            return callback(500);
         }
     }
 }

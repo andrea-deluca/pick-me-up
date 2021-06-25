@@ -15,7 +15,7 @@ module.exports = {
             db.collection("Utente").findOne({
                 "credenziali.email": datiUtente.credenziali.email
             }, (err, result) => {
-                if (err) return(callback(500));
+                if (err) return (callback(500));
                 // Se non esiste un account, effettuo registrazione
                 if (!result) {
                     // Calcolo un hash sull'email (univoca nel DB) per settare la chiave di attivazione dell'account
@@ -24,10 +24,10 @@ module.exports = {
                     db.collection("Utente").insertOne({
                         ...datiUtente, accountStatus: { activatorKey: activatorKey, active: false }, metodiPagamento: []
                     }, (err, res) => {
-                        if (err) return(callback(500));
+                        if (err) return (callback(500));
                         // invio email di conferma all'utente passando la sua chiave di attivazione e la sua email
                         mailModel.inviaConfermaRegistrazione({ "key": activatorKey, "email": datiUtente.credenziali.email })
-                            .catch(err => { throw createError(500) })
+                            .catch(err => callback(500))
                         return (callback(201))
                     })
                 } else {
@@ -36,6 +36,7 @@ module.exports = {
             })
         } catch (error) {
             console.log(error);
+            return callback(500);
         }
     },
 
@@ -47,11 +48,12 @@ module.exports = {
                 { "accountStatus.activatorKey": activatorKey },
                 { $set: { "accountStatus.activatorKey": null, "accountStatus.active": true } },
                 (err, res) => {
-                    if (err) return(callback(500));
-                    return (callback(202))
+                    if (err) return (callback(500));
+                    return (callback(200))
                 })
         } catch (error) {
             console.log(error)
+            return callback(500);
         }
     },
 
@@ -62,15 +64,15 @@ module.exports = {
             db.collection("Utente").findOne(
                 { "credenziali.email": credenziali.email },
                 (err, res) => {
-                    if (err) return(callback(500));
+                    if (err) return (callback(500));
                     // Se ho trovato un utente
                     if (res) {
                         // Controllo lo stato dell'account
-                        if (!res.accountStatus.active) return callback(405);
+                        if (!res.accountStatus.active) return callback(403);
                         const decryptedPassword = CryptoJS.AES.decrypt(res.credenziali.password, "pick-me-up").toString();
                         // Controllo la corrispondenza della password fornita
                         if (decryptedPassword !== CryptoJS.AES.decrypt(credenziali.encryptedPassword, "pick-me-up").toString()) {
-                            return callback(400);
+                            return callback(401);
                         }
                         // Genero un token di accesso
                         const payload = { email: res.credenziali.email };
@@ -80,7 +82,7 @@ module.exports = {
                         // Ritorno il token di accesso e i dati associati all'utente
                         return (callback({
                             token: token,
-                            code: 202,
+                            status: 202,
                             user: {
                                 id: res._id,
                                 nome: res.nome,
@@ -105,7 +107,8 @@ module.exports = {
                 }
             )
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            return callback(500);
         }
     },
 
@@ -132,14 +135,15 @@ module.exports = {
                     if (res.value) {
                         // Invio all'utente una email contenente la nuova password
                         mailModel.inviaRecuperoPassword({ email: user.email, password: randomPassword })
-                            .catch(err => { throw createError(500) })
-                        return (callback(201))
+                            .catch(err => callback(500))
+                        return (callback(200))
                     } else {
                         return (callback(404));
                     }
                 })
         } catch (error) {
-            console.log(error)
+            console.log(error);
+            return callback(500);
         }
     }
 }

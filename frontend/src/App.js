@@ -16,7 +16,6 @@ import './App.css';
 import './Components/Animations.css';
 
 // Custom Components
-import WithAuth from './WithAuth';
 import Navbar from './Components/Utility/Navbar';
 
 // Schermate Principali

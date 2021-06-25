@@ -12,13 +12,17 @@ import AlertMessage from '../../Utility/AlertMessage';
 import InputEmail from '../../Utility/FormsUtility/InputEmail';
 
 export default function EmailModal(props) {
-    const [state, setState] = useState({
-        error: false,
-        success: false,
-        submit: false
-    })
     const { session, setSession } = useSession();
     const history = useHistory()
+    const [state, setState] = useState({
+        error: {
+            show: false,
+        },
+        success: {
+            show: false
+        },
+        submit: false
+    })
 
     function onSubmit(e) {
         e.preventDefault();
@@ -31,15 +35,11 @@ export default function EmailModal(props) {
         try {
             axios.put("/profilo/modificaEmail", data)
                 .then(res => {
-                    if (res.status === 200) {
-                        setSession({ ...session, email: res.data.toString() })
-                        setState({ ...state, submit: false, success: true })
-                    }
+                    setSession({ ...session, email: res.data.email.toString() })
+                    setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {
-                    if (err.response.status === 404) {
-                        setState({ ...state, error: true, submit: false });
-                    }
+                    setState({ ...state, submit: false, error: { show: true, message: err.response.data } });
                 })
         } catch (error) {
             console.log(error.response.data.msg)
@@ -58,14 +58,14 @@ export default function EmailModal(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {state.success || state.error ?
+                {state.success.show || state.error.show ?
                     <AlertMessage
-                        show={state.success || state.error}
-                        variant={state.success ? "success" : "danger"}
-                        header={state.success ? "Operazione completata con successo" : "Operazione fallita!"}
-                        body={state.success ? "La modifica della tua email è andata a buon fine." : "La modifica della tua email non è andata a buon fine."}
+                        show={state.success.show || state.error.show}
+                        variant={state.success.show ? "success" : "danger"}
+                        header={state.success.show ? "Operazione completata con successo" : "Operazione fallita!"}
+                        body={state.success.show ? state.success.message : state.error.message}
                         button={"Indietro"}
-                        onClick={() => { state.success ? history.go(0) : setState({ ...state, error: false }) }} />
+                        onClick={() => { state.success.show ? history.go(0) : setState({ ...state, error: {show: false} }) }} />
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 10, offset: 1 }}>

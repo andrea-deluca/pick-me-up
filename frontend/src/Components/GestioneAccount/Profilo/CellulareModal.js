@@ -11,13 +11,17 @@ import Button from '../../Utility/Button';
 import AlertMessage from '../../Utility/AlertMessage';
 
 export default function CellulareModal(props) {
-    const [state, setState] = useState({
-        error: false,
-        success: false,
-        submit: false
-    })
     const { session, setSession } = useSession();
     const history = useHistory()
+    const [state, setState] = useState({
+        error: {
+            show: false,
+        },
+        success: {
+            show: false,
+        },
+        submit: false
+    })
 
     function onSubmit(e) {
         e.preventDefault();
@@ -30,15 +34,11 @@ export default function CellulareModal(props) {
         try {
             axios.put("/profilo/modificaCellulare", data)
                 .then(res => {
-                    if (res.status === 200) {
-                        setSession({ ...session, cellulare: res.data.toString() })
-                        setState({ ...state, submit: false, success: true })
-                    }
+                    setSession({ ...session, cellulare: res.data.cellulare.toString() })
+                    setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {
-                    if (err.response.status === 404) {
-                        setState({ ...state, error: true, submit: false });
-                    }
+                    setState({ ...state, submit: false, error: { show: true, message: err.response.data } });
                 })
         } catch (error) {
             console.log(error.response.data.msg)
@@ -56,14 +56,14 @@ export default function CellulareModal(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                {state.success || state.error ?
+                {state.success.show || state.error.show ?
                     <AlertMessage
-                        show={state.success || state.error}
-                        variant={state.success ? "success" : "danger"}
-                        header={state.success ? "Operazione completata con successo" : "Operazione fallita!"}
-                        body={state.success ? "La modifica del tuo cellulare è andata a buon fine." : "La modifica del tuo cellulare non è andata a buon fine."}
+                        show={state.success.show || state.error.show}
+                        variant={state.success.show ? "success" : "danger"}
+                        header={state.success.show ? "Operazione completata con successo" : "Operazione fallita!"}
+                        body={state.success.show ? state.success.message : state.error.message}
                         button={"Indietro"}
-                        onClick={() => { state.success ? history.go(0) : setState({ ...state, error: false }) }} />
+                        onClick={() => { state.success.show ? history.go(0) : setState({ ...state, error: {show: false} }) }} />
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 10, offset: 1 }}>

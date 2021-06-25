@@ -10,6 +10,7 @@ import { faTrashAlt, faEdit, faCreditCard } from '@fortawesome/free-solid-svg-ic
 // Custom Components
 import Button from "../../Utility/Button";
 import RimuoviMetodoModal from './RimuoviMetodoModal';
+import ModificaMetodoModal from './ModificaMetodoModal';
 
 // Card metodo di pagamento
 export default function CreditCard(props) {
@@ -40,7 +41,7 @@ export default function CreditCard(props) {
                     </Row>
                 </Card.Text>
                 <div className="buttonsGroup justify-content-start">
-                    <Button variant={"Light"}>
+                    <Button variant={"Light"} onClick={() => setModals({ ...modals, updateModal: true })}>
                         <FontAwesomeIcon className="me-2" icon={faEdit} fixedWidth />
                         Modifica
                     </Button>
@@ -49,6 +50,7 @@ export default function CreditCard(props) {
                         Elimina
                     </Button>
                     <RimuoviMetodoModal idCarta={props.idCarta} show={modals.deleteModal} onHide={() => setModals({ ...modals, deleteModal: false })} />
+                    <ModificaMetodoModal index={props.index} idCarta={props.idCarta} show={modals.updateModal} onHide={() => setModals({ ...modals, updateModal: false })} />
                 </div>
             </Card.Body>
         </Card>

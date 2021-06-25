@@ -3,43 +3,56 @@ var router = express.Router();
 let autenticazioneModel = require("../models/Autenticazione");
 
 router.post('/registraUtente', function (req, res) {
-  autenticazioneModel.registraUtente(req.body, function (status) {
-    if (status === 400) {
-      res.status(status);
-      console.log(status)
-      res.send();
+  autenticazioneModel.registraUtente(req.body, function (result) {
+    if (result === 400) {
+      res.status(result).send("L'email fornita risulta essere già associata ad un account esistente.");
+    } else if (result === 201) {
+      res.status(result).send();
     } else {
-      res.status(status);
-      res.send()
-      console.log(req.body)
-      console.log("Cliente registrato")
+      res.status(result).send("Internal Server Error.")
     }
   })
 });
 
 router.get('/confermaRegistrazione/:key', function (req, res) {
-  autenticazioneModel.confermaRegistrazione(req.params.key, function (status) {
-    res.status(status);
-    console.log(status);
-    res.redirect("http://192.168.1.9:3000/registrazione-confermata");
+  autenticazioneModel.confermaRegistrazione(req.params.key, function (result) {
+    if (result === 500) {
+      res.status(result).send("Internal Server Error.");
+    } else {
+      res.status(result);
+      res.redirect("http://localhost:3000/registrazione-confermata");
+    }
   })
 })
 
 router.post('/accedi', function (req, res) {
-  autenticazioneModel.accedi(req.body, function (status) {
-    if (status.code === 202) {
-      res.status(status.code);
-      //res.cookie("token", status.utente.token, { httpOnly: true });
-      res.send(status)
+  autenticazioneModel.accedi(req.body, function (result) {
+    if (result === 403) {
+      res.status(result).send(`Il tuo account non risulta essere attivato.
+      Procedi con la verifica via email prima di accedere.`);
+    } else if (result === 401) {
+      res.status(result).send(`Password errata.`);
+    } else if (result === 404) {
+      res.status(result).send(`Non è stato trovato nessun account associato
+      all'email fornita. Procedi prima con la registrazione.`);
+    } else if (result === 500) {
+      res.status(result).send("Internal Server Error.")
     } else {
-      res.status(status).send()
+      res.status(result.status).send(result);
     }
   })
 });
 
 router.post("/recupero-password", function (req, res) {
-  autenticazioneModel.recuperaPassword(req.body, function (status) {
-    res.status(status).send();
+  autenticazioneModel.recuperaPassword(req.body, function (result) {
+    if (result === 404) {
+      res.status(result).send(`Non è stato trovato nessun account associato
+      all'email fornita.`)
+    } else if(result === 500){
+      res.status(result).send("Internal Server Error");
+    } else {
+      res.status(result).send();
+    }
   })
 });
 
