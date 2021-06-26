@@ -1,29 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router';
+import axios from 'axios'
 
 import { Container, Row, Col, Image, Card, CardGroup } from 'react-bootstrap';
 
 import View from "../../Utility/View"
 import Button from "../../Utility/Button";
+import AlertMessage from '../../Utility/AlertMessage'
 
 function TipologiaCard(props) {
     const history = useHistory();
+    const [state, setState] = useState({
+        error: {
+            show: false
+        },
+        submit: false
+    })
 
     function onClick(e) {
         e.preventDefault();
         const datiPrenotazione = {
             tipologiaMezzo: props.id
         }
-        if (props.id === "auto") {
-            history.push("/prenota", {
-                payload: datiPrenotazione,
-                type: "RICHIESTA_AUTISTA"
-            })
-        } else {
-            history.push("/prenota", {
-                payload: datiPrenotazione,
-                type: "FORM_PRENOTAZIONE"
-            })
+        setState({ ...state, submit: true })
+        try {
+            axios.post("/prenotazione/fetchDepositi", datiPrenotazione)
+                .then(res => {
+                    if (props.id === "auto") {
+                        history.push("/prenota", {
+                            payload: {
+                                datiPrenotazione: {
+                                    ...datiPrenotazione
+                                },
+                                depositi: res.data
+                            },
+                            type: "RICHIESTA_AUTISTA"
+                        })
+                    } else {
+                        history.push("/prenota", {
+                            payload: {
+                                datiPrenotazione: {
+                                    ...datiPrenotazione
+                                },
+                                depositi: res.data
+                            },
+                            type: "FORM_PRENOTAZIONE"
+                        })
+                    }
+                })
+                .catch(err => {
+                    setState({ ...state, submit: false, error: { show: true, message: err.response.data } })
+                })
+        } catch (error) {
+            console.log(error.response.data.msg)
         }
     }
 
@@ -39,7 +68,7 @@ function TipologiaCard(props) {
                         </Card.Title>
                         <Card.Text className="t-light">{props.text}</Card.Text>
                     </div>
-                    <Button onClick={onClick} variant="primary">{props.button}</Button>
+                    <Button spinner={state.submit} onClick={onClick} variant="primary">{props.button}</Button>
                 </Card.Body>
             </Card>
         </Col>

@@ -10,7 +10,6 @@ import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 // Input data di nascita
 export default function InputDataNascita() {
     const [checkData, setCheckData] = useState(false);
-    const [value, onChange] = useState(new Date());
 
     // Gestisce il controllo della data di nascita e che l'utente abbia almeno 14 anni
     useEffect(() => {

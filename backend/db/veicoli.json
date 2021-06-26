@@ -1,0 +1,169 @@
+[{
+    "auto": [
+        {
+            "marca" : "Renault",
+            "modello" : "Clio",
+            "carburante" : "benzina",
+            "cambio" : "manuale",
+            "targa" : "BV367TM",
+            "tariffaOraria " : 80 ,
+            "numeroPosti " : 4
+        },
+
+        {
+            "marca" : "Fiat",
+            "modello" : "Panda",
+            "carburante" : "elettrica",
+            "cambio" : "automatico",
+            "targa" : "AH346ML",
+            "tariffaOraria " : 80,
+            "numeroPosti " : 4
+        },
+
+        {
+            "marca" : "Audi",
+            "modello" : "A1",
+            "carburante" : "diesel",
+            "cambio" : "manuale",
+            "targa" : "AH346MT",
+            "tariffaOraria " : 100,
+            "numeroPosti " : 4
+        },
+
+        {
+            "marca" : "Peugeot",
+            "modello" : "206",
+            "carburante" : "metano",
+            "cambio" : "manuale",
+            "targa" : "ED654NJ",
+            "tariffaOraria" : 110,
+            "numeroPosti" : 4
+        },
+
+        {
+            "marca" : "Fiat",
+            "modello" : "500X",
+            "carburante" : "benzina",
+            "cambio" : "manuale",
+            "targa" : "SD564ZN",
+            "tariffaOraria" : 150,
+            "numeroPosti" : 5
+        }
+    ],
+
+    "moto" : [
+
+        {
+            "marca" : "honda",
+            "modello" : "Sh",
+            "carburante" : "benzina",
+            "targa" : "AS654GH",
+            "cilindrata" : "125cc",
+            "tariffaOraria" : 50
+        },
+
+        {
+            "marca" : "Piaggio",
+            "modello" : "Vespa",
+            "carburante" : "benzina",
+            "targa" : "AH346MY",
+            "cilindrata" : "50cc",
+            "tariffaOraria" : 30
+        },
+
+        {
+            "marca" : "Piaggio",
+            "modello" : "Liberty",
+            "carburante" : "benzina",
+            "targa" : "AH346ML",
+            "cilindrata" : "50cc",
+            "tariffaOraria" : 30
+        },
+
+        {
+            "marca" : "Aprilia",
+            "modello" : "Scarabeo",
+            "carburante" : "benzina",
+            "targa" : "UY654LM",
+            "cilindrata" : "50cc",
+            "tariffaOraria" : 40
+        },
+
+        {
+            "marca" : "Piaggio",
+            "modello" : "Liberty",
+            "carburante" : "benzina",
+            "targa" : "AH346ML",
+            "cilindrata" : "125cc",
+            "tariffaOraria" : 50
+        },
+
+
+        {
+            "marca" : "Kymco",
+            "modello" : "Agility 125 R 16",
+            "carburante" : "benzina",
+            "targa" : "EW362PR",
+            "cilindrata" : "125cc",
+            "tariffaOraria" : 50
+        }
+        
+        
+    ],
+
+    "bicicletta" : [
+
+        {
+            "marca" : "Pininfarina",
+            "tariffaOraria" : 4,
+            "id" : 100
+
+        },
+        
+        {
+            "marca" : "BMX",
+            "tariffaOraria" : 4,
+            "id" : 101
+            
+        },
+
+        {
+            "marca" : "Licorne",
+            "tariffaOraria" : 4,
+            "id" : 102
+        },
+
+        {
+            "marca" : "BIKESTAR",
+            "tariffaOraria" : 4,
+            "id" : 103
+        }
+    ],
+
+    "monopattino" : [
+        
+        {
+            "marca" : "Xiaomi",
+            "modello" : "MI Electric Scooter Pro 2",
+            "carburante" : "elettrico",
+            "tariffaOraria" : 10,
+            "id" : 200
+        },
+
+        {
+            "marca" : "Ninebot",
+            "modello" : "Segway E22E",
+            "carburante" : "elettrico",
+            "tariffaOraria" : 10,
+            "id" : 201            
+        },
+
+        {
+            "marca" : "Kugoo",
+            "modello" : "S1 Pro",
+            "carburante" : "elettrico",
+            "tariffaOraria" : 10,
+            "id" : 202
+        }
+    ]
+}]

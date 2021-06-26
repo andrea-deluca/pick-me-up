@@ -13,6 +13,7 @@ import AlertMessage from '../../Utility/AlertMessage';
 export default function ModificaMetodoModal(props) {
     const { session, setSession } = useSession();
     const history = useHistory()
+    const metodoPagamento = session.metodiPagamento[props.index]
     const [state, setState] = useState({
         error: {
             show: false,
@@ -53,7 +54,7 @@ export default function ModificaMetodoModal(props) {
             console.log(error.response.data.msg)
         }
     }
-
+    
     return (
         <Modal
             {...props}
@@ -79,25 +80,25 @@ export default function ModificaMetodoModal(props) {
                             <Col xs={{ span: 5, offset: 1 }}>
                                 <Form.Group controlId="titolareCarta">
                                     <Form.Label>Titolare</Form.Label>
-                                    <Form.Control type="text" placeholder="Nome e cognome del titolare" placeholder={session.metodiPagamento[props.index].titolare} required />
+                                    <Form.Control type="text" placeholder="Nome e cognome del titolare" placeholder={metodoPagamento.titolare} required />
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5 }}>
                                 <Form.Group controlId="numeroCarta">
                                     <Form.Label>Numero Carta</Form.Label>
-                                    <Form.Control type="text" placeholder="Inserisci il numero della carta" placeholder={session.metodiPagamento[props.index].numeroCarta} required />
+                                    <Form.Control type="text" placeholder="Inserisci il numero della carta" placeholder={metodoPagamento.numeroCarta} required />
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5, offset: 1 }} >
                                 <Form.Group controlId="dataScadenzaCarta">
                                     <Form.Label>Data di scadenza</Form.Label>
-                                    <Form.Control type="date" placeholder="Inserisci data di scadenza" placeholder={session.metodiPagamento[props.index].dataScadenzaCarta} required />
+                                    <Form.Control type="date" placeholder="Inserisci data di scadenza" placeholder={metodoPagamento.dataScadenzaCarta} required />
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5 }}>
                                 <Form.Group controlId="codiceCVV">
                                     <Form.Label>CVV</Form.Label>
-                                    <Form.Control type="text" placeholder="Inserisci CVV" pattern="\d{3}" placeholder={session.metodiPagamento[props.index].cvv} required />
+                                    <Form.Control type="text" placeholder="Inserisci CVV" pattern="\d{3}" placeholder={metodoPagamento.cvv} required />
                                 </Form.Group>
                             </Col>
                             <div className="buttonsGroup col-10 offset-1 justify-content-end">

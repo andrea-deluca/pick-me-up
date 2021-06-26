@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 // Bootstrap Components
 import { Row, Col, Card } from 'react-bootstrap';

@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 // Bootstrap Components
-import { Container, Row, Col, ProgressBar, Image } from 'react-bootstrap';
+import { Container, Row, Image } from 'react-bootstrap';
 
 // Custom Components
 import Button from '../../Utility/Button';
@@ -14,7 +14,10 @@ export default function SchermataRichiestaAutista() {
         e.preventDefault();
         const datiPrenotazione = {
             ...history.location.state.payload,
-            autista: true
+            datiPrenotazione: {
+                ...history.location.state.payload.datiPrenotazione,
+                autista: true
+            }
         }
         history.push("/prenota", {
             payload: datiPrenotazione,
@@ -26,7 +29,10 @@ export default function SchermataRichiestaAutista() {
         e.preventDefault();
         const datiPrenotazione = {
             ...history.location.state.payload,
-            autista: false
+            datiPrenotazione: {
+                ...history.location.state.payload.datiPrenotazione,
+                autista: false
+            }
         }
         history.push("/prenota", {
             payload: datiPrenotazione,
@@ -38,7 +44,7 @@ export default function SchermataRichiestaAutista() {
         <Container fluid className="d-flex align-items-center justify-content-center h-100">
             <Row className="gy-3">
                 <div className="col-3 mx-auto">
-                    <Image fluid className="" src="/assets/svg/autista.svg" />
+                    <Image fluid className="" src="/assets/svg/autista.svg" alt="richiesta autista"/>
                 </div>
                 <h1 className="h1 t-bold text-center">Desideri richiedere la presenza di un autista?</h1>
                 <p className="h6 text-center t-light">Per continuare con la prenotazione dell'auto specifica se desideri la presenza di un autista</p>

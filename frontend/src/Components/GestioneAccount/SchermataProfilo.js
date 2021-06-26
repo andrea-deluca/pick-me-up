@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router';
 import useToken from '../../Hooks/useToken';
 import useSession from '../../Hooks/useSession';
@@ -45,7 +45,7 @@ export default function SchermataProfilo() {
                             animate={{ translateY: 0, opacity: 1 }}
                             exit={{ translateY: 100, opacity: 0 }}
                             transition={{ duration: 0.3 }}>
-                            <Row className="row my-5 d-flex d-lg-none">
+                            <Row className="row my-5 d-flex d-lg-none align-items-center">
                                 <Col xs={{ span: 3 }}>
                                     <Button variant={"White"} onClick={() => setModals({ ...modals, cellulareModal: true })}>
                                         <FontAwesomeIcon className="me-2" icon={faMobileAlt} fixedWidth />Modifica cellulare

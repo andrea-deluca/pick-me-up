@@ -4,7 +4,7 @@ import useSession from '../../../Hooks/useSession';
 import axios from 'axios';
 
 // Bootstrap Components
-import { Row, Col, Modal, Form } from 'react-bootstrap';
+import { Row, Col, Modal } from 'react-bootstrap';
 
 // Custom Components
 import Button from '../../Utility/Button';

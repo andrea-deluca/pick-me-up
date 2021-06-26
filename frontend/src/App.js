@@ -1,9 +1,6 @@
 import React from 'react';
 import { Switch, Route, useLocation } from "react-router-dom";
 
-// Custom Hooks
-import useToken from './Hooks/useToken'
-
 // Framer Motion Components
 import { AnimatePresence } from 'framer-motion';
 

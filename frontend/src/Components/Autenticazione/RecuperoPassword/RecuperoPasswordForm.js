@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 // Bootstrap Components
-import { Image, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
+import { Image, Form, Container, Row, Col } from 'react-bootstrap';
 
 // Custom Components
 import Button from '../../Utility/Button'

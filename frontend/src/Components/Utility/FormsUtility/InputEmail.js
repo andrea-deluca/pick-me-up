@@ -24,7 +24,7 @@ export default function InputEmail(props) {
             }
         }
         setValidateFormat(false);
-    }, [validateFormat])
+    }, [validateFormat, props.controlId])
 
     return (
         <Form.Group controlId={props.controlId}>

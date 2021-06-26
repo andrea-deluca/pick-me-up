@@ -1,47 +1,149 @@
 import React from 'react';
-import { Col, Row, Container, Form } from 'react-bootstrap'
-import Maps from './Map';
+import { useHistory } from 'react-router-dom';
+
+import { Col, Row, Container, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+
+import Map from './Map';
 import Button from '../../Utility/Button';
+import InputOrario from '../../Utility/FormsUtility/InputOrario';
 
+export default function SchermataFormPrenotazione() {
+    const history = useHistory()
 
-export default function SchermataMappa() {
+    function checkValidity() {
+
+        document.querySelector("#dataRitiro").classList.remove("border-danger", "text-danger")
+        document.querySelector("#dataConsegna").classList.remove("border-danger", "text-danger")
+        document.querySelector("#oraRitiro").classList.remove("border-danger", "text-danger")
+        document.querySelector("#oraConsegna").classList.remove("border-danger", "text-danger")
+        document.querySelector("#dataRitiro").classList.remove("border-success", "text-success")
+        document.querySelector("#dataConsegna").classList.remove("border-success", "text-success")
+        document.querySelector("#oraRitiro").classList.remove("border-success", "text-success")
+        document.querySelector("#oraConsegna").classList.remove("border-success", "text-success")
+
+        const dataRitiro = document.querySelector("#dataRitiro")
+        const dataConsegna = document.querySelector("#dataConsegna")
+
+        // Controllo sulle date inserite
+        if (new Date() > new Date(dataRitiro.value)) {
+            return false;
+        } else if (new Date() > new Date(dataConsegna.value)) {
+            return false
+        } else if (new Date(dataRitiro.value) > new Date(dataConsegna.value)) {
+            return false;
+        }
+
+        const orarioRitiro = document.querySelector("#oraRitiro")
+        const orarioConsegna = document.querySelector("#oraConsegna")
+        const oraRitiro = parseInt(orarioRitiro.value.split(":")[0]);
+        const minutiRitiro = parseInt(orarioRitiro.value.split(":")[1]);
+        const oraConsegna = parseInt(orarioConsegna.value.split(":")[0]);
+        const minutiConsegna = parseInt(orarioConsegna.value.split(":")[1]);
+
+        // Controllo sugli orari inseriti
+        if (new Date(dataRitiro.value).toString() === new Date(dataConsegna.value).toString()) {
+            if (oraRitiro > oraConsegna) {
+                return false
+            } else if ((oraRitiro === oraConsegna) && (minutiRitiro >= minutiConsegna)) {
+                return false
+            }
+        }
+
+        return true
+    }
+
+    function onSubmit(e) {
+        e.preventDefault()
+        if (!checkValidity()) {
+            document.querySelector("#dataRitiro").classList.add("border-danger", "text-danger")
+            document.querySelector("#dataConsegna").classList.add("border-danger", "text-danger")
+            document.querySelector("#oraRitiro").classList.add("border-danger", "text-danger")
+            document.querySelector("#oraConsegna").classList.add("border-danger", "text-danger")
+            return
+        } else {
+            document.querySelector("#dataRitiro").classList.add("border-success", "text-success")
+            document.querySelector("#dataConsegna").classList.add("border-success", "text-success")
+            document.querySelector("#oraRitiro").classList.add("border-success", "text-success")
+            document.querySelector("#oraConsegna").classList.add("border-success", "text-success")
+        }
+    }
+
     return (
         <Container fluid className="p-0 h-100 align-items-center justify-content-center">
             <Row className="h-100 g-0 align-items-center">
                 <Col xs={{ span: 5 }} className="mx-auto">
                     <h1 className="h1 text-center t-bold mb-4">Prenotazione</h1>
-                    <Form>
+                    <Form onSubmit={onSubmit}>
                         <Row className="gy-4">
-                            <Form.Group controlId="">
+                            <Form.Group controlId="ritiro">
                                 <Form.Label>Località di ritiro</Form.Label>
-                                <Form.Control type="text" placeholder="Inserisci località di ritiro, un indirizzo o seleziona un marker dalla mappa" />
+                                <Form.Control as="select" className="form-select" required>
+                                    <option value="" disabled selected>Seleziona località di ritiro</option>
+                                    {history.location.state.payload.depositi.map(key => {
+                                        return (
+                                            <option value={key.id}>{key.nome}</option>
+                                        );
+                                    })}
+                                </Form.Control>
                             </Form.Group>
-                            <Form.Group className="col-6 col-lg-6" controlId="">
-                                <Form.Label>Data di ritiro</Form.Label>
-                                <Form.Control type="date" placeholder="Seleziona data di ritiro" />
+                            <Form.Group className="col-6 col-lg-6" controlId="dataRitiro">
+                                <Form.Label className="pe-2">Data di ritiro</Form.Label>
+                                <OverlayTrigger
+                                    placement={"top"}
+                                    overlay={
+                                        <Tooltip id="dataNascitaInfo">
+                                            Formato valido per la data di ritiro: AAAA-MM-GG.
+                                        </Tooltip>}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                </OverlayTrigger>
+                                <Form.Control type="date" placeholder="Seleziona data di ritiro" pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
                             </Form.Group>
-                            <Form.Group className="col-6 col-lg-6" controlId="">
-                                <Form.Label>Ora di ritiro</Form.Label>
-                                <Form.Control type="time" placeholder="Seleziona ora di ritiro" />
-                            </Form.Group>
-                            <Form.Group controlId="">
+                            <Col xs={{ span: 6 }}>
+                                <InputOrario
+                                    controlId={"oraRitiro"}
+                                    default={"Seleziona ora di ritiro"}
+                                    label={"Ora di ritiro"}
+                                    required />
+                            </Col>
+                            <Form.Group controlId="consegna">
                                 <Form.Label>Località di consegna</Form.Label>
-                                <Form.Control type="text" placeholder="Inserisci località di consegna, un indirizzo o seleziona un marker dalla mappa" />
+                                <Form.Control as="select" className="form-select" required>
+                                    <option value="" disabled selected>Seleziona località di consegna</option>
+                                    {history.location.state.payload.depositi.map(key => {
+                                        return (
+                                            <option value={key.id}>{key.nome}</option>
+                                        );
+                                    })}
+                                </Form.Control>
                             </Form.Group>
-                            <Form.Group className="col-6 col-lg-6" controlId="">
-                                <Form.Label>Data di consegna</Form.Label>
-                                <Form.Control type="date" placeholder="Seleziona data di consegna" />
+                            <Form.Group className="col-6 col-lg-6" controlId="dataConsegna">
+                                <Form.Label className="pe-2">Data di consegna</Form.Label>
+                                <OverlayTrigger
+                                    placement={"top"}
+                                    overlay={
+                                        <Tooltip id="dataNascitaInfo">
+                                            Formato valido per la data di consegna: AAAA-MM-GG.
+                                        </Tooltip>}>
+                                    <FontAwesomeIcon icon={faInfoCircle} />
+                                </OverlayTrigger>
+                                <Form.Control type="date" placeholder="Seleziona data di consegna" pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
                             </Form.Group>
-                            <Form.Group className="col-6 col-lg-6" controlId="">
-                                <Form.Label>Ora di consegna</Form.Label>
-                                <Form.Control type="time" placeholder="Seleziona ora di consegna" />
-                            </Form.Group>
+                            <Col xs={{ span: 6 }}>
+                                <InputOrario
+                                    controlId={"oraConsegna"}
+                                    default={"Seleziona ora di consegna"}
+                                    label={"Ora di consegna"}
+                                    required />
+                            </Col>
                             <Button variant={"Primary"} submit >Continua</Button>
                         </Row>
                     </Form>
                 </Col>
                 <Col xs={{ span: 6 }} className="h-100">
-                    <Maps />
+                    <Map />
                 </Col>
             </Row>
         </Container>

@@ -11,10 +11,11 @@ var autenticazioneRouter = require('./routes/autenticazione');
 var profiloRouter = require("./routes/profilo");
 var walletRouter = require("./routes/wallet");
 var patenteRouter = require("./routes/patente")
+var prenotazioneRouter = require("./routes/prenotazione")
 
 var app = express();
 
-// view engine setup 8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+// view engine setup 
 //app.set('views', path.join(__dirname, 'views'));
 //app.set('view engine', 'ejs');
 
@@ -31,6 +32,7 @@ app.use('/autenticazione', autenticazioneRouter);
 app.use('/profilo', profiloRouter);
 app.use('/wallet', walletRouter);
 app.use('/patente', patenteRouter);
+app.use('/prenotazione', prenotazioneRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

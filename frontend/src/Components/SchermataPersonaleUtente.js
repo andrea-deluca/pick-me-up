@@ -43,8 +43,8 @@ function LinkCard(props) {
 
 // Schermata personale utente
 export default function SchermataPersonaleUtente() {
-    const { token, setToken } = useToken();
-    const { session, setSession } = useSession();
+    const { token } = useToken();
+    const { session } = useSession();
 
     if (!token) {
         return (<Redirect to={"/login"} />)
@@ -63,7 +63,7 @@ export default function SchermataPersonaleUtente() {
                             </Col>
                             <div className="d-flex flex-column align-items-start">
                                 <h1 className="t-bold">{`Bentornato, ${session.nome}!`}</h1>
-                                <div className="d-none d-lg-flex buttonsGroup">
+                                <div className="buttonsGroup">
                                     <Button to="/gestione-account/profilo" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
                                     <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
                                 </div>
