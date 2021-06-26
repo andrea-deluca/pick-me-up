@@ -12,4 +12,14 @@ router.post("/fetchDepositi", function(req, res){
     })
 })
 
+router.post("/fetchVeicoliDisponibili", function (req, res){
+    prenotazioneModel.fetchVeicoliDisponibili(req.body, function(result){
+        if(result === 500){
+            res.status(result).send("Internal Server Error")
+        } else{
+            res.status(result.status).send(result.veicoli)
+        }
+    })
+})
+
 module.exports = router

@@ -29,9 +29,7 @@ function TipologiaCard(props) {
                     if (props.id === "auto") {
                         history.push("/prenota", {
                             payload: {
-                                datiPrenotazione: {
-                                    ...datiPrenotazione
-                                },
+                                datiPrenotazione: datiPrenotazione,
                                 depositi: res.data
                             },
                             type: "RICHIESTA_AUTISTA"
@@ -39,9 +37,7 @@ function TipologiaCard(props) {
                     } else {
                         history.push("/prenota", {
                             payload: {
-                                datiPrenotazione: {
-                                    ...datiPrenotazione
-                                },
+                                datiPrenotazione: datiPrenotazione,
                                 depositi: res.data
                             },
                             type: "FORM_PRENOTAZIONE"

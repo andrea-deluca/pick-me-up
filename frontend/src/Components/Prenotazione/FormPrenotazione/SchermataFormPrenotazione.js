@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 
 import { Col, Row, Container, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
@@ -28,11 +29,30 @@ export default function SchermataFormPrenotazione() {
         const dataConsegna = document.querySelector("#dataConsegna")
 
         // Controllo sulle date inserite
-        if (new Date() > new Date(dataRitiro.value)) {
+        const now = new Date();
+        const dateRitiro = new Date(dataRitiro.value)
+        const dateConsegna = new Date(dataConsegna.value)
+        if (now.getFullYear() > dateRitiro.getFullYear()) {
             return false;
-        } else if (new Date() > new Date(dataConsegna.value)) {
-            return false
-        } else if (new Date(dataRitiro.value) > new Date(dataConsegna.value)) {
+        } else if (now.getFullYear() === dateRitiro.getFullYear()) {
+            if (now.getMonth() > dateRitiro.getMonth()) {
+                return false
+            } else if (now.getMonth() === dateRitiro.getMonth()) {
+                if (now.getDate() > dateRitiro.getDate()) {
+                    return false
+                }
+            }
+        } else if (now.getFullYear() > dateConsegna.getFullYear()) {
+            return false;
+        } else if (now.getFullYear() === dateConsegna.getFullYear()) {
+            if (now.getMonth() > dateConsegna.getMonth()) {
+                return false
+            } else if (now.getMonth() === dateConsegna.getMonth()) {
+                if (now.getDate() > dateConsegna.getDate()) {
+                    return false
+                }
+            }
+        } else if (dateRitiro > dateConsegna) {
             return false;
         }
 
@@ -57,17 +77,55 @@ export default function SchermataFormPrenotazione() {
 
     function onSubmit(e) {
         e.preventDefault()
+        const localitaRitiro = document.querySelector("#ritiro")
+        const localitaConsegna = document.querySelector("#consegna")
+        const dataRitiro = document.querySelector("#dataRitiro")
+        const dataConsegna = document.querySelector("#dataConsegna")
+        const orarioRitiro = document.querySelector("#oraRitiro")
+        const orarioConsegna = document.querySelector("#oraConsegna")
+
         if (!checkValidity()) {
-            document.querySelector("#dataRitiro").classList.add("border-danger", "text-danger")
-            document.querySelector("#dataConsegna").classList.add("border-danger", "text-danger")
-            document.querySelector("#oraRitiro").classList.add("border-danger", "text-danger")
-            document.querySelector("#oraConsegna").classList.add("border-danger", "text-danger")
+            dataRitiro.classList.add("border-danger", "text-danger")
+            dataConsegna.classList.add("border-danger", "text-danger")
+            orarioRitiro.classList.add("border-danger", "text-danger")
+            orarioConsegna.classList.add("border-danger", "text-danger")
             return
         } else {
-            document.querySelector("#dataRitiro").classList.add("border-success", "text-success")
-            document.querySelector("#dataConsegna").classList.add("border-success", "text-success")
-            document.querySelector("#oraRitiro").classList.add("border-success", "text-success")
-            document.querySelector("#oraConsegna").classList.add("border-success", "text-success")
+            dataRitiro.classList.add("border-success", "text-success")
+            dataConsegna.classList.add("border-success", "text-success")
+            orarioRitiro.classList.add("border-success", "text-success")
+            orarioConsegna.classList.add("border-success", "text-success")
+            const datiPrenotazione = {
+                ...history.location.state.payload.datiPrenotazione,
+                ritiro: {
+                    localita: localitaRitiro.value,
+                    data: dataRitiro.value,
+                    orario: orarioRitiro.value,
+
+                },
+                consegna: {
+                    localita: localitaConsegna.value,
+                    data: dataConsegna.value,
+                    orario: orarioConsegna.value
+                }
+            }
+            try {
+                axios.post("/prenotazione/fetchVeicoliDisponibili", datiPrenotazione)
+                    .then(res => {
+                        history.push("/prenota", {
+                            payload: {
+                                datiPrenotazione: datiPrenotazione,
+                                veicoli: res.data
+                            },
+                            type: "SELEZIONE_MEZZO"
+                        })
+                    })
+                    .catch(err => {
+
+                    })
+            } catch (error) {
+
+            }
         }
     }
 
