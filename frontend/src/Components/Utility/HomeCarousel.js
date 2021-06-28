@@ -30,10 +30,22 @@ export default function HomeCarousel() {
                         src="/assets/carousel-2.jpg"
                         alt="Fisrt slide" />
                 </Carousel.Item>
-                <Carousel.Item className="h-100">
+                {/* <Carousel.Item className="h-100">
                     <img
                         className="carousel-img"
                         src="/assets/carousel-3.jpg"
+                        alt="Fisrt slide" />
+                </Carousel.Item> */}
+                <Carousel.Item className="h-100">
+                    <img
+                        className="carousel-img"
+                        src="/assets/carousel-4.jpg"
+                        alt="Fisrt slide" />
+                </Carousel.Item>
+                <Carousel.Item className="h-100">
+                    <img
+                        className="carousel-img"
+                        src="/assets/carousel-5.jpg"
                         alt="Fisrt slide" />
                 </Carousel.Item>
             </Carousel>

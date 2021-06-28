@@ -99,12 +99,14 @@ export default function SchermataFormPrenotazione() {
                 ...history.location.state.payload.datiPrenotazione,
                 ritiro: {
                     localita: localitaRitiro.value,
+                    nome: localitaRitiro.op,
                     data: dataRitiro.value,
                     orario: orarioRitiro.value,
 
                 },
                 consegna: {
                     localita: localitaConsegna.value,
+                    nome: localitaConsegna.selected.textContent,
                     data: dataConsegna.value,
                     orario: orarioConsegna.value
                 }
@@ -142,7 +144,7 @@ export default function SchermataFormPrenotazione() {
                                     <option value="" disabled selected>Seleziona località di ritiro</option>
                                     {history.location.state.payload.depositi.map(key => {
                                         return (
-                                            <option value={key.id}>{key.nome}</option>
+                                            <option value={key._id}>{key.nome}</option>
                                         );
                                     })}
                                 </Form.Control>
@@ -172,7 +174,7 @@ export default function SchermataFormPrenotazione() {
                                     <option value="" disabled selected>Seleziona località di consegna</option>
                                     {history.location.state.payload.depositi.map(key => {
                                         return (
-                                            <option value={key.id}>{key.nome}</option>
+                                            <option value={key._id}>{key.nome}</option>
                                         );
                                     })}
                                 </Form.Control>

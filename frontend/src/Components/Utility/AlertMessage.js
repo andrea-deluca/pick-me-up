@@ -6,7 +6,7 @@ import Button from './Button';
 
 export default function AlertMessage(props) {
     return (
-        <Alert show={props.show} variant={props.variant}>
+        <Alert show={props.show} variant={props.variant} className={props.className}>
             <Alert.Heading className="t-bold">{props.header}</Alert.Heading>
             <p className="t-light">
                 {props.body}

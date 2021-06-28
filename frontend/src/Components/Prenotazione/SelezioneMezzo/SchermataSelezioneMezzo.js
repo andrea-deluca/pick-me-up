@@ -1,8 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom';
 
-import { Container, Row, Col, Card, Form, Image } from 'react-bootstrap';
-
+import { Container, Row, Col } from 'react-bootstrap';
 
 import View from '../../Utility/View';
 import VeicoloCard from './VeicoloCard';
@@ -13,8 +12,6 @@ export default function SelezioneVeicolo() {
     const history = useHistory();
     const datiPrenotazione = history.location.state.payload.datiPrenotazione
     const veicoli = history.location.state.payload.veicoli
-    console.log(datiPrenotazione)
-    console.log(veicoli)
     return (
         <React.Fragment>
             <View>
@@ -29,15 +26,33 @@ export default function SelezioneVeicolo() {
                         <Row className="gy-4 mb-5">
                             {veicoli.map(key => {
                                 return (
-                                    <VeicoloCard
-                                        tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
-                                        idMezzo={key._id} />
+                                    <Col xs={{ span: 4 }}>
+                                        <VeicoloCard
+                                            tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
+                                            idMezzo={key._id}
+                                            marca={key.marca}
+                                            modello={key.modello}
+                                            cambio={key.cambio}
+                                            carburante={key.carburante}
+                                            cilindrata={key.cilindrata}
+                                            numeroPosti={key.numeroPosti}
+                                            tariffa={key.tariffaOraria} />
+                                    </Col>
                                 );
                             })}
                         </Row>
                     </Col>
                     <Col xs={{ span: 3 }}>
-                        <RiepilogoCard />
+                        <RiepilogoCard 
+                        tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
+                        autista={datiPrenotazione.autista}
+                        localitaRitiro={datiPrenotazione.consegna.nome}
+                        localitaConsegna={datiPrenotazione.consegna.nome}
+                        dataRitiro={datiPrenotazione.ritiro.data}
+                        dataConsegna={datiPrenotazione.consegna.data}
+                        oraRitiro={datiPrenotazione.ritiro.orario}
+                        oraConsegna={datiPrenotazione.consegna.orario}
+                        />
                     </Col>
                 </Row>
             </Container>

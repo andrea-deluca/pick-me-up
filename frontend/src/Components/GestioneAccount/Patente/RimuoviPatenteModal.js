@@ -69,7 +69,7 @@ export default function RimuoviMetodoModal(props) {
                         </Col>
                         <div className="buttonsGroup col-10 offset-1 justify-content-end">
                             <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
-                            <Button spinner={state.submit} variant={"Danger"} onClick={onClick}>Elimina</Button>
+                            <Button spinner={state.submit} variant={"Danger"} onClick={onClick}>Conferma</Button>
                         </div>
                     </Row>
                 }

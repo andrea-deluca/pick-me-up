@@ -103,7 +103,7 @@ export default function ModificaMetodoModal(props) {
                             </Col>
                             <div className="buttonsGroup col-10 offset-1 justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
-                                <Button spinner={state.submit} variant={"Primary"} submit>Aggiungi</Button>
+                                <Button spinner={state.submit} variant={"Primary"} submit>Conferma</Button>
                             </div>
                         </Row>
                     </Form>

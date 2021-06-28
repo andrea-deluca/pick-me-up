@@ -62,7 +62,7 @@ export default function SchermataPatente() {
                             <div className="col-10 offset-1 mb-5 d-lg-none" onClick={onClickAggiungiPatente}>
                                 <Button variant={"White"}>
                                     <FontAwesomeIcon className="me-2" icon={faPlusCircle} fixedWidth />
-                                    Inserisci patente
+                                    Aggiungi patente di guida
                                 </Button>
                             </div>
                             <AlertMessage
@@ -93,12 +93,12 @@ export default function SchermataPatente() {
                             transition={{ dÎuration: 0.3 }}>
                             <Button onClick={onClickAggiungiPatente} variant={"White"}>
                                 <FontAwesomeIcon className="me-2" icon={faPlusCircle} fixedWidth />
-                                Inserisci patente
+                                Aggiungi patente di guida
                             </Button>
                             <AggiungiPatenteModal show={modals.addModal} onHide={() => setModals({ ...modals, addModal: false })} />
                         </motion.div>
                         <AlertMessage
-                            className="d-none d-lg-flex"
+                            className="d-none d-lg-block"
                             show={modals.error}
                             variant={"danger"}
                             header={"Operazione non consentita!"}

@@ -6,14 +6,25 @@ import { useHistory } from 'react-router-dom';
 
 function MarkerMap(props) {
     function getIcon(_iconSize) {
-        if (props.tipologiaMezzo === "auto" || props.tipologiaMezzo === "moto") {
+        if (props.tipologiaMezzo === "auto") {
             return L.icon({
-                iconUrl: "/assets/svg/marker.svg",
+                iconUrl: "/assets/svg/markerAuto.svg",
                 iconSize: [_iconSize]
             })
-        } else {
+        } else if (props.tipologiaMezzo === "moto") {
             return L.icon({
-                iconUrl: "/assets/svg/markerbici.png",
+                iconUrl: "/assets/svg/markerMoto.svg",
+                iconSize: [_iconSize]
+            })
+        } else if (props.tipologiaMezzo === "monopattino") {
+            return L.icon({
+                iconUrl: "/assets/svg/markerMonopattino.svg",
+                iconSize: [_iconSize]
+            })
+        } 
+        else {
+            return L.icon({
+                iconUrl: "/assets/svg/markerBici.svg",
                 iconSize: [_iconSize]
             })
         }
