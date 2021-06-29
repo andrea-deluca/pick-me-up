@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router';
+import useSession from '../../../Hooks/useSession';
 import axios from 'axios'
 
 import { Container, Row, Col, Image, Card, CardGroup } from 'react-bootstrap';
@@ -64,7 +65,7 @@ function TipologiaCard(props) {
                         </Card.Title>
                         <Card.Text className="t-light">{props.text}</Card.Text>
                     </div>
-                    <Button spinner={state.submit} onClick={onClick} variant="primary">{props.button}</Button>
+                    <Button disabled={props.disabled} spinner={state.submit} onClick={onClick} variant="primary">{props.button}</Button>
                 </Card.Body>
             </Card>
         </Col>
@@ -72,6 +73,7 @@ function TipologiaCard(props) {
 }
 
 export default function SelezioneTipologiaVeicolo() {
+    const { session, setSession } = useSession()
     return (
         <View>
             <Container fluid className="d-flex flex-column justify-content-center align-items-center">
@@ -87,6 +89,7 @@ export default function SelezioneTipologiaVeicolo() {
                             text={"Scegli di noleggiare un auto utilitaria,una berlina o un SUV. Inoltre potrai anche richiedere la presenza di un autista."}
                             button={"Seleziona"}
                             id="auto"
+                            disabled={ session.patente && session.patente.tipologiaPatente === "B" ? false : true }
                         />
                         <TipologiaCard
                             imageSrc={"/assets/svg/motore.svg"}
@@ -94,6 +97,7 @@ export default function SelezioneTipologiaVeicolo() {
                             text={"Noleggio un motore e scegli di goderti il vento tra i capelli... Ah no, ricordati di mettere il casco."}
                             button={"Seleziona"}
                             id="moto"
+                            disabled={ session.patente ? false : true }
                         />
                         <TipologiaCard
                             imageSrc={"/assets/svg/bici.svg"}

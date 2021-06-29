@@ -12,7 +12,21 @@ export default function SchermataConfermaPrenotazione() {
     const history = useHistory()
     const datiPrenotazione = history.location.state.payload
 
-    console.log(history.location.state.payload)
+    const dataRitiro = (datiPrenotazione.ritiro.data + "T" + datiPrenotazione.ritiro.orario);
+    const dataConsegna = (datiPrenotazione.consegna.data + "T" + datiPrenotazione.consegna.orario);
+    const tempoNoleggio = (new Date(dataConsegna) - new Date(dataRitiro)) / (1000 * 3600)
+    const importoTotale = datiPrenotazione.mezzo.tariffa * tempoNoleggio
+    
+    function onClick(e){
+        e.preventDefault()
+        history.push("/prenota", {
+            payload: {
+                ...datiPrenotazione,
+                totale: importoTotale
+            },
+            type: "EFFETTUA_PAGAMENTO"
+        })
+    }
 
     return (
         <View>
@@ -37,11 +51,21 @@ export default function SchermataConfermaPrenotazione() {
                                 noButton />
                         </Col>
                         <Col xs={{ span: 6 }}>
-                            <RiepilogoCard />
+                            <RiepilogoCard
+                                tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
+                                autista={datiPrenotazione.autista}
+                                localitaRitiro={datiPrenotazione.ritiro.nome}
+                                localitaConsegna={datiPrenotazione.consegna.nome}
+                                dataRitiro={datiPrenotazione.ritiro.data}
+                                dataConsegna={datiPrenotazione.consegna.data}
+                                oraRitiro={datiPrenotazione.ritiro.orario}
+                                oraConsegna={datiPrenotazione.consegna.orario}
+                                totale={importoTotale}
+                            />
                         </Col>
                         <div className="buttonsGroup justify-content-end">
                             <Button variant="secondary"> Annulla </Button>
-                            <Button variant="primary"> Conferma</Button>
+                            <Button onClick={onClick} variant="primary"> Conferma</Button>
                         </div>
                     </Row>
                 </CardGroup>

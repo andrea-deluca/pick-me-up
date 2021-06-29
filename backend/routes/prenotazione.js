@@ -22,4 +22,14 @@ router.post("/fetchVeicoliDisponibili", function (req, res){
     })
 })
 
+router.post("/confermaPrenotazione", function(req, res){
+    prenotazioneModel.confermaPrenotazione(req.body, function(result){
+        if(result === 500){
+            res.status(result).send("Internal Server Error")
+        } else {
+            res.status(result).send()
+        }
+    })
+})
+
 module.exports = router

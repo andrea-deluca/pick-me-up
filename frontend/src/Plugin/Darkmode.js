@@ -1,8 +1,12 @@
-import Darkmode from 'darkmode-js';
-import "./Darkmode.css"
+// import Darkmode from 'darkmode-js';
+// import "./Darkmode.css"
 
-const options = {
-  label: '🌓',
-  buttonColorDark: '#000'
-}
-new Darkmode(options).showWidget();
+
+
+
+// const options = {
+//   label: '🌓',
+//   buttonColorDark: '#000'
+// }
+// new Darkmode(options).showWidget();
+

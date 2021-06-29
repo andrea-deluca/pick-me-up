@@ -46,7 +46,7 @@ export default function SelezioneVeicolo() {
                         <RiepilogoCard 
                         tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
                         autista={datiPrenotazione.autista}
-                        localitaRitiro={datiPrenotazione.consegna.nome}
+                        localitaRitiro={datiPrenotazione.ritiro.nome}
                         localitaConsegna={datiPrenotazione.consegna.nome}
                         dataRitiro={datiPrenotazione.ritiro.data}
                         dataConsegna={datiPrenotazione.consegna.data}

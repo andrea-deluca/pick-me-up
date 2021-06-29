@@ -99,14 +99,14 @@ export default function SchermataFormPrenotazione() {
                 ...history.location.state.payload.datiPrenotazione,
                 ritiro: {
                     localita: localitaRitiro.value,
-                    nome: localitaRitiro.op,
+                    nome: localitaRitiro.options[localitaRitiro.selectedIndex].text,
                     data: dataRitiro.value,
                     orario: orarioRitiro.value,
 
                 },
                 consegna: {
                     localita: localitaConsegna.value,
-                    nome: localitaConsegna.selected.textContent,
+                    nome: localitaConsegna.options[localitaConsegna.selectedIndex].text,
                     data: dataConsegna.value,
                     orario: orarioConsegna.value
                 }

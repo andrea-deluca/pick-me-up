@@ -8,16 +8,16 @@ export default function InputOrario(props) {
             <Form.Label>{props.label}</Form.Label>
             <Form.Control as="select" classe="form-select" placeholder={props.placeholder} required={props.required}>
                 <option value="">{props.default}</option>
-                <option value="5:00">5:00</option>
-                <option value="5:30">5:30</option>
-                <option value="6:00">6:00</option>
-                <option value="6:30">6:30</option>
-                <option value="7:00">7:00</option>
-                <option value="7:30">7:30</option>
-                <option value="8:00">8:00</option>
-                <option value="8:30">8:30</option>
-                <option value="9:00">9:00</option>
-                <option value="9:30">9:30</option>
+                <option value="05:00">5:00</option>
+                <option value="05:30">5:30</option>
+                <option value="06:00">6:00</option>
+                <option value="06:30">6:30</option>
+                <option value="07:00">7:00</option>
+                <option value="07:30">7:30</option>
+                <option value="08:00">8:00</option>
+                <option value="08:30">8:30</option>
+                <option value="09:00">9:00</option>
+                <option value="09:30">9:30</option>
                 <option value="10:00">10:00</option>
                 <option value="10:30">10:30</option>
                 <option value="11:00">11:00</option>

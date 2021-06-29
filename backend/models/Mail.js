@@ -32,7 +32,7 @@ module.exports = {
         await transporter.sendMail(mailOptions);
     },
 
-    inviaRecuperoPassword: async function(userData){
+    inviaRecuperoPassword: async function (userData) {
         const mailOptions = {
             from: mailConfig.email,
             to: userData.email,
@@ -51,6 +51,30 @@ module.exports = {
                 Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
             </p>
         `
+        };
+        await transporter.sendMail(mailOptions);
+    },
+
+    inviaConfermaPrenotazione: async function (data) {
+        const mailOptions = {
+            from: mailConfig.email,
+            to: data.email,
+            subject: `Conferma prenotazione #${data.prenotazione}`,
+            html: `
+            <h1>Grazie per la tua prenotazione</h1>
+            <h3>Abbiamo ricevuto una prenotazione da parte tua!</h3>
+            <p>
+                Grazie per aver prenotato un noleggio. In allegato troverai la conferma e la fattura della tua prenotazione.
+            </p>
+            <p>
+                Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+        `,
+            attachments: [{
+                filename: `${data.prenotazione}.pdf`,
+                path: `public/${data.prenotazione}.pdf`,
+                contentType: "application/pdf"
+            }]
         };
         await transporter.sendMail(mailOptions);
     }

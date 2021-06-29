@@ -4,9 +4,6 @@ import { Switch, Route, useLocation } from "react-router-dom";
 // Framer Motion Components
 import { AnimatePresence } from 'framer-motion';
 
-// Plugin
-import Darkmode from './Plugin/Darkmode';
-
 // Custom CSS
 import "./Theme.scss";
 import './App.css';
@@ -32,62 +29,6 @@ import SchermataPatente from './Components/GestioneAccount/SchermataPatente';
 import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/SchermataPrenotazioniUtente';
 // Schermate Prenotazione
 import SchermataPrenotazione from './Components/Prenotazione/SchermataPrenotazione';
-
-// export const Router = React.createContext(null);
-// const initialState = {
-//   registrazione: {
-//     richiestaPatente: false,
-//     patente: false,
-//     credenziali: false,
-//     completato: false
-//   }
-// }
-
-// const reducer = (state, action) => {
-//   switch (action.type) {
-//     case "RICHIESTA_PATENTE":
-//       return {
-//         ...state, registrazione: { ...state.registrazione, richiestaPatente: true }, userData: action.payload 
-//       }
-//     case "REGISTRAZIONE_PATENTE":
-//       return {
-//         ...state, registrazione: { ...state.registrazione, richiestaPatente: false, patente: true }, userData: action.payload
-//       }
-//     case "REGISTRAZIONE_CREDENZIALI":
-//       return {
-//         ...state, registrazione: { ...state.registrazione, richiestaPatente: false, patente: false, credenziali: true }, userData: action.payload
-//       }
-//     case "COMPLETATO":
-//       return {
-//         ...state, registrazione: { ...state.registrazione, credenziali: false, completato: true }, userData: action.payload
-//       }
-//       case "RESET_REGISTRAZIONE":
-//         return {
-//           ...state, registrazione: { ...state.registarzione, richiestaPatente: false, patente: false, credenziali: false, completato: false}
-//         }
-//     default:
-//       return state;
-//   }
-// }
-
-
-// export const Controllo = React.createContext(null);
-// const initialState = {
-//   completato: false,
-// }
-// const reducer = (state, action) =>{
-//   console.log(action)
-//   switch (action.type){
-//     case 'CONTINUA_CLICKATO':
-//       return {
-//         ...state, completato: true, user: action.payload
-//       }
-//     default:
-//       return state;
-//     }
-//   }
-
-
 
 // App
 function App() {

@@ -2,6 +2,7 @@ const { config } = require("../db/config");
 const { makeDb } = require("../db/dbmiddleware");
 const createError = require("http-errors");
 const mailModel = require("./Mail")
+const pagamentoModel = require("./Pagamento")
 const { ObjectId } = require("mongodb");
 
 module.exports = {
@@ -70,15 +71,19 @@ module.exports = {
                                 }
                             }
                         }
-                    ]).toArray().then(res => {
-                        const veicoli = res[0].autoArray.map(key => {
-                            return key.auto[0]
-                        });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
+                    ]).toArray()
+                        .then(res => {
+                            const veicoli = res[0].autoArray.map(key => {
+                                return key.auto[0]
+                            });
+                            return callback({
+                                status: 200,
+                                veicoli: veicoli
+                            })
                         })
-                    })
+                        .catch(err => {
+                            return callback(500)
+                        })
                 } catch (error) {
                     console.log(error)
                     callback(500)
@@ -114,15 +119,19 @@ module.exports = {
                                 }
                             }
                         }
-                    ]).toArray().then(res => {
-                        const veicoli = res[0].motoArray.map(key => {
-                            return key.moto[0]
-                        });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
+                    ]).toArray()
+                        .then(res => {
+                            const veicoli = res[0].motoArray.map(key => {
+                                return key.moto[0]
+                            });
+                            return callback({
+                                status: 200,
+                                veicoli: veicoli
+                            })
                         })
-                    })
+                        .catch(err => {
+                            return callback(500)
+                        })
                 } catch (error) {
                     console.log(error)
                     callback(500)
@@ -158,15 +167,19 @@ module.exports = {
                                 }
                             }
                         }
-                    ]).toArray().then(res => {
-                        const veicoli = res[0].biciArray.map(key => {
-                            return key.bici[0]
-                        });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
+                    ]).toArray()
+                        .then(res => {
+                            const veicoli = res[0].biciArray.map(key => {
+                                return key.bici[0]
+                            });
+                            return callback({
+                                status: 200,
+                                veicoli: veicoli
+                            })
                         })
-                    })
+                        .catch(err => {
+                            return callback(500)
+                        })
                 } catch (error) {
                     console.log(error)
                     callback(500)
@@ -202,19 +215,68 @@ module.exports = {
                                 }
                             }
                         }
-                    ]).toArray().then(res => {
-                        const veicoli = res[0].monopattinoArray.map(key => {
-                            return key.monopattino[0]
-                        });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
+                    ]).toArray()
+                        .then(res => {
+                            const veicoli = res[0].monopattinoArray.map(key => {
+                                return key.monopattino[0]
+                            });
+                            return callback({
+                                status: 200,
+                                veicoli: veicoli
+                            })
                         })
-                    })
+                        .catch(err => {
+                            return callback(500)
+                        })
                 } catch (error) {
                     console.log(error)
                     callback(500)
                 }
+        }
+    },
+
+    confermaPrenotazione: async function (datiPrenotazione, callback) {
+        const db = await makeDb(config);
+        const prenotazione = {
+            _id: new ObjectId(),
+            ritiro: {
+                idRitiro: ObjectId(datiPrenotazione.ritiro.localita),
+                nome: datiPrenotazione.ritiro.nome,
+                data: datiPrenotazione.ritiro.data,
+                orario: datiPrenotazione.ritiro.orario
+            },
+            consegna: {
+                idConsegna: ObjectId(datiPrenotazione.consegna.localita),
+                nome: datiPrenotazione.consegna.nome,
+                data: datiPrenotazione.consegna.data,
+                orario: datiPrenotazione.consegna.orario
+            },
+            mezzo: {
+                ...datiPrenotazione.mezzo,
+                idMezzo: ObjectId(datiPrenotazione.mezzo.idMezzo),
+                tipologia: datiPrenotazione.tipologiaMezzo,
+            },
+            pagamento: {
+                idMetodoPagamento: ObjectId(datiPrenotazione.metodoPagamento),
+                importoTotale: datiPrenotazione.totale
+            },
+            autista: datiPrenotazione.autista,
+            stato: "PROGRAMMATA",
+            idUtente: ObjectId(datiPrenotazione.idUtente),
+        }
+        try {
+            db.collection("Utente").aggregate([
+                { $match: { "_id": prenotazione.idUtente } },
+                { $unset: ["credenziali.password", "accountStatus"] },
+                { $unwind: "$metodiPagamento" },
+                { $match: { "metodiPagamento._id": prenotazione.pagamento.idMetodoPagamento } }])
+                .toArray()
+                .then(res => {
+                    pagamentoModel.generaConfermaPrenotazione({ prenotazione: prenotazione, utente: res[0] });
+                })
+        } catch (error) {
+            console.log(error)
+            callback(500)
         }
     }
 }

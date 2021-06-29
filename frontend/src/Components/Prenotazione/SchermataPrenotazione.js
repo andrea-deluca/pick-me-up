@@ -7,13 +7,13 @@ import SchermataRichiestaAutista from './RichiestaAutista/SchermataRichiestaAuti
 import SchermataFormPrenotazione from './FormPrenotazione/SchermataFormPrenotazione'
 import SchermataSelezioneMezzo from './SelezioneMezzo/SchermataSelezioneMezzo'
 import SchermataConfermaPrenotazione from './ConfermaPrenotazione/SchermataConfermaPrenotazione'
+import SchermataEffettuaPagamento from './Pagamento/SchermataEffettuaPagamento'
 
 
 export default function SchermataPrenotazione() {
     const { token, setToken } = useToken();
     const history = useHistory();
-    // CAMBIARE IN !TOKEN <===========================
-    if (token) {
+    if (!token) {
         return (<Redirect to={"/login"} />)
     } else {
         if (history.location.state) {
@@ -33,6 +33,10 @@ export default function SchermataPrenotazione() {
                 case "CONFERMA_PRENOTAZIONE":
                     return (
                         <SchermataConfermaPrenotazione />
+                    );
+                case "EFFETTUA_PAGAMENTO":
+                    return (
+                        <SchermataEffettuaPagamento />
                     );
             }
         } else {
