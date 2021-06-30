@@ -14,9 +14,7 @@ export default function SelezioneVeicolo() {
     const history = useHistory();
     const datiPrenotazione = history.location.state.payload.datiPrenotazione
     const veicoli = history.location.state.payload.veicoli
-
-    console.log(veicoli)
-
+    
     return (
         <React.Fragment>
             <View>
@@ -48,7 +46,8 @@ export default function SelezioneVeicolo() {
                                             carburante={key.mezzo.carburante}
                                             cilindrata={key.mezzo.cilindrata}
                                             numeroPosti={key.mezzo.numeroPosti}
-                                            tariffa={key.mezzo.tariffaOraria} />
+                                            tariffa={key.mezzo.tariffaOraria}
+                                            path={key.mezzo.path} />
                                     </Col>
                                 );
                             })}

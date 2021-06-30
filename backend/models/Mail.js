@@ -77,5 +77,56 @@ module.exports = {
             }]
         };
         await transporter.sendMail(mailOptions);
+    },
+
+    inviaAnnullaPrenotazione: async function (data) {
+        const mailOptions = {
+            from: mailConfig.email,
+            to: data.email,
+            subject: `Annullamento prenotazione #${data.prenotazione}`,
+            html: `
+            <h1>Prenotazione annullata con successo</h1>
+            <h3>Ci dispiace vederti disdire una prenotazione...</h3>
+            <p>
+                Come richiesto abbiamo annullato la prenotazione ed è stato effettuato il rimborso
+                dell'intero importo precedentemente pagato sul metodo di pagamento associato alla prenotazione.
+                In allegato troverai la conferma di annullamento e la fattura del rimborso della tua prenotazione.
+            </p>
+            <p>
+                Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+        `,
+            attachments: [{
+                filename: `${data.prenotazione}.pdf`,
+                path: `public/pdf/${data.prenotazione}.pdf`,
+                contentType: "application/pdf"
+            }]
+        };
+        await transporter.sendMail(mailOptions);
+    },
+
+    inviaModificaPrenotazione: async function (data) {
+        const mailOptions = {
+            from: mailConfig.email,
+            to: data.email,
+            subject: `Modifica prenotazione #${data.prenotazione}`,
+            html: `
+            <h1>Prenotazione modificata con successo</h1>
+            <h3>Abbiamo ricevuta una richiesta di modifica</h3>
+            <p>
+                Come richiesto abbiamo modificato la prenotazione. In allegato troverai
+                la conferma delle modifiche apportate, la fattura e i dettagli del pagamento effettuato.
+            </p>
+            <p>
+                Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+        `,
+            attachments: [{
+                filename: `${data.prenotazione}.pdf`,
+                path: `public/pdf/${data.prenotazione}.pdf`,
+                contentType: "application/pdf"
+            }]
+        };
+        await transporter.sendMail(mailOptions);
     }
 }

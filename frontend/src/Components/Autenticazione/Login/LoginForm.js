@@ -42,6 +42,7 @@ export default function LoginForm() {
                 .then((res) => {
                     setSession(res.data.user)
                     setToken(res.data.token);
+                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     history.push("/home");
                 })
                 .catch(err => {

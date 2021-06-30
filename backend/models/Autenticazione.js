@@ -6,6 +6,7 @@ const mailModel = require("./Mail");
 const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const password = require("secure-random-password")
+const gestionePrenotazioneModel = require("./GestionePrenotazione")
 
 module.exports = {
     registraUtente: async function (datiUtente, callback) {
@@ -82,29 +83,36 @@ module.exports = {
                         let datiPatente;
                         if (res.patente) {
                             datiPatente = res.patente;
-                        } else{
+                        } else {
                             datiPatente = null;
                         }
-                        // Ritorno il token di accesso e i dati associati all'utente
-                        return (callback({
-                            token: token,
-                            status: 202,
-                            user: {
-                                id: res._id,
-                                nome: res.nome,
-                                cognome: res.cognome,
-                                dataNascita: res.dataNascita,
-                                sesso: res.sesso,
-                                luogoNascita: {
-                                    ...res.luogoNascita
-                                },
-                                patente: datiPatente,
-                                cellulare: res.credenziali.cellulare,
-                                email: res.credenziali.email,
-                                codiceFiscale: res.codiceFiscale,
-                                metodiPagamento: res.metodiPagamento
+
+                        const datiUtente = {
+                            id: res._id,
+                            nome: res.nome,
+                            cognome: res.cognome,
+                            dataNascita: res.dataNascita,
+                            sesso: res.sesso,
+                            luogoNascita: {
+                                ...res.luogoNascita
                             },
-                        }))
+                            patente: datiPatente,
+                            cellulare: res.credenziali.cellulare,
+                            email: res.credenziali.email,
+                            codiceFiscale: res.codiceFiscale,
+                            metodiPagamento: res.metodiPagamento
+                        }
+
+                        gestionePrenotazioneModel.fetchPrenotazioniUtente({_id: res._id}, res => {
+                            if (res === 500) return callback(500)
+                            // Ritorno il token di accesso e i dati associati all'utente
+                            return (callback({
+                                token: token,
+                                status: 202,
+                                user: datiUtente,
+                                prenotazioni: res.prenotazioni
+                            }))
+                        })
                     } else {
                         return callback(404);
                     }

@@ -1,12 +1,83 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 import { Row, Col, Card, Image } from 'react-bootstrap'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import Button from '../Utility/Button';
+import AnnullaPrenotazioneModal from './AnnullaPrenotazioneModal';
 
 export default function PrenotazioneCard(props) {
+    const history = useHistory()
+    const [showModals, setShowModals] = useState({
+        deleteModal: false,
+        updateModal: false
+    })
+
+    function modificaPrenotazione(e) {
+        e.preventDefault();
+        const datiPrenotazione = {
+            _id: props.id,
+            opCode: "MODIFICA",
+            tipologiaMezzo: props.tipologiaMezzo,
+            autista: props.autista
+        }
+        try {
+            axios.post("/prenotazione/fetchDepositi", datiPrenotazione)
+                .then(res => {
+                    history.push("/prenota", {
+                        payload: {
+                            datiPrenotazione: datiPrenotazione,
+                            depositi: res.data
+                        },
+                        type: "FORM_PRENOTAZIONE"
+                    })
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        } catch (error) {
+            console.log(error.response.data.msg)
+        }
+    }
+
+    function cambiaMezzo(e) {
+        e.preventDefault()
+        const datiPrenotazione = {
+            _id: props.id,
+            opCode: "CAMBIA_MEZZO",
+            tipologiaMezzo: props.tipologiaMezzo,
+            autista: props.autista,
+            ritiro: {
+                localita: props.idRitiro,
+                nome: props.ritiro,
+                data: props.dataRitiro
+            },
+            consegna: {
+                localita: props.idConsegna,
+                nome: props.consegna,
+                data: props.dataConsegna
+            }
+        }
+        try {
+            axios.post("/prenotazione/fetchVeicoliDisponibili", datiPrenotazione)
+                .then(res => {
+                    history.push("/prenota", {
+                        payload: {
+                            datiPrenotazione: datiPrenotazione,
+                            veicoli: res.data
+                        },
+                        type: "SELEZIONE_MEZZO"
+                    })
+                })
+                .catch(err => {
+
+                })
+        } catch (error) {
+            console.log(error.response.data.msg)
+        }
+    }
+
     return (
         <Card className="col-10 offset-1 my-4 mt-lg-0 animation-card border-0 shadow">
             <Card.Body>
@@ -23,7 +94,7 @@ export default function PrenotazioneCard(props) {
                         </Row>
                     </Card.Title>
                     <Col xs={{ span: 12 }} lg={{ span: 5 }} className="mb-5">
-                        <Image fluid src={`/assets/veicoli/${props.tipologiaMezzo}/${props.idMezzo}.png`} alt="..." />
+                        <Image fluid src={props.path} alt="..." />
                     </Col>
                     <Col xs={{ span: 12 }} lg={{ span: 7 }}>
                         <Card.Text>
@@ -57,12 +128,13 @@ export default function PrenotazioneCard(props) {
                         </div>
                         : props.stato === "PROGRAMMATA" ?
                             <div className="col-12 buttonsGroup justify-content-end mt-4">
-                                <Button variant={"Light"}>Cambia mezzo</Button>
-                                <Button variant={"Light"}>Modifica</Button>
-                                <Button variant={"Danger"}>Annulla noleggio</Button>
+                                <Button onClick={cambiaMezzo} variant={"Light"}>Cambia mezzo</Button>
+                                <Button onClick={modificaPrenotazione} variant={"Light"}>Modifica</Button>
+                                <Button onClick={() => setShowModals({ ...showModals, deleteModal: true })} variant={"Danger"}>Annulla noleggio</Button>
+                                <AnnullaPrenotazioneModal id={props.id} show={showModals.deleteModal} onHide={() => setShowModals({ ...showModals, deleteModal: false })} />
                             </div> : null}
                 </Row>
             </Card.Body>
-        </Card>
+        </Card >
     );
 }

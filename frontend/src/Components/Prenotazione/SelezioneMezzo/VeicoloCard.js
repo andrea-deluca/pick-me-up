@@ -26,6 +26,7 @@ export default function VeicoloCard(props) {
                 cambio: props.cambio,
                 cilindrata: props.cilindrata,
                 tariffa: props.tariffa,
+                path: props.path,
                 code: history.location.state.payload.veicoli[props.index].code
             }
         }
@@ -43,7 +44,7 @@ export default function VeicoloCard(props) {
             transition={{ duration: 0.3 }}>
             <Card className="animation-card border-0 mx-auto h-100 shadow">
                 <Card.Body className="d-flex flex-column justify-content-evenly">
-                    <Image fluid className="col-12 align-self-center pb-4" src={`/assets/veicoli/${props.tipologiaMezzo}/${props.idMezzo}.png`} alt="..." />
+                    <Image fluid className="col-12 align-self-center pb-4" src={props.path} alt="..." />
                     <Card.Title>
                         <h5 className="t-light">{props.marca}</h5>
                         <h5 className="t-bold">{props.modello}</h5>

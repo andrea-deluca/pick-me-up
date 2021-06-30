@@ -18,7 +18,6 @@ export default function SchermataEffettuaPagamento() {
         submit: false
     })
 
-
     function onSubmit(e) {
         e.preventDefault()
         const datiPrenotazione = {
@@ -30,6 +29,7 @@ export default function SchermataEffettuaPagamento() {
         try {
             axios.post("/prenotazione/confermaPrenotazione", datiPrenotazione)
                 .then(res => {
+                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data))
                     history.push("/prenota", {
                         type: "PRENOTAZIONE_COMPLETATA"
                     })

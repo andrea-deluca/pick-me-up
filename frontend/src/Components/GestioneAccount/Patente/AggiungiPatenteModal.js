@@ -23,6 +23,30 @@ export default function AggiungiMetodoModal(props) {
         submit: false
     })
 
+    function checkValidity(){
+        
+        document.querySelector("#dataScadenzaPatente").classList.remove("border-danger", "text-danger")
+
+        const dataScadenzaPatente = document.querySelector("#dataScadenzaPatente")
+    
+        //Controllo sulle date inserite
+        const now = new Date();
+        const dataScadenza = new Date(dataScadenzaPatente.value)
+        if(now.getFullYear() > dataScadenza.getFullYear()) {
+            return false;
+        } else if(now.getFullYear() === dataScadenza.getFullYear()){
+            if(now.getMonth() > dataScadenza.getMonth()){
+                return false
+            } else if(now.getMonth() === dataScadenza.getMonth()) {
+                if(now.getDate() > dataScadenza.getDate()) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
     function onSubmit(e) {
         e.preventDefault();
         const tipologiaPatenteInput = document.getElementById("tipologiaPatente");
@@ -37,6 +61,13 @@ export default function AggiungiMetodoModal(props) {
                 dataScadenza: dataScadenzaPatente.value,
                 ufficioRilascio: ufficioRilascioInput.value,
             }
+        }
+
+        if(!checkValidity()) {
+            dataScadenzaPatente.classList.add("border-danger", "text-danger")
+            return
+        } else {
+            dataScadenzaPatente.classList.add("border-success", "text-success")
         }
         setState({ ...state, submit: true });
         try {
@@ -97,7 +128,7 @@ export default function AggiungiMetodoModal(props) {
                             <Col xs={{ span: 5, offset: 1 }} >
                                 <Form.Group controlId="dataScadenzaPatente">
                                     <Form.Label>Data di scadenza</Form.Label>
-                                    <Form.Control type="date" placeholder="Inserisci data di scadenza" required />
+                                    <Form.Control onBlur={() => checkValidity} type="date" placeholder="Inserisci data di scadenza" required />
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 5 }}>

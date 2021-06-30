@@ -1,35 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 
 import { motion } from 'framer-motion'
 
 import { Container, Row, Col, CardGroup } from 'react-bootstrap';
 
-import View from "../../Utility/View"
 import Button from "../../Utility/Button";
 import VeicoloCard from '../SelezioneMezzo/VeicoloCard';
 import RiepilogoCard from '../SelezioneMezzo/RiepilogoCard';
+import ModificaPrenotazioneModal from '../../GestionePrenotazioni/ModificaPrenotazioneModal';
+import CambiaMezzoModal from '../../GestionePrenotazioni/CambiaMezzoModal';
 
 export default function SchermataConfermaPrenotazione() {
     const history = useHistory()
     const datiPrenotazione = history.location.state.payload
-
     const tempoNoleggio = (new Date(datiPrenotazione.consegna.data) - new Date(datiPrenotazione.ritiro.data)) / (1000 * 3600)
     const importoTotale = datiPrenotazione.mezzo.tariffa * tempoNoleggio
+    const [showModal, setShowModal] = useState({
+        modificaModal: false,
+        cambiaMezzoModal: false
+    })
 
     function onClick(e) {
         e.preventDefault()
-        history.push("/prenota", {
-            payload: {
-                ...datiPrenotazione,
-                totale: importoTotale
-            },
-            type: "EFFETTUA_PAGAMENTO"
-        })
+        if (datiPrenotazione.opCode === "MODIFICA") {
+            setShowModal({ ...showModal, modificaModal: true })
+        } else if (datiPrenotazione.opCode === "CAMBIA_MEZZO") {
+            setShowModal({ ...showModal, cambiaMezzoModal: true })
+        } else {
+            history.push("/prenota", {
+                payload: {
+                    ...datiPrenotazione,
+                    totale: importoTotale
+                },
+                type: "EFFETTUA_PAGAMENTO"
+            })
+        }
     }
 
     return (
         <Container className="d-flex flex-column justify-content-start align-items-center mt-5">
+            <ModificaPrenotazioneModal show={showModal.modificaModal} onHide={() => { setShowModal({...showModal, modificaModal: false}) }} />
+            <CambiaMezzoModal show={showModal.cambiaMezzoModal} onHide={() => { setShowModal({...showModal, cambiaMezzoModal: false}) }} />
             <motion.div
                 className="d-flex flex-column"
                 initial={{ translateY: -50, opacity: 0 }}
@@ -52,6 +64,7 @@ export default function SchermataConfermaPrenotazione() {
                             cilindrata={datiPrenotazione.mezzo.cilindrata}
                             numeroPosti={datiPrenotazione.mezzo.posti}
                             tariffa={datiPrenotazione.mezzo.tariffa}
+                            path={datiPrenotazione.mezzo.path}
                             noButton />
                         <motion.div
                             className="d-lg-none mt-4 buttonsGroup justify-content-center"
@@ -86,6 +99,5 @@ export default function SchermataConfermaPrenotazione() {
                 </Row>
             </CardGroup>
         </Container>
-
     )
 }

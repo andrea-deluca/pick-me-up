@@ -4,6 +4,8 @@ const createError = require("http-errors");
 const mailModel = require("./Mail")
 const pagamentoModel = require("./Pagamento")
 const { ObjectId } = require("mongodb");
+const gestionePrenotazioneModel = require("./GestionePrenotazione")
+const timerModel = require("./Timer")
 
 module.exports = {
     fetchDepositi: async function (datiPrenotazione, callback) {
@@ -50,9 +52,7 @@ module.exports = {
                     {
                         $lookup: {
                             from: "Veicolo",
-                            let: {
-                                autoId: "$parcheggi.auto._id"
-                            },
+                            let: { autoId: "$parcheggi.auto._id" },
                             pipeline: [
                                 { $unset: ["_id", "moto", "bicicletta", "monopattino"] },
                                 { $unwind: "$auto" },
@@ -75,15 +75,19 @@ module.exports = {
                 ]).toArray()
                     .then(res => {
                         const veicoli = res[0].autoArray.map(key => {
-                            return {mezzo: key.auto[0], code: key.targhe}
+                            return { mezzo: key.auto[0], code: key.targhe }
                         });
                         db.collection("Prenotazione").aggregate([
-                            {$match: 
-                                {$and: [
-                                    {"ritiro.data" : {$lte: new Date(datiPrenotazione.consegna.data)}}, 
-                                    {"consegna.data" : {$gte: new Date(datiPrenotazione.ritiro.data)}}
-                                ]}},
-                                {$project: {_id: 0, "mezzo.idMezzo": 1, "mezzo.code" : 1}}
+                            {
+                                $match:
+                                {
+                                    $and: [
+                                        { "ritiro.data": { $lte: new Date(datiPrenotazione.consegna.data) } },
+                                        { "consegna.data": { $gte: new Date(datiPrenotazione.ritiro.data) } }
+                                    ]
+                                }
+                            },
+                            { $project: { _id: 0, "mezzo.idMezzo": 1, "mezzo.code": 1 } }
                         ]).toArray()
                             .then(res => {
                                 const targhePrenotazioni = res.map(key => {
@@ -93,7 +97,7 @@ module.exports = {
                                     key.code.map((value, index, arr) => {
                                         targhePrenotazioni.forEach(element => {
                                             let i = index
-                                            if(element === arr[i]){
+                                            if (element === arr[i]) {
                                                 arr.splice(i, 1)
                                                 i--
                                             }
@@ -103,8 +107,8 @@ module.exports = {
                                 const veicoliDisponibili = veicoli.filter((value, index, arr) => {
                                     return value.code.length !== 0
                                 })
-                                if(veicoliDisponibili.length === 0) return callback(404)
-                                
+                                if (veicoliDisponibili.length === 0) return callback(404)
+
                                 return callback({
                                     status: 200,
                                     veicoli: veicoliDisponibili
@@ -128,9 +132,7 @@ module.exports = {
                     {
                         $lookup: {
                             from: "Veicolo",
-                            let: {
-                                motoId: "$parcheggi.moto._id"
-                            },
+                            let: { motoId: "$parcheggi.moto._id" },
                             pipeline: [
                                 { $unset: ["_id", "auto", "bicicletta", "monopattino"] },
                                 { $unwind: "$moto" },
@@ -144,7 +146,8 @@ module.exports = {
                             "_id": "$parcheggi._id",
                             motoArray: {
                                 $push: {
-                                    moto: "$parcheggi.moto.datiMoto.moto"
+                                    moto: "$parcheggi.moto.datiMoto.moto",
+                                    targhe: "$parcheggi.moto.targhe"
                                 }
                             }
                         }
@@ -152,12 +155,45 @@ module.exports = {
                 ]).toArray()
                     .then(res => {
                         const veicoli = res[0].motoArray.map(key => {
-                            return key.moto[0]
+                            return { mezzo: key.moto[0], code: key.targhe }
                         });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
-                        })
+                        db.collection("Prenotazione").aggregate([
+                            {
+                                $match:
+                                {
+                                    $and: [
+                                        { "ritiro.data": { $lte: new Date(datiPrenotazione.consegna.data) } },
+                                        { "consegna.data": { $gte: new Date(datiPrenotazione.ritiro.data) } }
+                                    ]
+                                }
+                            },
+                            { $project: { _id: 0, "mezzo.idMezzo": 1, "mezzo.code": 1 } }
+                        ]).toArray()
+                            .then(res => {
+                                const targhePrenotazioni = res.map(key => {
+                                    return key.mezzo.code
+                                })
+                                veicoli.map((key) => {
+                                    key.code.map((value, index, arr) => {
+                                        targhePrenotazioni.forEach(element => {
+                                            let i = index
+                                            if (element === arr[i]) {
+                                                arr.splice(i, 1)
+                                                i--
+                                            }
+                                        })
+                                    })
+                                })
+                                const veicoliDisponibili = veicoli.filter((value, index, arr) => {
+                                    return value.code.length !== 0
+                                })
+                                if (veicoliDisponibili.length === 0) return callback(404)
+
+                                return callback({
+                                    status: 200,
+                                    veicoli: veicoliDisponibili
+                                })
+                            })
                     })
                     .catch(err => {
                         return callback(500)
@@ -176,9 +212,7 @@ module.exports = {
                     {
                         $lookup: {
                             from: "Veicolo",
-                            let: {
-                                biciId: "$stalli.bici._id"
-                            },
+                            let: { biciId: "$stalli.bici._id" },
                             pipeline: [
                                 { $unset: ["_id", "auto", "moto", "monopattino"] },
                                 { $unwind: "$bicicletta" },
@@ -192,7 +226,8 @@ module.exports = {
                             "_id": "$stalli._id",
                             biciArray: {
                                 $push: {
-                                    bici: "$stalli.bici.datiBici.bicicletta"
+                                    bici: "$stalli.bici.datiBici.bicicletta",
+                                    codici: "$stalli.bici.codice"
                                 }
                             }
                         }
@@ -200,12 +235,45 @@ module.exports = {
                 ]).toArray()
                     .then(res => {
                         const veicoli = res[0].biciArray.map(key => {
-                            return key.bici[0]
+                            return { mezzo: key.bici[0], code: key.codici }
                         });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
-                        })
+                        db.collection("Prenotazione").aggregate([
+                            {
+                                $match:
+                                {
+                                    $and: [
+                                        { "ritiro.data": { $lte: new Date(datiPrenotazione.consegna.data) } },
+                                        { "consegna.data": { $gte: new Date(datiPrenotazione.ritiro.data) } }
+                                    ]
+                                }
+                            },
+                            { $project: { _id: 0, "mezzo.idMezzo": 1, "mezzo.code": 1 } }
+                        ]).toArray()
+                            .then(res => {
+                                const codiciPrenotazione = res.map(key => {
+                                    return key.mezzo.code
+                                })
+                                veicoli.map((key) => {
+                                    key.code.map((value, index, arr) => {
+                                        codiciPrenotazione.forEach(element => {
+                                            let i = index
+                                            if (element === arr[i]) {
+                                                arr.splice(i, 1)
+                                                i--
+                                            }
+                                        })
+                                    })
+                                })
+                                const veicoliDisponibili = veicoli.filter((value, index, arr) => {
+                                    return value.code.length !== 0
+                                })
+                                if (veicoliDisponibili.length === 0) return callback(404)
+
+                                return callback({
+                                    status: 200,
+                                    veicoli: veicoliDisponibili
+                                })
+                            })
                     })
                     .catch(err => {
                         return callback(500)
@@ -224,9 +292,7 @@ module.exports = {
                     {
                         $lookup: {
                             from: "Veicolo",
-                            let: {
-                                monopattinoId: "$stalli.monopattino._id"
-                            },
+                            let: { monopattinoId: "$stalli.monopattino._id" },
                             pipeline: [
                                 { $unset: ["_id", "auto", "moto", "bicicletta"] },
                                 { $unwind: "$monopattino" },
@@ -240,7 +306,8 @@ module.exports = {
                             "_id": "$stalli._id",
                             monopattinoArray: {
                                 $push: {
-                                    monopattino: "$stalli.monopattino.datiMonopattino.monopattino"
+                                    monopattino: "$stalli.monopattino.datiMonopattino.monopattino",
+                                    codici: "$stalli.monopattino.codice"
                                 }
                             }
                         }
@@ -248,12 +315,45 @@ module.exports = {
                 ]).toArray()
                     .then(res => {
                         const veicoli = res[0].monopattinoArray.map(key => {
-                            return key.monopattino[0]
+                            return { mezzo: key.monopattino[0], code: key.codici }
                         });
-                        return callback({
-                            status: 200,
-                            veicoli: veicoli
-                        })
+                        db.collection("Prenotazione").aggregate([
+                            {
+                                $match:
+                                {
+                                    $and: [
+                                        { "ritiro.data": { $lte: new Date(datiPrenotazione.consegna.data) } },
+                                        { "consegna.data": { $gte: new Date(datiPrenotazione.ritiro.data) } }
+                                    ]
+                                }
+                            },
+                            { $project: { _id: 0, "mezzo.idMezzo": 1, "mezzo.code": 1 } }
+                        ]).toArray()
+                            .then(res => {
+                                const codiciPrenotazione = res.map(key => {
+                                    return key.mezzo.code
+                                })
+                                veicoli.map((key) => {
+                                    key.code.map((value, index, arr) => {
+                                        codiciPrenotazione.forEach(element => {
+                                            let i = index
+                                            if (element === arr[i]) {
+                                                arr.splice(i, 1)
+                                                i--
+                                            }
+                                        })
+                                    })
+                                })
+                                const veicoliDisponibili = veicoli.filter((value, index, arr) => {
+                                    return value.code.length !== 0
+                                })
+                                if (veicoliDisponibili.length === 0) return callback(404)
+
+                                return callback({
+                                    status: 200,
+                                    veicoli: veicoliDisponibili
+                                })
+                            })
                     })
                     .catch(err => {
                         return callback(500)
@@ -295,7 +395,7 @@ module.exports = {
             idUtente: ObjectId(datiPrenotazione.idUtente),
         }
         try {
-            
+
             db.collection("Utente").aggregate([
                 { $match: { "_id": prenotazione.idUtente } },
                 { $unset: ["credenziali.password", "accountStatus"] },
@@ -306,7 +406,13 @@ module.exports = {
                     pagamentoModel.generaConfermaPrenotazione({ prenotazione: prenotazione, utente: res[0] });
                     db.collection("Prenotazione").insertOne(prenotazione, (err, res) => {
                         if (err) return callback(500)
-                        return callback(201)
+                        timerModel.setTimerAttivazionePrenotazione(prenotazione);
+                        gestionePrenotazioneModel.fetchPrenotazioniUtente({ _id: datiPrenotazione.idUtente }, res => {
+                            return callback({
+                                status: 201,
+                                prenotazioni: res.prenotazioni
+                            })
+                        })
                     })
                 })
         } catch (error) {

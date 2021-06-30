@@ -29,7 +29,7 @@ router.post("/confermaPrenotazione", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result).send()
+            res.status(result.status).send(result.prenotazioni)
         }
     })
 })
