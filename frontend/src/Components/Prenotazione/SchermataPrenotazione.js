@@ -8,6 +8,7 @@ import SchermataFormPrenotazione from './FormPrenotazione/SchermataFormPrenotazi
 import SchermataSelezioneMezzo from './SelezioneMezzo/SchermataSelezioneMezzo'
 import SchermataConfermaPrenotazione from './ConfermaPrenotazione/SchermataConfermaPrenotazione'
 import SchermataEffettuaPagamento from './Pagamento/SchermataEffettuaPagamento'
+import SchermataPrenotazioneCompletata from './SchermataPrenotazioneCompletata'
 
 
 export default function SchermataPrenotazione() {
@@ -37,6 +38,10 @@ export default function SchermataPrenotazione() {
                 case "EFFETTUA_PAGAMENTO":
                     return (
                         <SchermataEffettuaPagamento />
+                    );
+                case "PRENOTAZIONE_COMPLETATA":
+                    return (
+                        <SchermataPrenotazioneCompletata />
                     );
             }
         } else {

@@ -72,7 +72,7 @@ module.exports = {
         `,
             attachments: [{
                 filename: `${data.prenotazione}.pdf`,
-                path: `public/${data.prenotazione}.pdf`,
+                path: `public/pdf/${data.prenotazione}.pdf`,
                 contentType: "application/pdf"
             }]
         };

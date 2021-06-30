@@ -85,33 +85,6 @@ asideIcon svg {
   width: 300px;
 }
 
-/*
-.slide-enter, .slide-exit {
-  transition: transform .3s ease-out;
-  overflow: hidden;
+.riepilogo-card-mobile-icon {
+  transition: 0.2s;
 }
-
-.slide-enter {
-  transform: translateX(100%);
-  overflow: hidden;
-}
-
-.slide-enter.slide-enter-active {
-  transform: translateX(0%);
-  overflow: hidden;
-}
-
-.slide-exit {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  transform: translateX(0%);
-  overflow: hidden;
-}
-
-.slide-exit-active {
-  transform: translateX(-100%);
-  overflow: hidden;
-}
-*/

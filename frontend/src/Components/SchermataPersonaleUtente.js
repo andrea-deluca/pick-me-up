@@ -63,8 +63,8 @@ export default function SchermataPersonaleUtente() {
                             </Col>
                             <div className="d-flex flex-column align-items-start">
                                 <h1 className="t-bold">{`Bentornato, ${session.nome}!`}</h1>
-                                <div className="buttonsGroup">
-                                    <Button to="/gestione-account/profilo" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
+                                <div className="buttonsGroup flex-column flex-lg-row align-items-start">
+                                    <Button to="/gestione-account/profilo" className="mb-2" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
                                     <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
                                 </div>
                             </div>

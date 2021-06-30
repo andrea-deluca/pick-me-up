@@ -9,7 +9,7 @@ module.exports = {
         // Genero un id da associare al metodo di pagamento da inserire
         const metodoPagamento = {
             ...data.metodoPagamento,
-            id: new ObjectId()
+            _id: new ObjectId()
         }
         try {
             // Aggiorno nel db l'array dei metodi di pagamento associato all'utente, inserendo un nuovo oggetto
@@ -39,12 +39,12 @@ module.exports = {
         const db = await makeDb(config);
         const metodoPagamento = {
             ...data.metodoPagamento,
-            id: new ObjectId()
+            _id: new ObjectId()
         }
         try {
             db.collection("Utente").updateOne(
                 { "_id": ObjectId(data.id) },
-                { $pull: { "metodiPagamento": { id: ObjectId(data.idCarta) } } },
+                { $pull: { "metodiPagamento": { _id: ObjectId(data.idCarta) } } },
                 (err, res) => {
                     if (err) return callback(500);
                     if (res) {
@@ -74,11 +74,11 @@ module.exports = {
     eliminaCarta: async function (data, callback) {
         const db = await makeDb(config);
         try {
-            // Aggiorno nel db l; array dei metodi di pagamento associato all'utente,
+            // Aggiorno nel db l'array dei metodi di pagamento associato all'utente,
             //rimuovendo l'oggetto che ha l'id passato
             db.collection("Utente").updateOne(
                 { "_id": ObjectId(data.id) },
-                { $pull: { "metodiPagamento": { id: ObjectId(data.idCarta) } } },
+                { $pull: { "metodiPagamento": { _id: ObjectId(data.idCarta) } } },
                 (err, res) => {
                     if (err) return callback(500)
                     if (res) {

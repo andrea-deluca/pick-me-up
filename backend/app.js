@@ -12,6 +12,7 @@ var profiloRouter = require("./routes/profilo");
 var walletRouter = require("./routes/wallet");
 var patenteRouter = require("./routes/patente")
 var prenotazioneRouter = require("./routes/prenotazione")
+var gestionePrenotazioneRouter = require("./routes/gestionePrenotazione")
 
 var app = express();
 
@@ -33,6 +34,7 @@ app.use('/profilo', profiloRouter);
 app.use('/wallet', walletRouter);
 app.use('/patente', patenteRouter);
 app.use('/prenotazione', prenotazioneRouter);
+app.use('/gestione-prenotazione', gestionePrenotazioneRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

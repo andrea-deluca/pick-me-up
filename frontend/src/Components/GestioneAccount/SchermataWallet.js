@@ -58,7 +58,7 @@ export default function SchermataWallet() {
                                     session.metodiPagamento.map((key, index) => {
                                         return (<CreditCard key={key}
                                             index={index}
-                                            idCarta={key.id}
+                                            idCarta={key._id}
                                             numeroCarta={key.numeroCarta}
                                             titolare={key.titolare}
                                             dataScadenza={key.dataScadenzaCarta}
