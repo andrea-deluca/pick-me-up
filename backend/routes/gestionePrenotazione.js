@@ -59,4 +59,17 @@ router.delete("/annullaPrenotazione", function (req, res) {
     })
 })
 
+router.put("/iniziaNoleggio", function (req, res) {
+    gestionePrenotazioneModel.iniziaNoleggio(req.body, function (result) {
+        if(result === 500){
+            res.status(result).send("Internal Server Error")
+        } else {
+            res.status(result.status).send({
+                prenotazioni: result.prenotazioni,
+                message: `Il tuo noleggio è iniziato con successo.`
+            })
+        }
+    })
+})
+
 module.exports = router;

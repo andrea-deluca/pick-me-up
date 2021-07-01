@@ -4,8 +4,10 @@ const createError = require("http-errors");
 const mailModel = require("./Mail")
 const pagamentoModel = require("./Pagamento")
 const { ObjectId } = require("mongodb");
-const gestionePrenotazioneModel = require("./GestionePrenotazione")
-const timerModel = require("./Timer")
+const gestionePrenotazioneModel = require("./GestionePrenotazione");
+const Timers = require("./Timers");
+
+const timer = new Timers()
 
 module.exports = {
     fetchDepositi: async function (datiPrenotazione, callback) {
@@ -404,9 +406,13 @@ module.exports = {
                 .toArray()
                 .then(res => {
                     pagamentoModel.generaConfermaPrenotazione({ prenotazione: prenotazione, utente: res[0] });
+                    timer.startTimeoutAttivazionePrenotazione({
+                        _id: prenotazione._id,
+                        dataPrenotazione: prenotazione.dataPrenotazione,
+                        ritiro: prenotazione.ritiro.data, 
+                    })
                     db.collection("Prenotazione").insertOne(prenotazione, (err, res) => {
                         if (err) return callback(500)
-                        timerModel.setTimerAttivazionePrenotazione(prenotazione);
                         gestionePrenotazioneModel.fetchPrenotazioniUtente({ _id: datiPrenotazione.idUtente }, res => {
                             return callback({
                                 status: 201,

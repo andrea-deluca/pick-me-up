@@ -9,7 +9,6 @@ import { Container, Row, Col, Image, Card, CardGroup } from 'react-bootstrap';
 
 import View from "../../Utility/View"
 import Button from "../../Utility/Button";
-import AlertMessage from '../../Utility/AlertMessage'
 
 function TipologiaCard(props) {
     const history = useHistory();

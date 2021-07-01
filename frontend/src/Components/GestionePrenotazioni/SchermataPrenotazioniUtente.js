@@ -1,16 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom';
 import useToken from '../../Hooks/useToken';
+import useSession from '../../Hooks/useSession';
+import axios from 'axios';
 
 import { motion } from 'framer-motion';
 
-import { Container, Row, Col, Image, CardColumns, Nav, Tab } from 'react-bootstrap';
+import { Container, Row, Col, Image, CardColumns, Nav, Tab, Spinner } from 'react-bootstrap';
 
 import NavAside from "../GestioneAccount/NavAside"
 import PrenotazioneCard from './PrenotazioneCard';
 
 export default function SchermataPrenotazioniUtente() {
     const { token, setToken } = useToken();
+    const { session, setSession } = useSession()
+    const [submit, setSubmit] = useState(false)
+
+    function onClick(e) {
+        e.preventDefault()
+        setSubmit(true)
+        try {
+            axios.post("/gestione-prenotazione/fetchPrenotazioniUtente", { _id: session.id })
+                .then(res => {
+                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data))
+                    setSubmit(false)
+                })
+        } catch (error) {
+            console.log(error.response.data.msg)
+        }
+    }
+
     if (!token) {
         return <Redirect to={"/login"} />
     } else {
@@ -44,12 +63,24 @@ export default function SchermataPrenotazioniUtente() {
                                             <Nav.Item>
                                                 <Nav.Link eventKey="passate">Passate</Nav.Link>
                                             </Nav.Item>
+                                            <Nav.Item>
+                                                <Nav.Link onClick={onClick} className="t-light">
+                                                    <Spinner
+                                                        as="span"
+                                                        animation={submit ? "border" : ""}
+                                                        size="sm"
+                                                        role="status"
+                                                        aria-hidden="true"
+                                                        className={submit ? "me-2" : ""} />
+                                                    Aggiorna
+                                                </Nav.Link>
+                                            </Nav.Item>
                                         </Nav>
                                     </Col>
                                     <Col lg={{ span: 9 }} className="my-5 my-lg-0">
                                         <Tab.Content eventKey="attive">
                                             <Tab.Pane eventKey="attive">
-                                                <CardColumns>
+                                                <CardColumns className="scrollable">
                                                     {window.sessionStorage.getItem("prenotazioni") && JSON.parse(window.sessionStorage.getItem("prenotazioni")).attive.length !== 0 ?
                                                         JSON.parse(window.sessionStorage.getItem("prenotazioni")).attive.map(key => {
                                                             return (
@@ -79,9 +110,9 @@ export default function SchermataPrenotazioniUtente() {
                                             <Tab.Pane eventKey="programmate">
                                                 <CardColumns className="scrollable">
                                                     {window.sessionStorage.getItem("prenotazioni") && JSON.parse(window.sessionStorage.getItem("prenotazioni")).programmate.length !== 0 ?
-                                                        JSON.parse(window.sessionStorage.getItem("prenotazioni")).programmate.map(key => {
+                                                        JSON.parse(window.sessionStorage.getItem("prenotazioni")).programmate.map((key, index) => {
                                                             return (
-                                                                <PrenotazioneCard
+                                                                <PrenotazioneCard index={index}
                                                                     id={key._id}
                                                                     dataPrenotazione={new Date(key.dataPrenotazione).toLocaleString("it-IT")}
                                                                     stato={key.stato}
@@ -107,7 +138,7 @@ export default function SchermataPrenotazioniUtente() {
                                         </Tab.Content>
                                         <Tab.Content eventKey="passate">
                                             <Tab.Pane eventKey="passate">
-                                                <CardColumns>
+                                                <CardColumns className="scrollable">
                                                     {window.sessionStorage.getItem("prenotazioni") && JSON.parse(window.sessionStorage.getItem("prenotazioni")).passate.length !== 0 ?
                                                         JSON.parse(window.sessionStorage.getItem("prenotazioni")).passate.map(key => {
                                                             return (

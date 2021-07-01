@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useSession from '../../../Hooks/useSession';
 import axios from 'axios'
 
 import { Col, Row, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
@@ -20,6 +19,7 @@ export default function FormPrenotazione() {
             show: false,
         },
     })
+    const maxDate = new Date((new Date().setDate(new Date().getDate() + 23))).toISOString().substring(0, 10)
 
     function checkValidity() {
 
@@ -163,18 +163,19 @@ export default function FormPrenotazione() {
                         <OverlayTrigger
                             placement={"top"}
                             overlay={
-                                <Tooltip id="dataNascitaInfo">
+                                <Tooltip id="dataRitiroInfo">
                                     Formato valido per la data di ritiro: AAAA-MM-GG.
                                 </Tooltip>}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                         </OverlayTrigger>
-                        <Form.Control type="date" placeholder="Seleziona data di ritiro" pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
+                        <Form.Control type="date" placeholder="Seleziona data di ritiro" min={new Date().toISOString().substring(0, 10)} max={maxDate} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
                     </Form.Group>
                     <Col xs={{ span: 6 }}>
                         <InputOrario
                             controlId={"oraRitiro"}
                             default={"Seleziona ora di ritiro"}
                             label={"Ora di ritiro"}
+                            dataId={"dataRitiro"}
                             required />
                     </Col>
                     <Form.Group controlId="consegna">
@@ -193,12 +194,12 @@ export default function FormPrenotazione() {
                         <OverlayTrigger
                             placement={"top"}
                             overlay={
-                                <Tooltip id="dataNascitaInfo">
+                                <Tooltip id="dataConsegnaInfo">
                                     Formato valido per la data di consegna: AAAA-MM-GG.
                                 </Tooltip>}>
                             <FontAwesomeIcon icon={faInfoCircle} />
                         </OverlayTrigger>
-                        <Form.Control type="date" placeholder="Seleziona data di consegna" pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
+                        <Form.Control type="date" placeholder="Seleziona data di consegna" min={new Date().toISOString().substring(0, 10)} max={maxDate} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
                     </Form.Group>
                     <Col xs={{ span: 6 }}>
                         <InputOrario

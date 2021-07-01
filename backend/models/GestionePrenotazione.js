@@ -4,6 +4,9 @@ const createError = require("http-errors");
 const mailModel = require("./Mail")
 const pagamentoModel = require("./Pagamento")
 const { ObjectId } = require("mongodb");
+const Timers = require("./Timers")
+
+const timer = new Timers()
 
 module.exports = {
     fetchPrenotazioniUtente: async function (utente, callback) {
@@ -11,7 +14,15 @@ module.exports = {
         try {
             db.collection("Prenotazione").aggregate([
                 { $match: { idUtente: ObjectId(utente._id) } },
-                { $match: { stato: "ATTIVA" } }
+                {
+                    $match: {
+                        $or: [
+                            { stato: "ATTIVA" },
+                            { stato: "IN PREPARAZIONE" },
+                            { stato: "INIZIATA" }
+                        ]
+                    }
+                }
             ]).toArray()
                 .then(res => {
                     const prenotazioniAttive = res;
@@ -113,6 +124,11 @@ module.exports = {
                                         utente: utente,
                                         prenotazione: prenotazione,
                                         differenzaImporto: differenzaImporto
+                                    })
+                                    timer.updateTimeoutAttivazionePrenotazione({
+                                        _id: prenotazione._id,
+                                        ritiro: prenotazione.ritiro.data,
+                                        dataPrenotazione: new Date()
                                     })
                                     this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
                                         if (res === 500) return callback(500)
@@ -218,6 +234,9 @@ module.exports = {
                                 metodoPagamento: res[0].metodiPagamento
                             }
                             pagamentoModel.generaAnnullaPrenotazione({ utente: utente, prenotazione: prenotazione })
+                            timer.stopTimeoutAttivazionePrenotazione({
+                                _id: data.idPrenotazione
+                            })
                             this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
                                 if (res === 500) return callback(500)
                                 return callback({
@@ -234,6 +253,29 @@ module.exports = {
         } catch (error) {
             console.log(error)
             callback(500)
+        }
+    },
+
+    iniziaNoleggio: async function (data, callback) {
+        const db = await makeDb(config);
+        try {
+            db.collection("Prenotazione").findOneAndUpdate(
+                { _id: ObjectId(data._id) },
+                { $set: { stato: "INIZIATA" } },
+                (err, res) => {
+                    if (err) return callback(500)
+                    this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                        if (res === 500) return callback(500)
+                        return callback({
+                            status: 200,
+                            prenotazioni: res.prenotazioni
+                        })
+                    })
+                }
+            )
+        } catch (error) {
+            console.log(error)
+            return callback(500)
         }
     }
 }

@@ -35,7 +35,7 @@ export default function SchermataEffettuaPagamento() {
                     })
                 })
                 .catch(err => {
-
+                    
                 })
         } catch (error) {
             console.log(error.response.data.msg)
