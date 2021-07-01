@@ -4,7 +4,7 @@ import { Form } from 'react-bootstrap';
 
 export default function InputOrario(props) {
     const now = new Date()
-    const data = document.querySelector(props.dataId)
+    //const data = document.querySelector(props.dataId)
 
     return (
         <Form.Group controlId={props.controlId}>
