@@ -37,22 +37,22 @@ export default function SchermataPrenotazioniUtente() {
             <Container fluid className="p-0 h-100">
                 <Row className="g-0 h-100 align-items-start">
                     <NavAside />
-                    <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 1 }} className="mx-lg-auto mt-5">
+                    <Col xs={{ span: 12 }} lg={{ span: 8, offset: 1 }} className="mx-auto ms-lg-auto mt-5">
                         <motion.div
                             initial={{ translateY: 70, opacity: 0 }}
                             animate={{ translateY: 0, opacity: 1 }}
                             exit={{ translateY: 70, opacity: 0 }}
                             transition={{ dÎuration: 0.3 }}>
                             <div className="d-flex justify-content-start align-items-center mb-5">
-                                <Image fluid className="col-2 me-3" src="/assets/svg/prenotazioni.svg" />
+                                <Image fluid className="col-3 mx-3" src="/assets/svg/prenotazioni.svg" />
                                 <div className="d-flex flex-column">
-                                    <p className="h6 t-light">USER ID #</p>
+                                    <p className="h6 t-light">USER ID #{session.id}</p>
                                     <h1 className="h1 t-bold">Le mie prenotazioni</h1>
                                 </div>
                             </div>
                             <Tab.Container defaultActiveKey="attive" id="listaPrenotazioni">
                                 <Row>
-                                    <Col lg={{ span: 3 }}>
+                                    <Col xs={{ span: 10, offset: 1 }} lg={{ span: 3, offset: 0 }}>
                                         <Nav variant="pills" className="flex-column t-bold">
                                             <Nav.Item >
                                                 <Nav.Link eventKey="attive">Attive</Nav.Link>
@@ -77,10 +77,10 @@ export default function SchermataPrenotazioniUtente() {
                                             </Nav.Item>
                                         </Nav>
                                     </Col>
-                                    <Col lg={{ span: 9 }} className="my-5 my-lg-0">
+                                    <Col xs={{ span: 12 }} lg={{ span: 9 }} className="my-5 my-lg-0">
                                         <Tab.Content eventKey="attive">
                                             <Tab.Pane eventKey="attive">
-                                                <CardColumns className="scrollable">
+                                                <CardColumns className="scrollable row">
                                                     {window.sessionStorage.getItem("prenotazioni") && JSON.parse(window.sessionStorage.getItem("prenotazioni")).attive.length !== 0 ?
                                                         JSON.parse(window.sessionStorage.getItem("prenotazioni")).attive.map(key => {
                                                             return (
@@ -102,7 +102,7 @@ export default function SchermataPrenotazioniUtente() {
                                                                     tariffaOraria={key.mezzo.tariffa}
                                                                     importo={key.pagamento.importoTotale} />
                                                             );
-                                                        }) : <h3 className="t-light text-muted">Nessuna prenotazione attiva trovata</h3>}
+                                                        }) : <h3 className="t-light text-center text-muted">Nessuna prenotazione attiva trovata</h3>}
                                                 </CardColumns>
                                             </Tab.Pane>
                                         </Tab.Content>
@@ -132,7 +132,7 @@ export default function SchermataPrenotazioniUtente() {
                                                                     tariffaOraria={key.mezzo.tariffa}
                                                                     importo={key.pagamento.importoTotale} />
                                                             );
-                                                        }) : <h3 className="t-light text-muted">Nessuna prenotazione programmata trovata</h3>}
+                                                        }) : <h3 className="t-light text-center text-muted">Nessuna prenotazione programmata trovata</h3>}
                                                 </CardColumns>
                                             </Tab.Pane>
                                         </Tab.Content>
@@ -158,7 +158,7 @@ export default function SchermataPrenotazioniUtente() {
                                                                     consegna={key.consegna.nome}
                                                                     path={key.mezzo.path} />
                                                             );
-                                                        }) : <h3 className="t-light text-muted">Nessuna prenotazione trovata</h3>}
+                                                        }) : <h3 className="t-light text-center text-muted">Nessuna prenotazione trovata</h3>}
                                                 </CardColumns>
                                             </Tab.Pane>
                                         </Tab.Content>

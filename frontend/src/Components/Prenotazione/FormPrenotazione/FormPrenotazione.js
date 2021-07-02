@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios'
 
-import { Col, Row, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { Row, Col, Form } from 'react-bootstrap'
 
 import Button from '../../Utility/Button';
-import InputOrario from '../../Utility/FormsUtility/InputOrario';
+import InputDataPrenotazione from '../../Utility/FormsUtility/InputDataPrenotazione';
 import AlertMessage from '../../Utility/AlertMessage'
 
 export default function FormPrenotazione() {
@@ -19,7 +16,6 @@ export default function FormPrenotazione() {
             show: false,
         },
     })
-    const maxDate = new Date((new Date().setDate(new Date().getDate() + 23))).toISOString().substring(0, 10)
 
     function checkValidity() {
 
@@ -59,8 +55,16 @@ export default function FormPrenotazione() {
                     return false
                 }
             }
-        } else if (dateRitiro > dateConsegna) {
+        } else if (dateRitiro.getFullYear() > dateConsegna.getFullYear()) {
             return false;
+        } else if (dateRitiro.getFullYear() === dateConsegna.getFullYear()) {
+            if (dateRitiro.getMonth() > dateConsegna.getMonth()) {
+                return false
+            } else if (dateRitiro.getMonth() === dateConsegna.getMonth()) {
+                if (dateRitiro.getDate() > dateConsegna.getDate()) {
+                    return false
+                }
+            }
         }
 
         const orarioRitiro = document.querySelector("#oraRitiro")
@@ -147,67 +151,48 @@ export default function FormPrenotazione() {
                 onClick={() => setState({ ...state, error: { show: false } })} />
             <Form onSubmit={onSubmit}>
                 <Row className="gy-4">
-                    <Form.Group controlId="ritiro">
-                        <Form.Label>Località di ritiro</Form.Label>
-                        <Form.Control as="select" className="form-select" required>
-                            <option value="" disabled selected>Seleziona località di ritiro</option>
-                            {history.location.state.payload.depositi.map(key => {
-                                return (
-                                    <option value={key._id}>{key.nome}</option>
-                                );
-                            })}
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group className="col-6 col-lg-6" controlId="dataRitiro">
-                        <Form.Label className="pe-2">Data di ritiro</Form.Label>
-                        <OverlayTrigger
-                            placement={"top"}
-                            overlay={
-                                <Tooltip id="dataRitiroInfo">
-                                    Formato valido per la data di ritiro: AAAA-MM-GG.
-                                </Tooltip>}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                        </OverlayTrigger>
-                        <Form.Control type="date" placeholder="Seleziona data di ritiro" min={new Date().toISOString().substring(0, 10)} max={maxDate} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
-                    </Form.Group>
-                    <Col xs={{ span: 6 }}>
-                        <InputOrario
-                            controlId={"oraRitiro"}
-                            default={"Seleziona ora di ritiro"}
-                            label={"Ora di ritiro"}
-                            dataId={"dataRitiro"}
-                            required />
+                    <Col xs={{ span: 12 }}>
+                        <Form.Group controlId="ritiro">
+                            <Form.Label>Località di ritiro</Form.Label>
+                            <Form.Control as="select" className="form-select" required>
+                                <option value="" disabled selected>Seleziona località di ritiro</option>
+                                {history.location.state.payload.depositi.map(key => {
+                                    return (
+                                        <option value={key._id}>{key.nome}</option>
+                                    );
+                                })}
+                            </Form.Control>
+                        </Form.Group>
                     </Col>
-                    <Form.Group controlId="consegna">
-                        <Form.Label>Località di consegna</Form.Label>
-                        <Form.Control as="select" className="form-select" required>
-                            <option value="" disabled selected>Seleziona località di consegna</option>
-                            {history.location.state.payload.depositi.map(key => {
-                                return (
-                                    <option value={key._id}>{key.nome}</option>
-                                );
-                            })}
-                        </Form.Control>
-                    </Form.Group>
-                    <Form.Group className="col-6 col-lg-6" controlId="dataConsegna">
-                        <Form.Label className="pe-2">Data di consegna</Form.Label>
-                        <OverlayTrigger
-                            placement={"top"}
-                            overlay={
-                                <Tooltip id="dataConsegnaInfo">
-                                    Formato valido per la data di consegna: AAAA-MM-GG.
-                                </Tooltip>}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                        </OverlayTrigger>
-                        <Form.Control type="date" placeholder="Seleziona data di consegna" min={new Date().toISOString().substring(0, 10)} max={maxDate} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
-                    </Form.Group>
-                    <Col xs={{ span: 6 }}>
-                        <InputOrario
-                            controlId={"oraConsegna"}
-                            default={"Seleziona ora di consegna"}
-                            label={"Ora di consegna"}
-                            required />
+                    <InputDataPrenotazione
+                        controlDataId={"dataRitiro"}
+                        labelData={"Data di ritiro"}
+                        placeholderData={"Seleziona data di ritiro"}
+                        controlOrarioId={"oraRitiro"}
+                        defaultOrario={"Seleziona ora di ritiro"}
+                        labelOrario={"Ora di ritiro"}
+                        required />
+                    <Col xs={{ span: 12 }}>
+                        <Form.Group controlId="consegna">
+                            <Form.Label>Località di consegna</Form.Label>
+                            <Form.Control as="select" className="form-select" required>
+                                <option value="" disabled selected>Seleziona località di consegna</option>
+                                {history.location.state.payload.depositi.map(key => {
+                                    return (
+                                        <option value={key._id}>{key.nome}</option>
+                                    );
+                                })}
+                            </Form.Control>
+                        </Form.Group>
                     </Col>
+                    <InputDataPrenotazione
+                        controlDataId={"dataConsegna"}
+                        labelData={"Data di consegna"}
+                        placeholderData={"Seleziona data di consegna"}
+                        controlOrarioId={"oraConsegna"}
+                        defaultOrario={"Seleziona ora di consegna"}
+                        labelOrario={"Ora di consegna"}
+                        required />
                     <Button spinner={state.submit} variant={"Primary"} submit >Continua</Button>
                 </Row>
             </Form>

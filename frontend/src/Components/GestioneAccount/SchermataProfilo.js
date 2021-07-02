@@ -11,7 +11,7 @@ import { Container, Row, Col, Image } from 'react-bootstrap';
 
 // FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMobileAlt, faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import { faMobileAlt, faEnvelope, faKey, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Components
 import Button from "../Utility/Button";
@@ -45,33 +45,14 @@ export default function SchermataProfilo() {
                             animate={{ translateY: 0, opacity: 1 }}
                             exit={{ translateY: 100, opacity: 0 }}
                             transition={{ duration: 0.3 }}>
-                            <Row className="row my-5 d-flex d-lg-none align-items-center">
-                                <Col xs={{ span: 3 }}>
-                                    <Button variant={"White"} onClick={() => setModals({ ...modals, cellulareModal: true })}>
-                                        <FontAwesomeIcon className="me-2" icon={faMobileAlt} fixedWidth />Modifica cellulare
-                                    </Button>
-                                </Col>
-                                <Col xs={{ span: 4, offset: 1 }}>
-                                    <Button variant={"White"} onClick={() => setModals({ ...modals, emailModal: true })}>
-                                        <FontAwesomeIcon className="me-2" icon={faEnvelope} fixedWidth />Modifica email
-                                    </Button>
-                                </Col>
-                                <Col xs={{ span: 3 }}>
-                                    <Button variant={"White"} onClick={() => setModals({ ...modals, passwordModal: true })}>
-                                        <FontAwesomeIcon className="me-2" icon={faKey} fixedWidth />Modifica password
-                                    </Button>
-                                </Col>
-                            </Row>
                             <div className="d-flex justify-content-start align-items-center mb-5">
                                 <Image fluid className="col-2 me-3" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
                                 <div className="d-flex flex-column">
-                                    <h6 className="t-light">USER ID #</h6>
+                                    <h6 className="t-light">USER ID #{session.id}</h6>
                                     <h1 className="t-bold">{session.nome + " " + session.cognome}</h1>
                                 </div>
                             </div>
-
                             <RiepilogoProfilo />
-
                         </motion.div>
                     </Col>
                     <Col lg={{ span: 3, offset: 1 }} className="d-none d-lg-block me-auto">

@@ -2,9 +2,11 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import useSession from '../../../Hooks/useSession'
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Bootstrap Components
-import { Row, Col, Modal, Form } from 'react-bootstrap'
+import { Row, Col, Modal, Form, Tooltip, OverlayTrigger } from 'react-bootstrap'
 
 // Custom Components
 import Button from '../../Utility/Button';
@@ -22,7 +24,7 @@ export default function ModificaMetodoModal(props) {
         },
         submit: false
     })
-    
+
     function onSubmit(e) {
         e.preventDefault();
         const tipologiaPatenteInput = document.getElementById("tipologiaPatente");
@@ -42,7 +44,7 @@ export default function ModificaMetodoModal(props) {
         try {
             axios.put("/patente/modificaPatente", data)
                 .then(res => {
-                    setSession({ ...session, patente: res.data.patente})
+                    setSession({ ...session, patente: res.data.patente })
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {
@@ -74,8 +76,8 @@ export default function ModificaMetodoModal(props) {
                         button={"Indietro"}
                         onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Form onSubmit={onSubmit}>
-                          <Row className="gy-4" >
-                            <Col xs={{ span: 5, offset: 1 }}>
+                        <Row className="gy-4" >
+                            <Col xs={{ span: 12 }} lg={{ span: 5, offset: 1 }}>
                                 <Form.Group controlId="tipologiaPatente">
                                     <Form.Label>Patente di guida</Form.Label>
                                     <Form.Control className="form-select" as="select" required>
@@ -88,19 +90,33 @@ export default function ModificaMetodoModal(props) {
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 5 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 5 }}>
                                 <Form.Group controlId="numeroPatente">
-                                    <Form.Label>Numero Patente</Form.Label>
+                                    <Form.Label className="me-2">Numero Patente</Form.Label>
+                                    <OverlayTrigger
+                                        placement={"top"}
+                                        overlay={
+                                            <Tooltip id="numeroCartaInfo">
+                                                Il numero della patente per risultare valida deve essere composta da:
+                                                <br />• 2 Lettere
+                                                <br />• 7 Cifre
+                                                <br />• 1 Lettera finale
+                                                <br />Ad esempio: AB1234567C
+                                            </Tooltip>
+                                        }
+                                    >
+                                        <FontAwesomeIcon icon={faInfoCircle} />
+                                    </OverlayTrigger>
                                     <Form.Control type="text" placeholder={session.patente.numeroPatente} pattern="[a-zA-Z]{2}\d{7}[a-zA-Z]{1}" required />
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 5, offset: 1 }} >
+                            <Col xs={{ span: 6 }} lg={{ span: 5, offset: 1 }} >
                                 <Form.Group controlId="dataScadenzaPatente">
                                     <Form.Label>Data di scadenza</Form.Label>
                                     <Form.Control type="date" placeholder={session.patente.dataScadenza} required />
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 5 }}>
+                            <Col xs={{ span: 6 }} lg={{ span: 5 }}>
                                 <Form.Group controlId="ufficioRilascio">
                                     <Form.Label>Ufficio di rilascio</Form.Label>
                                     <Form.Control className="form-select" as="select" required>
@@ -111,10 +127,10 @@ export default function ModificaMetodoModal(props) {
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1}} className="buttonsGroup justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                                 <Button spinner={state.submit} variant={"Primary"} submit>Conferma</Button>
-                            </div>
+                            </Col>
                         </Row>
                     </Form>
                 }

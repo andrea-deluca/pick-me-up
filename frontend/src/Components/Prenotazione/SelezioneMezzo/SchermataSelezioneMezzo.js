@@ -18,24 +18,24 @@ export default function SelezioneVeicolo() {
     return (
         <React.Fragment>
             <View>
-                <Container>
+                <Container className="mt-5">
                     <motion.div
                         initial={{ translateY: -50, opacity: 0 }}
                         animate={{ translateY: 0, opacity: 1 }}
                         exit={{ translateY: -50, opacity: 0 }}
                         transition={{ duration: 0.4 }}>
                         <h1 className="t-bold text-center my-5">Seleziona veicolo</h1>
-                        <FormRicerca />
+                        {/* <FormRicerca /> */}
                     </motion.div>
                 </Container>
             </View>
-            <Container className="mt-5">
-                <Row>
+            <Container  className="mt-2 mb-5">
+                <Row className="mb-100">
                     <Col xs={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 9 }}>
                         <Row className="gy-4 mb-5">
                             {veicoli.map((key, index) => {
                                 return (
-                                    <Col xs={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 0 }} xl={{ span: 4 }}>
+                                    <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 0 }} xl={{ span: 4 }}>
                                         <VeicoloCard
                                             index={index}
                                             tipologiaMezzo={datiPrenotazione.tipologiaMezzo}

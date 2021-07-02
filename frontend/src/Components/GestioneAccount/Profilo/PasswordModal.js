@@ -78,25 +78,25 @@ export default function PasswordModal(props) {
                         onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
-                            <Col xs={{ span: 10, offset: 1 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }}>
                                 <InputPassword controlId={"vecchiaPassword"} placeholder={"Inserisci la tua password attuale"}>
                                     Vecchia password
                                 </InputPassword>
                             </Col>
-                            <Col xs={{ span: 10, offset: 1 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }}>
                                 <InputPassword tooltip controlId={"nuovaPassword"} placeholder={"Inserisci la tua nuova password"}>
                                     Nuova password
                                 </InputPassword>
                             </Col>
-                            <Col xs={{ span: 10, offset: 1 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }}>
                                 <InputPassword controlId={"confermaNuovaPassword"} placeholder={"Conferma la tua password"}>
                                     Conferma password
                                 </InputPassword>
                             </Col>
-                            <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }} className="buttonsGroup justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                                 <Button variant={"Primary"} submit>Conferma</Button>
-                            </div>
+                            </Col>
                         </Row>
                     </Form>
                 }

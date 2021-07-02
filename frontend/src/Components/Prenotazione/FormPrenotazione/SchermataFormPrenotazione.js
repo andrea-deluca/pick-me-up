@@ -11,7 +11,7 @@ export default function SchermataFormPrenotazione() {
     return (
         <Container fluid className="p-0 h-100 align-items-center justify-content-center">
             <Row className="h-100 g-0 align-items-center">
-                <Col xs={{ span: 10, offset: 1 }} lg={{ span: 5 }} className="mx-auto">
+                <Col xs={{ span: 10, offset: 1 }} lg={{ span: 5 }} className="mx-auto my-5">
                     <motion.div
                         initial={{ translateY: 100, opacity: 0 }}
                         animate={{ translateY: 0, opacity: 1 }}

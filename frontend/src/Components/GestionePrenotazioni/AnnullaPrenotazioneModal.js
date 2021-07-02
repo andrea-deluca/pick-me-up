@@ -69,13 +69,13 @@ export default function AnnullaPrenotazioneModal(props) {
                         button={"Indietro"}
                         onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Row className="gy-4" >
-                        <Col xs={{ span: 10, offset: 1 }}>
+                        <Col >
                             <h3 className="t-bold text-center h5">Sei sicuro di voler annullare la tua prenotazione?</h3>
                         </Col>
-                        <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                        <Col xs={{ span: 12 }} className="buttonsGroup">
                             <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                             <Button spinner={state.submit} variant={"Danger"} onClick={onClick}>Conferma</Button>
-                        </div>
+                        </Col>
                     </Row>
                 }
             </Modal.Body>

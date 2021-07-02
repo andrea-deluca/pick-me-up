@@ -163,10 +163,11 @@ a {
   background-color: rgb(255, 255, 255);
   background-image: url("https://webartdevelopers.com/blog/wp-content/uploads/2019/02/CSS-Background-Animation-1.gif");
 }
-
-.scrollable {
-  overflow: auto;
-  height: 60vh;
+@media screen and (min-width: 992.98px) {
+  .scrollable {
+    overflow: auto;
+    height: 60vh;
+  }
 }
 
 #riepilogo-card-mobile {
@@ -181,4 +182,8 @@ a {
   transition: 0.2s;
 }
 
-
+@media screen and (max-width: 992.98px) {
+  .mb-100 {
+    margin-bottom: 100px;
+  }
+}

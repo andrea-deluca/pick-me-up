@@ -10,7 +10,7 @@ import { Row, Col, Modal } from 'react-bootstrap'
 import Button from '../../Utility/Button';
 import AlertMessage from '../../Utility/AlertMessage';
 
-export default function CellulareModal(props) {
+export default function EliminaAccountModal(props) {
     const { session, setSession } = useSession();
     const history = useHistory()
     const [state, setState] = useState({
@@ -60,10 +60,10 @@ export default function CellulareModal(props) {
                         button={"Indietro"}
                         onClick={() => { setState({ ...state, error: { show: false } }) }} />
                     : <Row className="gy-4" >
-                        <Col xs={{ span: 10, offset: 1 }}>
+                        <Col >
                             <h3 className="t-bold text-center h5">Sei sicuro di voler eliminare il tuo account?</h3>
                         </Col>
-                        <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                        <div className="buttonsGroup mx-auto">
                             <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                             <Button spinner={state.submit} variant={"Danger"} onClick={onClick}>Conferma</Button>
                         </div>

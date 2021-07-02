@@ -17,11 +17,16 @@ class Timers {
                     { _id: ObjectId(prenotazione._id) },
                     { $set: { stato: "IN PREPARAZIONE" } },
                     (err, res) => {
-                        this.setTimeoutPrenotazione(async function () {
-                            db.collection("Prenotazione").findOneAndUpdate(
-                                { _id: ObjectId(prenotazione._id) },
-                                { $set: { stato: "ATTIVA" } }
-                            )
+                        setTimeout(async function () {
+                            const db = await makeDb(config)
+                            try {
+                                db.collection("Prenotazione").findOneAndUpdate(
+                                    { _id: ObjectId(prenotazione._id) },
+                                    { $set: { stato: "ATTIVA" } }
+                                )
+                            } catch (error) {
+                                console.log(error)
+                            }
                         }, 900000)
                     }
                 )

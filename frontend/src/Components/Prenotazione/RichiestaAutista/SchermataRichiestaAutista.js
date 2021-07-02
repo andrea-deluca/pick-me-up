@@ -55,8 +55,8 @@ export default function SchermataRichiestaAutista() {
                     </Col>
                     <h1 className="h1 t-bold text-center">Desideri richiedere la presenza di un autista?</h1>
                     <p className="h6 text-center t-light">Per continuare con la prenotazione dell'auto specifica se desideri la presenza di un autista</p>
-                    <div className="buttonsGroup">
-                        <Button onClick={richiediAutista} variant={"Primary"}>Richiedi autista</Button>
+                    <div className="buttonsGroup flex-column flex-sm-row">
+                        <Button className="mb-2 mb-sm-0" onClick={richiediAutista} variant={"Primary"}>Richiedi autista</Button>
                         <Button onClick={procediSenzaAutista} variant={"Secondary"}>Procedi senza autista</Button>
                     </div>
                 </Row>

@@ -58,17 +58,17 @@ export default function SchermataPersonaleUtente() {
                         exit={{ translateY: 100, opacity: 0 }}
                         transition={{ duration: 0.3 }}>
                         <Container fluid className="d-flex justify-content-center align-items-center my-5">
-                            <Col xs={{ span: 2 }} lg={{ span: 1 }} className="me-3">
-                                <Image fluid className="" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
+                            <Col xs={{ span: 2, offset: 1 }} sm={{ span: 1, offset: 0 }} className="me-3">
+                                <Image fluid src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
                             </Col>
                             <div className="d-flex flex-column align-items-start">
                                 <h1 className="t-bold">{`Bentornato, ${session.nome}!`}</h1>
-                                <div className="buttonsGroup flex-column flex-lg-row align-items-start">
-                                    <Button to="/gestione-account/profilo" className="mb-2" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
-                                    <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
-                                </div>
                             </div>
                         </Container >
+                        <div className="buttonsGroup offset-1 offset-sm-0 flex-column flex-sm-row align-items-start mb-5">
+                            <Button to="/gestione-account/profilo" className="mb-2" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth /> Visualizza Profilo</Button>
+                            <Button to="/gestione-prenotazioni" variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth /> Le mie prenotazioni</Button>
+                        </div>
                     </motion.div>
                 </View>
                 <View>

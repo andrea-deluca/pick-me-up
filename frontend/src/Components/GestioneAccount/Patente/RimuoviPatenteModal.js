@@ -64,10 +64,10 @@ export default function RimuoviMetodoModal(props) {
                         button={"Indietro"}
                         onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Row className="gy-4" >
-                        <Col xs={{ span: 10, offset: 1 }}>
+                        <Col >
                             <h3 className="t-bold text-center h5">Sei sicuro di voler eliminare il tuo metodo di pagamento?</h3>
                         </Col>
-                        <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                        <div className="buttonsGroup mx-auto">
                             <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                             <Button spinner={state.submit} variant={"Danger"} onClick={onClick}>Conferma</Button>
                         </div>

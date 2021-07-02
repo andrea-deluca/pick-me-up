@@ -72,8 +72,8 @@ function TipologiaCard(props) {
                             </Card.Title>
                             <Card.Text className="t-light">{props.text}</Card.Text>
                         </div>
-                        <Button disabled={props.disabled} spinner={state.submit} onClick={onClick} variant="primary">{props.button}</Button>
                     </Card.Body>
+                    <Button disabled={props.disabled} spinner={state.submit} onClick={onClick} variant="primary">Seleziona</Button>
                 </Card>
             </motion.div>
         </Col>
@@ -84,8 +84,7 @@ export default function SelezioneTipologiaVeicolo() {
     const { session, setSession } = useSession()
     return (
         <View>
-
-            <Container fluid className="d-flex flex-column justify-content-center align-items-center">
+            <Container fluid className="mb-5 d-flex flex-column justify-content-center align-items-center">
                 <motion.div
                     className="d-flex flex-column align-items-center my-5"
                     initial={{ translateY: 100, opacity: 0 }}
@@ -93,15 +92,14 @@ export default function SelezioneTipologiaVeicolo() {
                     exit={{ translateY: 100, opacity: 0 }}
                     transition={{ duration: 0.3 }}>
                     <h1 className="t-bold">Prenotazione</h1>
-                    <h6 className="t-light">Seleziona la tipologia di veicolo che vuoi noleggiare e continua</h6>
+                    <h6 className="text-center t-light">Seleziona la tipologia di veicolo che vuoi noleggiare e continua</h6>
                 </motion.div>
                 <CardGroup >
                     <Row className="gy-5">
                         <TipologiaCard
                             imageSrc={"/assets/svg/auto.svg"}
                             title={"Automobile 🚗"}
-                            text={"Scegli di noleggiare un auto utilitaria,una berlina o un SUV. Inoltre potrai anche richiedere la presenza di un autista."}
-                            button={"Seleziona"}
+                            text={"Noleggia un auto utilitaria,una berlina o un SUV. Potrai inoltre richiedere la presenza di un autista."}
                             id="auto"
                             disabled={session.patente && session.patente.tipologiaPatente === "B" ? false : true}
                             animationDuration={0.3}
@@ -109,8 +107,7 @@ export default function SelezioneTipologiaVeicolo() {
                         <TipologiaCard
                             imageSrc={"/assets/svg/motore.svg"}
                             title={"Moto 🛵"}
-                            text={"Noleggio un motore e scegli di goderti il vento tra i capelli... Ah no, ricordati di mettere il casco."}
-                            button={"Seleziona"}
+                            text={"Noleggio una Moto o un Motorino e scegli di goderti il vento tra i capelli... Ah no, ricordati di mettere il casco."}
                             id="moto"
                             disabled={session.patente ? false : true}
                             animationDuration={0.4}
@@ -118,8 +115,7 @@ export default function SelezioneTipologiaVeicolo() {
                         <TipologiaCard
                             imageSrc={"/assets/svg/bici.svg"}
                             title={"Bicicletta 🚴‍♀️"}
-                            text={"Noleggia una bicicletta per sentirti libero di muoverti in città senza danneggiare l'ambiente. "}
-                            button={"Seleziona"}
+                            text={"Noleggia una Bicicletta per sentirti libero di muoverti in città senza danneggiare l'ambiente. "}
                             id="bici"
                             green
                             animationDuration={0.5}
@@ -127,13 +123,11 @@ export default function SelezioneTipologiaVeicolo() {
                         <TipologiaCard
                             imageSrc={"/assets/svg/monopattino.svg"}
                             title={"Monopattino Elettrico 🛴"}
-                            text={"Scegli di noleggiare un Monopattino Elettrico e scopri così un nuovo modo per spostarsi in città! Una soluzione divertente, economica e semplice da utilizzare. L'ambiente che ci circonda ti ringrazierà! "}
-                            button={"Seleziona"}
+                            text={"Noleggia un Monopattino Elettrico e scopri un nuovo modo per spostarsi in città! Una soluzione divertente e semplice da utilizzare."}
                             id="monopattino"
                             green
                             animationDuration={0.6}
                         />
-
                     </Row>
                 </CardGroup>
             </Container>

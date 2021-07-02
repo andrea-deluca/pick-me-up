@@ -39,7 +39,7 @@ export default function SchermataConfermaPrenotazione() {
     }
 
     return (
-        <Container className="d-flex flex-column justify-content-start align-items-center mt-5">
+        <Container className="d-flex flex-column justify-content-center align-items-center mt-5">
             <ModificaPrenotazioneModal show={showModal.modificaModal} onHide={() => { setShowModal({...showModal, modificaModal: false}) }} />
             <CambiaMezzoModal show={showModal.cambiaMezzoModal} onHide={() => { setShowModal({...showModal, cambiaMezzoModal: false}) }} />
             <motion.div
@@ -52,8 +52,8 @@ export default function SchermataConfermaPrenotazione() {
                 <h6 className="t-light text-center">Conferma i dati della prenotazione prima di procedere con il pagamento</h6>
             </motion.div>
             <CardGroup>
-                <Row className="gy-5 align-items-center">
-                    <Col xs={{ span: 8, offset: 2 }} lg={{ span: 6, offset: 0 }}>
+                <Row className="gy-5 align-items-center mt-2 mt-lg-5 mb-100">
+                    <Col xs={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 0 }}>
                         <VeicoloCard
                             tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
                             idMezzo={datiPrenotazione.mezzo.idMezzo}

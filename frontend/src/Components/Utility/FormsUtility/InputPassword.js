@@ -28,7 +28,7 @@ export default function InputPassword(props) {
                 <FontAwesomeIcon icon={faInfoCircle} />
             </OverlayTrigger> : null}
             <InputGroup >
-                <Form.Control id={props.controlId} type={showPassword ? "text" : "password"} placeholder={props.placeholder} pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" required />
+                <Form.Control id={props.controlId} type={showPassword ? "text" : "password"} placeholder={props.placeholder} pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" required />
                 <InputGroup.Append>
                     <InputGroup.Text className="h-100">
                         <FontAwesomeIcon onClick={() => setShowPassoword(!showPassword)} icon={showPassword ? faEyeSlash : faEye} />

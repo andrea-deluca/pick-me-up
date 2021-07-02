@@ -23,22 +23,22 @@ export default function AggiungiMetodoModal(props) {
         submit: false
     })
 
-    function checkValidity(){
-        
+    function checkValidity() {
+
         document.querySelector("#dataScadenzaPatente").classList.remove("border-danger", "text-danger")
 
         const dataScadenzaPatente = document.querySelector("#dataScadenzaPatente")
-    
+
         //Controllo sulle date inserite
         const now = new Date();
         const dataScadenza = new Date(dataScadenzaPatente.value)
-        if(now.getFullYear() > dataScadenza.getFullYear()) {
+        if (now.getFullYear() > dataScadenza.getFullYear()) {
             return false;
-        } else if(now.getFullYear() === dataScadenza.getFullYear()){
-            if(now.getMonth() > dataScadenza.getMonth()){
+        } else if (now.getFullYear() === dataScadenza.getFullYear()) {
+            if (now.getMonth() > dataScadenza.getMonth()) {
                 return false
-            } else if(now.getMonth() === dataScadenza.getMonth()) {
-                if(now.getDate() > dataScadenza.getDate()) {
+            } else if (now.getMonth() === dataScadenza.getMonth()) {
+                if (now.getDate() > dataScadenza.getDate()) {
                     return false
                 }
             }
@@ -63,7 +63,7 @@ export default function AggiungiMetodoModal(props) {
             }
         }
 
-        if(!checkValidity()) {
+        if (!checkValidity()) {
             dataScadenzaPatente.classList.add("border-danger", "text-danger")
             return
         } else {
@@ -106,7 +106,7 @@ export default function AggiungiMetodoModal(props) {
                         onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
-                            <Col xs={{ span: 5, offset: 1 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 5, offset: 1 }}>
                                 <Form.Group controlId="tipologiaPatente">
                                     <Form.Label>Patente di guida</Form.Label>
                                     <Form.Control className="form-select" as="select" required>
@@ -119,19 +119,19 @@ export default function AggiungiMetodoModal(props) {
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 5 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 5 }}>
                                 <Form.Group controlId="numeroPatente">
                                     <Form.Label>Numero Patente</Form.Label>
                                     <Form.Control type="text" placeholder="Inserisci il numero di patente" pattern="[a-zA-Z]{2}\d{7}[a-zA-Z]{1}" required />
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 5, offset: 1 }} >
+                            <Col xs={{ span: 6 }} lg={{ span: 5, offset: 1 }} >
                                 <Form.Group controlId="dataScadenzaPatente">
                                     <Form.Label>Data di scadenza</Form.Label>
                                     <Form.Control onBlur={() => checkValidity} type="date" placeholder="Inserisci data di scadenza" required />
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 5 }}>
+                            <Col xs={{ span: 6 }} lg={{ span: 5 }}>
                                 <Form.Group controlId="ufficioRilascio">
                                     <Form.Label>Ufficio di rilascio</Form.Label>
                                     <Form.Control className="form-select" as="select" required>
@@ -142,10 +142,10 @@ export default function AggiungiMetodoModal(props) {
                                     </Form.Control>
                                 </Form.Group>
                             </Col>
-                            <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offse: 1 }} className="buttonsGroup justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                                 <Button spinner={state.submit} variant={"Primary"} submit>Aggiungi</Button>
-                            </div>
+                            </Col>
                         </Row>
                     </Form>
                 }

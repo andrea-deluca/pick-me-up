@@ -65,16 +65,16 @@ export default function EmailModal(props) {
                         header={state.success.show ? "Operazione completata con successo" : "Operazione fallita!"}
                         body={state.success.show ? state.success.message : state.error.message}
                         button={"Indietro"}
-                        onClick={() => { state.success.show ? history.go(0) : setState({ ...state, error: {show: false} }) }} />
+                        onClick={() => { state.success.show ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
-                            <Col xs={{ span: 10, offset: 1 }}>
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }}>
                                 <InputEmail controlId={"modificaEmail"} />
                             </Col>
-                            <div className="buttonsGroup col-10 offset-1 justify-content-end">
+                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }} className="buttonsGroup justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                                 <Button spinner={state.submit} variant={"Primary"} submit>Conferma</Button>
-                            </div>
+                            </Col>
                         </Row>
                     </Form>
                 }
