@@ -128,5 +128,30 @@ module.exports = {
             }]
         };
         await transporter.sendMail(mailOptions);
+    },
+
+    inviaEstesioneNoleggio: async function (data) {
+        const mailOptions = {
+            from: mailConfig.email,
+            to: data.email,
+            subject: `Modifica prenotazione #${data.prenotazione}`,
+            html: `
+            <h1>Estensione noleggio effettuata con successo!</h1>
+            <h3>Abbiamo ricevuta una richiesta di modifica</h3>
+            <p>
+                Come richiesto abbiamo esteso la durata del tuo noleggio. In allegato troverai
+                la conferma delle modifiche apportate, la fattura e i dettagli del pagamento effettuato.
+            </p>
+            <p>
+                Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+        `,
+            attachments: [{
+                filename: `${data.prenotazione}.pdf`,
+                path: `public/pdf/${data.prenotazione}.pdf`,
+                contentType: "application/pdf"
+            }]
+        };
+        await transporter.sendMail(mailOptions);
     }
 }

@@ -8,12 +8,18 @@ import { Row, Col, Card, Image } from 'react-bootstrap'
 import Button from '../Utility/Button';
 import AnnullaPrenotazioneModal from './AnnullaPrenotazioneModal';
 import AlertMessage from '../Utility/AlertMessage';
+import TerminaNoleggioModal from './TerminaNoleggioModal';
+import EstendiNoleggioModal from './EstendiNoleggioModal'
 
 export default function PrenotazioneCard(props) {
     const history = useHistory()
     const { session, setSession } = useSession()
     const [showModals, setShowModals] = useState({
         deleteModal: false,
+        terminaModal: {
+            show: false
+        },
+        estendiModal: false
     })
     const [state, setState] = useState({
         error: {
@@ -108,11 +114,24 @@ export default function PrenotazioneCard(props) {
 
     function terminaNoleggio(e) {
         e.preventDefault()
+        setState({ ...state, submit: true })
+        try {
+            axios.post("/prenotazione/fetchDepositi", { tipologiaMezzo: props.tipologiaMezzo })
+                .then(res => {
+                    setShowModals({ ...showModals, terminaModal: { show: true, depositi: res.data } })
+                    setState({ ...state, submit: false })
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                })
+        } catch (error) {
+            console.log(error.response.data.msg)
+        }
     }
 
     return (
         <React.Fragment>
-            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 0 }} lg={{ span: 10, offset: 1 }} className="mx-auto my-4">
+            <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 0 }} lg={{ span: 10, offset: 1 }} className="my-4">
                 <Card className="animation-card border-0 shadow">
                     <AlertMessage
                         show={state.success.show || state.error.show}
@@ -164,15 +183,19 @@ export default function PrenotazioneCard(props) {
                             </Col>
                             {props.stato === "IN PREPARAZIONE" || props.stato === "ATTIVA" || props.stato === "INIZIATA" ?
                                 <div className="buttonsGroup justify-content-end mt-4">
-                                    <Button variant={"Light"}>Estendi noleggio</Button>
+                                    <Button onClick={() => setShowModals({ ...showModals, estendiModal: true })} variant={"Light"}>Estendi noleggio</Button>
                                     <Button spinner={state.submit} variant={"Primary"}
                                         disabled={props.stato === "ATTIVA" || props.stato === "INIZIATA" ? false : true}
                                         onClick={props.stato === "ATTIVA" ? iniziaNoleggio : terminaNoleggio}>
                                         {props.stato === "INIZIATA" ? "Termina noleggio" : "Inizia noleggio"}
                                     </Button>
+                                    <TerminaNoleggioModal id={props.id} depositi={showModals.terminaModal.depositi}
+                                        show={showModals.terminaModal.show}
+                                        onHide={() => setShowModals({ ...showModals, terminaModal: { show: false } })} />
+                                    <EstendiNoleggioModal id={props.id} dataConsegna={props.dataConsegna} show={showModals.estendiModal} onHide={() => setShowModals({ ...showModals, estendiModal: false })} />
                                 </div>
                                 : props.stato === "PROGRAMMATA" ?
-                                    <div className="row gy-3 justify-content-end mt-4">
+                                    <div className="buttonsGroup gy-3 justify-content-end mt-4">
                                         <Button onClick={cambiaMezzo} variant={"Light"}>Cambia mezzo</Button>
                                         <Button onClick={modificaPrenotazione} variant={"Light"}>Modifica</Button>
                                         <Button onClick={() => setShowModals({ ...showModals, deleteModal: true })} variant={"Danger"}>Annulla noleggio</Button>

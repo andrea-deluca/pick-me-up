@@ -108,7 +108,7 @@ export default function SchermataPrenotazioniUtente() {
                                         </Tab.Content>
                                         <Tab.Content eventKey="programmate">
                                             <Tab.Pane eventKey="programmate">
-                                                <CardColumns className="scrollable">
+                                                <CardColumns className="scrollable row">
                                                     {window.sessionStorage.getItem("prenotazioni") && JSON.parse(window.sessionStorage.getItem("prenotazioni")).programmate.length !== 0 ?
                                                         JSON.parse(window.sessionStorage.getItem("prenotazioni")).programmate.map((key, index) => {
                                                             return (
@@ -138,7 +138,7 @@ export default function SchermataPrenotazioniUtente() {
                                         </Tab.Content>
                                         <Tab.Content eventKey="passate">
                                             <Tab.Pane eventKey="passate">
-                                                <CardColumns className="scrollable">
+                                                <CardColumns className="scrollable row">
                                                     {window.sessionStorage.getItem("prenotazioni") && JSON.parse(window.sessionStorage.getItem("prenotazioni")).passate.length !== 0 ?
                                                         JSON.parse(window.sessionStorage.getItem("prenotazioni")).passate.map(key => {
                                                             return (

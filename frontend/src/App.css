@@ -133,9 +133,20 @@ a {
 
 .carousel-img {
   object-fit: cover;
-  object-position: center left;
+  object-position: center center;
   width: 100vw;
   height: 100%;
+}
+
+@media screen and (max-width: 992.98px) {
+  .carousel-img {
+    object-position: center center;
+  }
+
+  .right-image {
+    object-position: center right;
+    
+  }
 }
 
 .carousel-caption {

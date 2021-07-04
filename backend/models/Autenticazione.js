@@ -135,7 +135,8 @@ module.exports = {
                     password.upper,
                     password.digits,
                     password.symbols
-                ]
+                ],
+                predicate: x => x.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
             })
             // Aggiorno nel db la password associata all'utente
             const encryptedRandomPassword = CryptoJS.AES.encrypt(randomPassword, "pick-me-up").toString();

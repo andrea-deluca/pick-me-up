@@ -38,7 +38,7 @@ export default function HomeCarousel() {
                 </Carousel.Item> */}
                 <Carousel.Item className="h-100">
                     <img
-                        className="carousel-img"
+                        className="carousel-img right-image"
                         src="/assets/carousel-4.jpg"
                         alt="Fisrt slide" />
                 </Carousel.Item>

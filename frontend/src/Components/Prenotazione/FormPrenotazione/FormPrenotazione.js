@@ -170,8 +170,7 @@ export default function FormPrenotazione() {
                         placeholderData={"Seleziona data di ritiro"}
                         controlOrarioId={"oraRitiro"}
                         defaultOrario={"Seleziona ora di ritiro"}
-                        labelOrario={"Ora di ritiro"}
-                        required />
+                        labelOrario={"Ora di ritiro"} />
                     <Col xs={{ span: 12 }}>
                         <Form.Group controlId="consegna">
                             <Form.Label>Località di consegna</Form.Label>
@@ -191,8 +190,7 @@ export default function FormPrenotazione() {
                         placeholderData={"Seleziona data di consegna"}
                         controlOrarioId={"oraConsegna"}
                         defaultOrario={"Seleziona ora di consegna"}
-                        labelOrario={"Ora di consegna"}
-                        required />
+                        labelOrario={"Ora di consegna"} />
                     <Button spinner={state.submit} variant={"Primary"} submit >Continua</Button>
                 </Row>
             </Form>

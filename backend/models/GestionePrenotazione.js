@@ -34,7 +34,7 @@ module.exports = {
                             const prenotazioniProg = res;
                             db.collection("Prenotazione").aggregate([
                                 { $match: { idUtente: ObjectId(utente._id) } },
-                                { $match: { stato: "PASSATA" } }
+                                { $match: { stato: "TERMINATA" } }
                             ]).toArray()
                                 .then(res => {
                                     const prenotazioniPassate = res
@@ -271,6 +271,217 @@ module.exports = {
                             prenotazioni: res.prenotazioni
                         })
                     })
+                }
+            )
+        } catch (error) {
+            console.log(error)
+            return callback(500)
+        }
+    },
+
+    terminaNoleggio: async function (data, callback) {
+        const db = await makeDb(config);
+        try {
+            db.collection("Prenotazione").findOneAndUpdate(
+                { _id: ObjectId(data._id) },
+                { $set: { stato: "TERMINATA" } },
+                { returnDocument: "after" },
+                (err, res) => {
+                    if (err) return callback(500)
+                    let prenotazione = res.value
+                    if (data.consegna) {
+                        prenotazione = {
+                            ...prenotazione,
+                            consegna: {
+                                idConsegna: data.consegna
+                            }
+                        }
+                    }
+                    if (prenotazione.mezzo.tipologia === "auto") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "parcheggi._id": ObjectId(prenotazione.ritiro.idRitiro) },
+                            { $pull: { "parcheggi.$.auto.$[idMezzo].targhe": prenotazione.mezzo.code } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            (err, res) => {
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "parcheggi._id": ObjectId(prenotazione.consegna.idConsegna) },
+                                    { $push: { "parcheggi.$.auto.$[idMezzo].targhe": prenotazione.mezzo.code } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    } else if (prenotazione.mezzo.tipologia === "moto") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "parcheggi._id": ObjectId(prenotazione.ritiro.idRitiro) },
+                            { $pull: { "parcheggi.$.moto.$[idMezzo].targhe": prenotazione.mezzo.code } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            (err, res) => {
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "parcheggi._id": ObjectId(prenotazione.consegna.idConsegna) },
+                                    { $push: { "parcheggi.$.moto.$[idMezzo].targhe": prenotazione.mezzo.code } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    } else if (prenotazione.mezzo.tipologia === "bici") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "stalli._id": ObjectId(prenotazione.ritiro.idRitiro) },
+                            { $pull: { "stalli.$.bici.$[idMezzo].codice": prenotazione.mezzo.code } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            (err, res) => {
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "stalli._id": ObjectId(prenotazione.consegna.idConsegna) },
+                                    { $push: { "stalli.$.bici.$[idMezzo].codice": prenotazione.mezzo.code } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    } else if (prenotazione.mezzo.tipologia === "monopattino") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "stalli._id": ObjectId(prenotazione.ritiro.idRitiro) },
+                            { $pull: { "stalli.$.monopattino.$[idMezzo].codice": prenotazione.mezzo.code } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            (err, res) => {
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "stalli._id": ObjectId(prenotazione.consegna.idConsegna) },
+                                    { $push: { "stalli.$.monopattino.$[idMezzo].targhe": prenotazione.mezzo.code } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    }
+                }
+            )
+        } catch (error) {
+            console.log(error)
+            return callback(500)
+        }
+    },
+
+    estendiNoleggio: async function (data, callback) {
+        const db = await makeDb(config)
+        try {
+            db.collection("Prenotazione").findOne(
+                { _id: ObjectId(data._id) },
+                { projection: { _id: 0, "mezzo.idMezzo": 1, "mezzo.code": 1 } },
+                (err, res) => {
+                    if (err) return callback(500)
+                    db.collection("Prenotazione").findOne(
+                        {
+                            "mezzo.idMezzo": ObjectId(res.mezzo.idMezzo),
+                            "mezzo.code": res.mezzo.code,
+                            "_id": { $ne: ObjectId(data._id) },
+                            "ritiro.data": { $lte: new Date(data.dataConsegna) }
+                        },
+                        (err, res) => {
+                            if (err) return callback(500)
+                            if (res) {
+                                return callback(400)
+                            } else {
+                                db.collection("Prenotazione").findOneAndUpdate(
+                                    { _id: ObjectId(data._id) },
+                                    { $set: { "consegna.data": new Date(data.dataConsegna) } },
+                                    (err, res) => {
+                                        if (err) return callback(500)
+                                        const prenotazione = res.value
+                                        const tempoTotaleMillis = new Date(data.dataConsegna) - new Date(prenotazione.ritiro.data)
+                                        const tempoTotale = tempoTotaleMillis / (1000 * 3600)
+                                        const importoTotale = tempoTotale * prenotazione.mezzo.tariffa;
+                                        const importoPagato = prenotazione.pagamento.importoTotale;
+                                        const differenzaImporto = importoTotale - importoPagato
+                                        db.collection("Prenotazione").findOneAndUpdate(
+                                            { _id: ObjectId(data._id) },
+                                            { $set: { "pagamento.importoTotale": importoTotale } },
+                                            (err, res) => {
+                                                db.collection("Utente").findOne(
+                                                    {
+                                                        _id: ObjectId(prenotazione.idUtente),
+                                                        "metodiPagamento._id": ObjectId(prenotazione.pagamento.idMetodoPagamento)
+                                                    },
+                                                    {
+                                                        projection: {
+                                                            nome: 1,
+                                                            cognome: 1,
+                                                            codiceFiscale: 1,
+                                                            "credenziali.cellulare": 1,
+                                                            "credenziali.email": 1,
+                                                            "metodiPagamento.$": 1
+                                                        }
+                                                    },
+                                                    (err, res) => {
+                                                        const utente = {
+                                                            id: res._id,
+                                                            nome: res.nome,
+                                                            cognome: res.cognome,
+                                                            codiceFiscale: res.codiceFiscale,
+                                                            cellulare: res.credenziali.cellulare,
+                                                            email: res.credenziali.email,
+                                                            metodoPagamento: {
+                                                                ...res.metodiPagamento[0]
+                                                            }
+                                                        }
+                                                        pagamentoModel.generaEstensioneNoleggio({
+                                                            utente: utente,
+                                                            prenotazione: {
+                                                                ...prenotazione,
+                                                                consegna: {
+                                                                    ...prenotazione.consegna,
+                                                                    data: data.dataConsegna
+                                                                },
+                                                                pagamento: {
+                                                                    ...prenotazione.pagamento,
+                                                                    importoTotale: importoTotale
+                                                                }
+                                                            },
+                                                            differenzaImporto: differenzaImporto
+                                                        })
+                                                        this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
+                                                            return callback({
+                                                                status: 200,
+                                                                prenotazioni: res.prenotazioni
+                                                            })
+                                                        })
+                                                    }
+                                                )
+                                            }
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    )
                 }
             )
         } catch (error) {

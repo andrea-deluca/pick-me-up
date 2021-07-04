@@ -122,5 +122,44 @@ module.exports = {
             email: data.utente.email,
             prenotazione: data.prenotazione._id
         })
+    },
+
+    generaEstensioneNoleggio: async function (data) {
+        const doc = new jsPDF()
+
+        //immagine base64
+        var img = logoConfig.logo.uri
+        doc.addImage(img, 'png', 10, 10, 65, 18)
+        doc.setFontSize(18)
+        doc.text("Estesione noleggio", 10, 40)
+        doc.setFontSize(10)
+        doc.text(
+            `ID PRENOTAZIONE: ${data.prenotazione._id}\nPrenotazione effettuata ${(new Date(data.prenotazione.dataPrenotazione)).toLocaleString("it-IT")}`, 10, 45)
+        doc.setFontSize(16)
+        doc.text("Dati dell'utente", 10, 70)
+        doc.setFontSize(10)
+        doc.text(
+            `ID UTENTE: ${data.utente.id}\nNOME E COGNOME: ${data.utente.nome} ${data.utente.cognome}\nCODICE FISCALE: ${data.utente.codiceFiscale}\nCELLULARE: ${data.utente.cellulare}\nEMAIL: ${data.utente.email}`, 10, 80)
+        doc.setFontSize(14)
+        doc.setFontSize(16)
+        doc.text("Dati della prenotazione", 10, 110)
+        doc.setFontSize(10)
+        doc.text(
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.code}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
+        doc.setFontSize(16)
+        doc.text("Dettagli pagamento", 10, 150)
+        doc.setFontSize(10)
+        doc.text(
+            `TARIFFA ORARIA: € ${data.prenotazione.mezzo.tariffa}\nTOTALE IMPORTO AGGIORNATO: € ${data.prenotazione.pagamento.importoTotale}\nDIFFERENZA: € ${data.differenzaImporto}`, 10, 160)
+        doc.setFontSize(14)
+        doc.text("Metodo di pagamento", 10, 190)
+        doc.setFontSize(10)
+        doc.text(
+            `TITOLARE: ${data.utente.metodoPagamento.titolare}\nNUMERO: ${data.utente.metodoPagamento.numeroCarta}\nDATA DI SCADENZA: ${data.utente.metodoPagamento.dataScadenzaCarta}\nCVV: ${data.utente.metodoPagamento.cvv}\n`, 10, 200)
+        doc.save(`./public/pdf/${data.prenotazione._id}.pdf`)
+        mailModel.inviaEstesioneNoleggio({
+            email: data.utente.email,
+            prenotazione: data.prenotazione._id
+        })
     }
 }
