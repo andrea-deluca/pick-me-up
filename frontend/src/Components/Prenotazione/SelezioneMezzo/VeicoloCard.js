@@ -18,7 +18,7 @@ export default function VeicoloCard(props) {
         const datiPrenotazione = {
             ...history.location.state.payload.datiPrenotazione,
             mezzo: {
-                idMezzo: props.idMezzo,
+                _id: props.idMezzo,
                 marca: props.marca,
                 modello: props.modello,
                 posti: props.numeroPosti,
@@ -27,7 +27,7 @@ export default function VeicoloCard(props) {
                 cilindrata: props.cilindrata,
                 tariffa: props.tariffa,
                 path: props.path,
-                code: history.location.state.payload.veicoli[props.index].code
+                targa: history.location.state.payload.veicoli[props.index].targhe[0]
             }
         }
         history.push("/prenota", {

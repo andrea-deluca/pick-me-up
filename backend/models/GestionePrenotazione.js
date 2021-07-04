@@ -70,20 +70,20 @@ module.exports = {
         const importoAggiornato = data.prenotazione.mezzo.tariffa * tempoTotale
         const datiPrenotazione = {
             ritiro: {
-                idRitiro: ObjectId(data.prenotazione.ritiro.localita),
+                _id: ObjectId(data.prenotazione.ritiro.localita),
                 nome: data.prenotazione.ritiro.nome,
                 data: new Date(data.prenotazione.ritiro.data),
             },
             consegna: {
-                idConsegna: ObjectId(data.prenotazione.consegna.localita),
+                _id: ObjectId(data.prenotazione.consegna.localita),
                 nome: data.prenotazione.consegna.nome,
                 data: new Date(data.prenotazione.consegna.data),
             },
             mezzo: {
                 ...data.prenotazione.mezzo,
                 tipologia: data.prenotazione.tipologiaMezzo,
-                idMezzo: ObjectId(data.prenotazione.mezzo.idMezzo),
-                code: data.prenotazione.mezzo.code[0]
+                _id: ObjectId(data.prenotazione.mezzo.idMezzo),
+                targa: data.prenotazione.mezzo.targa
             },
             pagamento: {
                 importoTotale: importoAggiornato
@@ -95,7 +95,7 @@ module.exports = {
                 (err, res) => {
                     if (err) return callback(500)
                     const differenzaImporto = importoAggiornato - res.pagamento.importoTotale
-                    const metodoPagamento = res.pagamento.idMetodoPagamento
+                    const metodoPagamento = res.pagamento._id
                     db.collection("Prenotazione").findOneAndUpdate(
                         { _id: ObjectId(data.prenotazione._id) },
                         {
@@ -156,8 +156,8 @@ module.exports = {
             mezzo: {
                 ...data.prenotazione.mezzo,
                 tipologia: data.prenotazione.tipologiaMezzo,
-                idMezzo: ObjectId(data.prenotazione.mezzo.idMezzo),
-                code: data.prenotazione.mezzo.code[0]
+                _id: ObjectId(data.prenotazione.mezzo.idMezzo),
+                targa: data.prenotazione.mezzo.targa
             },
             pagamento: {
                 importoTotale: importoAggiornato
@@ -169,7 +169,7 @@ module.exports = {
                 (err, res) => {
                     if (err) return callback(500)
                     const differenzaImporto = importoAggiornato - res.pagamento.importoTotale
-                    const metodoPagamento = res.pagamento.idMetodoPagamento
+                    const metodoPagamento = res.pagamento._id
                     db.collection("Prenotazione").findOneAndUpdate(
                         { _id: ObjectId(data.prenotazione._id) },
                         {
@@ -225,7 +225,7 @@ module.exports = {
                     db.collection("Utente").aggregate([
                         { $match: { "_id": ObjectId(data.utente.id) } },
                         { $unwind: "$metodiPagamento" },
-                        { $match: { "metodiPagamento._id": ObjectId(prenotazione.pagamento.idMetodoPagamento) } },
+                        { $match: { "metodiPagamento._id": ObjectId(prenotazione.pagamento._id) } },
                         { $project: { "metodiPagamento": 1 } }
                     ]).toArray()
                         .then(res => {
@@ -299,14 +299,14 @@ module.exports = {
                     }
                     if (prenotazione.mezzo.tipologia === "auto") {
                         db.collection("Deposito").findOneAndUpdate(
-                            { "parcheggi._id": ObjectId(prenotazione.ritiro.idRitiro) },
-                            { $pull: { "parcheggi.$.auto.$[idMezzo].targhe": prenotazione.mezzo.code } },
-                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "auto.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                             (err, res) => {
                                 db.collection("Deposito").findOneAndUpdate(
-                                    { "parcheggi._id": ObjectId(prenotazione.consegna.idConsegna) },
-                                    { $push: { "parcheggi.$.auto.$[idMezzo].targhe": prenotazione.mezzo.code } },
-                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    { "_id": ObjectId(prenotazione.consegna._id) },
+                                    { $push: { "auto.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
                                         this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
@@ -320,14 +320,14 @@ module.exports = {
                             })
                     } else if (prenotazione.mezzo.tipologia === "moto") {
                         db.collection("Deposito").findOneAndUpdate(
-                            { "parcheggi._id": ObjectId(prenotazione.ritiro.idRitiro) },
-                            { $pull: { "parcheggi.$.moto.$[idMezzo].targhe": prenotazione.mezzo.code } },
-                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "moto.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                             (err, res) => {
                                 db.collection("Deposito").findOneAndUpdate(
-                                    { "parcheggi._id": ObjectId(prenotazione.consegna.idConsegna) },
-                                    { $push: { "parcheggi.$.moto.$[idMezzo].targhe": prenotazione.mezzo.code } },
-                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    { "_id": ObjectId(prenotazione.consegna._id) },
+                                    { $push: { "moto.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
                                         this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
@@ -341,14 +341,14 @@ module.exports = {
                             })
                     } else if (prenotazione.mezzo.tipologia === "bici") {
                         db.collection("Deposito").findOneAndUpdate(
-                            { "stalli._id": ObjectId(prenotazione.ritiro.idRitiro) },
-                            { $pull: { "stalli.$.bici.$[idMezzo].codice": prenotazione.mezzo.code } },
-                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "bici.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                             (err, res) => {
                                 db.collection("Deposito").findOneAndUpdate(
-                                    { "stalli._id": ObjectId(prenotazione.consegna.idConsegna) },
-                                    { $push: { "stalli.$.bici.$[idMezzo].codice": prenotazione.mezzo.code } },
-                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    { "_id": ObjectId(prenotazione.consegna._id) },
+                                    { $push: { "bici.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
                                         this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
@@ -362,14 +362,14 @@ module.exports = {
                             })
                     } else if (prenotazione.mezzo.tipologia === "monopattino") {
                         db.collection("Deposito").findOneAndUpdate(
-                            { "stalli._id": ObjectId(prenotazione.ritiro.idRitiro) },
-                            { $pull: { "stalli.$.monopattino.$[idMezzo].codice": prenotazione.mezzo.code } },
-                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "monopattino.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                             (err, res) => {
                                 db.collection("Deposito").findOneAndUpdate(
-                                    { "stalli._id": ObjectId(prenotazione.consegna.idConsegna) },
-                                    { $push: { "stalli.$.monopattino.$[idMezzo].targhe": prenotazione.mezzo.code } },
-                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo.idMezzo) }] },
+                                    { "_id": ObjectId(prenotazione.consegna._id) },
+                                    { $push: { "monopattino.$[idMezzo].targhe": prenotazione.mezzo._id } },
+                                    { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
                                         this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
@@ -395,13 +395,13 @@ module.exports = {
         try {
             db.collection("Prenotazione").findOne(
                 { _id: ObjectId(data._id) },
-                { projection: { _id: 0, "mezzo.idMezzo": 1, "mezzo.code": 1 } },
+                { projection: { _id: 0, "mezzo._id": 1, "mezzo.targa": 1 } },
                 (err, res) => {
                     if (err) return callback(500)
                     db.collection("Prenotazione").findOne(
                         {
-                            "mezzo.idMezzo": ObjectId(res.mezzo.idMezzo),
-                            "mezzo.code": res.mezzo.code,
+                            "mezzo._id": ObjectId(res.mezzo._id),
+                            "mezzo.targa": res.mezzo.targa,
                             "_id": { $ne: ObjectId(data._id) },
                             "ritiro.data": { $lte: new Date(data.dataConsegna) }
                         },
@@ -428,7 +428,7 @@ module.exports = {
                                                 db.collection("Utente").findOne(
                                                     {
                                                         _id: ObjectId(prenotazione.idUtente),
-                                                        "metodiPagamento._id": ObjectId(prenotazione.pagamento.idMetodoPagamento)
+                                                        "metodiPagamento._id": ObjectId(prenotazione.pagamento._id)
                                                     },
                                                     {
                                                         projection: {

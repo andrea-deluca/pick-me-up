@@ -28,7 +28,7 @@ function TipologiaCard(props) {
         try {
             axios.post("/prenotazione/fetchDepositi", datiPrenotazione)
                 .then(res => {
-                    if (props.id === "auto") {
+                    if (datiPrenotazione.tipologiaMezzo === "auto") {
                         history.push("/prenota", {
                             payload: {
                                 datiPrenotazione: datiPrenotazione,

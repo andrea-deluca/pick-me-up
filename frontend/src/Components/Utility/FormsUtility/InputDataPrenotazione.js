@@ -12,7 +12,7 @@ export default function InputDataPrenotazione(props) {
 
     let minDate
     if (props.dataConsegna && parseInt(props.dataConsegna.substring(3, 4)) > 9) {
-        minDate = props.dataConsegna.substring(5, 9) + "-" + props.dataConsegna.substring(3, 4) + "-" + props.dataConsegna.substring(0, 2)
+        minDate = props.dataConsegna.substring(5, 9) + "-" + props.dataConsegna.substring(3, 5) + "-" + props.dataConsegna.substring(0, 2)
     } else if (props.dataConsegna && parseInt(props.dataConsegna.substring(3, 4)) < 10) {
         minDate = props.dataConsegna.substring(5, 9) + "-0" + props.dataConsegna.substring(3, 4) + "-" + props.dataConsegna.substring(0, 2)
     } else {
@@ -42,7 +42,7 @@ export default function InputDataPrenotazione(props) {
                         <FontAwesomeIcon icon={faInfoCircle} />
                     </OverlayTrigger>
                     <Form.Control onBlur={checkDate} type="date" placeholder={props.placeholderData}
-                        min={minDate ? new Date(minDate).toISOString().substring(0, 10) : new Date().toISOString().substring(0, 10)}
+                        min={new Date().toISOString().substring(0, 10)}
                         max={maxDate} pattern="[0-9]{4}-[0-1][0-9]-[0-3][0-9]" required />
                 </Form.Group>
             </Col>

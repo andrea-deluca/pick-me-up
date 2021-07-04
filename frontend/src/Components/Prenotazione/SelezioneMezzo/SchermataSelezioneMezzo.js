@@ -7,7 +7,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import View from '../../Utility/View';
 import VeicoloCard from './VeicoloCard';
-import FormRicerca from './FormRicerca';
 import RiepilogoCard from './RiepilogoCard';
 
 export default function SelezioneVeicolo() {
@@ -29,7 +28,7 @@ export default function SelezioneVeicolo() {
                     </motion.div>
                 </Container>
             </View>
-            <Container  className="mt-2 mb-5">
+            <Container className="mt-2 mb-5">
                 <Row className="mb-100">
                     <Col xs={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 9 }}>
                         <Row className="gy-4 mb-5">
@@ -39,15 +38,15 @@ export default function SelezioneVeicolo() {
                                         <VeicoloCard
                                             index={index}
                                             tipologiaMezzo={datiPrenotazione.tipologiaMezzo}
-                                            idMezzo={key.mezzo._id}
-                                            marca={key.mezzo.marca}
-                                            modello={key.mezzo.modello}
-                                            cambio={key.mezzo.cambio}
-                                            carburante={key.mezzo.carburante}
-                                            cilindrata={key.mezzo.cilindrata}
-                                            numeroPosti={key.mezzo.numeroPosti}
-                                            tariffa={key.mezzo.tariffaOraria}
-                                            path={key.mezzo.path} />
+                                            idMezzo={key._id}
+                                            marca={key.dati[0].marca}
+                                            modello={key.dati[0].modello}
+                                            cambio={key.dati[0].cambio}
+                                            carburante={key.dati[0].carburante}
+                                            cilindrata={key.dati[0].cilindrata}
+                                            numeroPosti={key.dati[0].numeroPosti}
+                                            tariffa={key.dati[0].tariffaOraria}
+                                            path={key.dati[0].path} />
                                     </Col>
                                 );
                             })}

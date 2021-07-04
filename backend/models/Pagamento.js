@@ -13,22 +13,22 @@ module.exports = {
         doc.text("Grazie per la tua prenotazione", 10, 40)
         doc.setFontSize(10)
         doc.text(
-            `ID PRENOTAZIONE: ${data.prenotazione._id}\nPrenotazione effettuata ${new Date(data.dataPrenotazione).toLocaleString("it-IT")}`, 10, 45)
+            `ID PRENOTAZIONE: ${data.prenotazione._id}\nPrenotazione effettuata ${new Date(data.prenotazione.dataPrenotazione).toLocaleString("it-IT")}`, 10, 45)
         doc.setFontSize(16)
         doc.text("Dati dell'utente", 10, 60)
         doc.setFontSize(10)
         doc.text(
-            `ID UTENTE: ${data.utente._id}\nNOME E COGNOME: ${data.utente.nome} ${data.utente.cognome}\nDATA DI NASCITA: ${data.utente.dataNascita}\nLUOGO DI NASCITA: ${data.utente.luogoNascita.nazione}\nCODICE FISCALE: ${data.utente.codiceFiscale}\nCELLULARE: ${data.utente.credenziali.cellulare}\nEMAIL: ${data.utente.credenziali.email}`, 10, 70)
+            `ID UTENTE: ${data.utente._id}\nNOME E COGNOME: ${data.utente.nome} ${data.utente.cognome}\nDATA DI NASCITA: ${new Date(data.utente.dataNascita).toLocaleDateString("it-IT")}\nLUOGO DI NASCITA: ${data.utente.luogoNascita.nazione}\nCODICE FISCALE: ${data.utente.codiceFiscale}\nCELLULARE: ${data.utente.credenziali.cellulare}\nEMAIL: ${data.utente.credenziali.email}`, 10, 70)
         doc.setFontSize(14)
         doc.text("Patente", 10, 110)
         doc.setFontSize(10)
         doc.text(
-            `PATENTE: ${data.utente.patente.tipologiaPatente}\nNUMERO: ${data.utente.patente.numeroPatente}\nDATA DI SCADENZA: ${data.utente.patente.dataScadenza}\nUFFICIO DI RILASCIO: ${data.utente.patente.ufficioRilascio}\n`, 10, 120)
+            `PATENTE: ${data.utente.patente.tipologiaPatente}\nNUMERO: ${data.utente.patente.numeroPatente}\nDATA DI SCADENZA: ${new Date(data.utente.patente.dataScadenza).toLocaleDateString("it-IT")}\nUFFICIO DI RILASCIO: ${data.utente.patente.ufficioRilascio}\n`, 10, 120)
         doc.setFontSize(16)
         doc.text("Dati della prenotazione", 10, 150)
         doc.setFontSize(10)
         doc.text(
-            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.code}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 160)
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 160)
         doc.setFontSize(16)
         doc.text("Dettagli pagamento", 10, 190)
         doc.setFontSize(10)

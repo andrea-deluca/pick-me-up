@@ -162,7 +162,7 @@ export default function PrenotazioneCard(props) {
                                         <Col xs={{ span: 12 }} lg={{ span: 6 }}>
                                             <h6 className="t-bold">MEZZO</h6>
                                             <p className="h6 t-light">{props.marca} {props.modello}</p>
-                                            <p className="h6 t-light">Cod. {props.code}</p>
+                                            <p className="h6 t-light">Cod. {props.targa}</p>
                                         </Col>
                                         <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                             <h6 className="t-bold">AUTISTA</h6>
