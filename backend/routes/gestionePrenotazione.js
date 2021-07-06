@@ -12,6 +12,16 @@ router.post("/fetchPrenotazioniUtente", function (req, res) {
     })
 })
 
+router.get("/fetchPrenotazioni", function(req, res){
+    gestionePrenotazioneModel.fetchPrenotazioni(function (result) {
+        if(result === 500){
+            res.status(result).send()
+        } else{
+            res.status(result.status).send(result.prenotazioni)
+        }
+    })
+})
+
 router.put("/modificaPrenotazione", function (req, res) {
     gestionePrenotazioneModel.modificaPrenotazione(req.body, function (result) {
         if (result === 500) {

@@ -8,7 +8,7 @@ import { Image, Container, Row, Col } from 'react-bootstrap';
 
 // FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faBars, faCar, faListUl, faAddressCard, faWallet, faIdCard } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faBars, faCar, faListUl, faAddressCard, faWallet, faIdCard, faPeopleArrows, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Components
 import Button from './Button';
@@ -52,14 +52,30 @@ export default function Navbar(props) {
                 </Row>
                 <Sidebar>
                     <Button to={"/home"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faHome} fixedWidth />Home</Button>
-                    <Button to={"/prenota"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Prenota</Button>
-                    <Button to={"/gestione-prenotazioni"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth />Le mie prenotazioni</Button>
+                    {
+                        session.user === "CLIENTE" &&
+                        <Button to={"/prenota"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Prenota</Button>
+                    }
+                    <Button to={"/gestione-prenotazioni"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth />
+                        {session.user === "CLIENTE" ? "Le mie prenotazioni" : "Gestione prenotazioni"}
+                    </Button>
+                    {session.user === "AMMINISTRATORE" &&
+                        <>
+                            <Button to={"/gestione-mezzi"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Ricerca mezzi</Button>
+                            <Button to={"/registrazione-impiegato"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faUserPlus} fixedWidth />Registra impiegato</Button>
+                            <Button to={"/gestione-utenti"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faUserEdit} fixedWidth />Modifica utente</Button>
+                            <Button to={"/gestione-impiegati"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faPeopleArrows} fixedWidth />Cambia ruoli</Button>
+                        </>
+                    }
                     <Button to={"/gestione-account/profilo"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth />Visualizza profilo</Button>
-                    <Button to={"/gestione-account/wallet"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faWallet} fixedWidth />Visualizza Wallet</Button>
-                    <Button to={"/gestione-account/patente"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faIdCard} fixedWidth />Visualizza patente</Button>
-                    <div onClick={logout}>
-                        <Button variant={"Dark"}>Logout</Button>
-                    </div>
+                    {session.user === "CLIENTE" &&
+                        <>
+                            <Button to={"/gestione-account/wallet"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faWallet} fixedWidth />Visualizza Wallet</Button>
+                            <Button to={"/gestione-account/patente"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faIdCard} fixedWidth />Visualizza patente</Button>
+                        </>
+                    }
+                    <Button onClick={logout} variant={"Dark"}>Logout</Button>
+
                 </Sidebar>
             </nav>
         );

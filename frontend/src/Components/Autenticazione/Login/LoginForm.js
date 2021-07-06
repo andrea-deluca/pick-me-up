@@ -75,7 +75,7 @@ export default function LoginForm() {
                     <h1 className="h1 text-center t-bold mb-4">Accedi</h1>
                     <Form onSubmit={onSubmit} onClick={() => setState({ ...state, error: { show: false } })}>
                         <Row className="gy-4">
-                            <InputEmail controlId={"loginEmail"} />
+                            <InputEmail controlId={"loginEmail"} required />
                             <InputPassword controlId={"loginPassword"} placeholder={"Inserisci la tua password"}>
                                 Password
                             </InputPassword>

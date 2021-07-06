@@ -29,7 +29,7 @@ export default function InputEmail(props) {
     return (
         <Form.Group controlId={props.controlId}>
             <Form.Label>Email</Form.Label>
-            <Form.Control type="email" placeholder="Inserisci la tua email" onBlur={() => setValidateFormat(true)} required />
+            <Form.Control type="email" placeholder={props.placeholder ? props.placeholder : "Inserisci la tua email"} onBlur={() => setValidateFormat(true)} required={props.required ? true : false} />
             <Form.Text id="emailFormatError" className="text-danger d-none">Formato email non valido!</Form.Text>
         </Form.Group>
     );

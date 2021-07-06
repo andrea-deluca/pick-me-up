@@ -69,7 +69,7 @@ export default function EmailModal(props) {
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }}>
-                                <InputEmail controlId={"modificaEmail"} />
+                                <InputEmail controlId={"modificaEmail"} required />
                             </Col>
                             <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }} className="buttonsGroup justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>

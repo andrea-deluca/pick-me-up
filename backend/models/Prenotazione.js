@@ -55,8 +55,6 @@ module.exports = {
 
     fetchVeicoliDisponibili: async function (datiPrenotazione, callback) {
         const db = await makeDb(config);
-
-
         if (datiPrenotazione.tipologiaMezzo === "auto") {
             try {
                 db.collection("Deposito").aggregate([
@@ -71,7 +69,7 @@ module.exports = {
                                 { $match: { $expr: { $eq: ["$_id", "$$veicoloId"] } } },
                                 { $unset: ["_id"] }
                             ],
-                            as: "auto.datiauto"
+                            as: "auto.datiAuto"
                         }
                     },
                     {
@@ -80,7 +78,7 @@ module.exports = {
                             auto: {
                                 $push: {
                                     _id: "$auto._id",
-                                    dati: "$auto.datiauto",
+                                    dati: "$auto.datiAuto",
                                     targhe: "$auto.targhe"
                                 }
                             }
@@ -156,7 +154,7 @@ module.exports = {
                             moto: {
                                 $push: {
                                     _id: "$moto._id",
-                                    dati: "$moto.datiBici",
+                                    dati: "$moto.datiMoto",
                                     targhe: "$moto.targhe"
                                 }
                             }
@@ -366,7 +364,6 @@ module.exports = {
 
     confermaPrenotazione: async function (datiPrenotazione, callback) {
         const db = await makeDb(config);
-        console.log(datiPrenotazione)
         const prenotazione = {
             _id: new ObjectId(),
             dataPrenotazione: new Date(),

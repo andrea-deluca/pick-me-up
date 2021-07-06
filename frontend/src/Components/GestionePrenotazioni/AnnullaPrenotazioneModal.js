@@ -26,16 +26,14 @@ export default function AnnullaPrenotazioneModal(props) {
     function onClick(e) {
         e.preventDefault();
         setState({ ...state, submit: true });
-        const utente = {
-            id: session.id,
-            nome: session.nome,
-            cognome: session.cognome,
-            codiceFiscale: session.codiceFiscale,
-            cellulare: session.cellulare,
-            email: session.email
+        let utente
+        if (props.idUtente) {
+            utente = props.idUtente
+        } else {
+            utente = session.id
         }
         try {
-            axios.delete("/gestione-prenotazione/annullaPrenotazione", { data: { utente: utente, idPrenotazione: props.id } })
+            axios.delete("/gestione-prenotazione/annullaPrenotazione", { data: { utente: utente, idPrenotazione: props.idPrenotazione } })
                 .then(res => {
                     window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })

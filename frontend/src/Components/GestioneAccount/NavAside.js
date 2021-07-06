@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import useSession from '../../Hooks/useSession';
 
 // Framer Motion Components
 import { motion } from 'framer-motion';
@@ -8,7 +9,7 @@ import { Row } from 'react-bootstrap';
 
 // FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowRight, faCar, faListUl, faAddressCard, faWallet, faIdCard } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faCar, faListUl, faAddressCard, faWallet, faIdCard, faPeopleArrows, faUserEdit, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Components
 import NavAsideLink from './NavAsideLink';
@@ -19,6 +20,7 @@ import NavAsideLink from './NavAsideLink';
 export default function NavAside() {
     const [open, setOpen] = useState(false);
     const [flipIcon, setFlipIcon] = useState("");
+    const { session, setSession } = useSession()
 
     useEffect(() => {
         let aside = document.querySelector("#navAside");
@@ -58,11 +60,23 @@ export default function NavAside() {
                     <FontAwesomeIcon icon={faArrowRight} size={"lg"} color={"white"} flip={flipIcon} />
                     <h6 className="asideLink ms-3 t-bold text-light">Chiudi</h6>
                 </div>
-                <NavAsideLink to={"/prenota"} icon={faCar}>Prenota</NavAsideLink>
-                <NavAsideLink to={"/gestione-prenotazioni"} icon={faListUl}>Le mie prenotazioni</NavAsideLink>
+                {session.user === "CLIENTE" && <NavAsideLink to={"/prenota"} icon={faCar}>Prenota</NavAsideLink>}
+                <NavAsideLink to={"/gestione-prenotazioni"} icon={faListUl}>{session.user === "CLIENTE" ? "Le mie prenotazioni" : "Gestione prenotazioni"}</NavAsideLink>
+                {session.user === "AMMINISTRATORE" &&
+                    <>
+                        <NavAsideLink to={"/gestione-mezzi"} icon={faCar}>Gestione mezzi</NavAsideLink>
+                        <NavAsideLink to={"/registrazione-impiegato"} icon={faUserPlus}>Registra impiegato</NavAsideLink>
+                        <NavAsideLink to={"/gestione-utente"} icon={faUserEdit}>Modifica Utente</NavAsideLink>
+                        <NavAsideLink to={"/gestione-impiegati"} icon={faPeopleArrows}>Cambia ruoli</NavAsideLink>
+                    </>
+                }
                 <NavAsideLink to={"/gestione-account/profilo"} icon={faAddressCard}>Visualizza profilo</NavAsideLink>
-                <NavAsideLink to={"/gestione-account/wallet"} icon={faWallet}>Visualizza Wallet</NavAsideLink>
-                <NavAsideLink to={"/gestione-account/patente"} icon={faIdCard}>Visualizza patente</NavAsideLink>
+                {session.user === "CLIENTE" &&
+                    <>
+                        <NavAsideLink to={"/gestione-account/wallet"} icon={faWallet}>Visualizza Wallet</NavAsideLink>
+                        <NavAsideLink to={"/gestione-account/patente"} icon={faIdCard}>Visualizza patente</NavAsideLink>
+                    </>
+                }
             </Row>
         </motion.div >
     );

@@ -62,7 +62,7 @@ export default function RecuperoPasswordForm() {
                     <p className="h6 text-muted t-light text-center mb-4">Inserisci l'indirizzo email con cui ti sei registrato per continuare</p>
                     <Form onSubmit={onSubmit} onClick={() => setState({...state, error: { show: false }})}>
                         <Row className="gy-4">
-                            <InputEmail controlId={"recuperoPasswordEmail"} />
+                            <InputEmail controlId={"recuperoPasswordEmail"} required />
                             <Button spinner={state.submit} variant={"Primary"} submit>Continua</Button>
                         </Row>
                     </Form>

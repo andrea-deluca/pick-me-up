@@ -28,7 +28,7 @@ module.exports = {
         doc.text("Dati della prenotazione", 10, 150)
         doc.setFontSize(10)
         doc.text(
-            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 160)
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}) ${data.prenotazione.mezzo.posti ? data.prenotazione.mezzo.posti + " posti" : ""} ${data.prenotazione.mezzo.carburante ? data.prenotazione.mezzo.carburante : ""} ${data.prenotazione.mezzo.cambio ? data.prenotazione.mezzo.cambio : ""}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 160)
         doc.setFontSize(16)
         doc.text("Dettagli pagamento", 10, 190)
         doc.setFontSize(10)
@@ -67,7 +67,7 @@ module.exports = {
         doc.text("Dati della prenotazione", 10, 110)
         doc.setFontSize(10)
         doc.text(
-            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.code}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}) ${data.prenotazione.mezzo.posti ? data.prenotazione.mezzo.posti : ""} ${data.prenotazione.mezzo.carburante ? data.prenotazione.mezzo.carburante : ""} ${data.prenotazione.mezzo.cambio ? data.prenotazione.mezzo.cambio : ""}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
         doc.setFontSize(16)
         doc.text("Dettagli pagamento", 10, 150)
         doc.setFontSize(10)
@@ -77,7 +77,7 @@ module.exports = {
         doc.text("Metodo di pagamento", 10, 190)
         doc.setFontSize(10)
         doc.text(
-            `TITOLARE: ${data.utente.metodoPagamento.titolare}\nNUMERO: ${data.utente.metodoPagamento.numeroCarta}\nDATA DI SCADENZA: ${new Date(data.utente.metodoPagamento.dataScadenzaCarta).toLocaleDateString("it-IT")}\nCVV: ${data.utente.metodoPagamento.cvv}\n`, 10, 200)
+            `TITOLARE: ${data.utente.metodoPagamento.titolare}\nNUMERO: ${data.utente.metodoPagamento.numeroCarta}\nDATA DI SCADENZA: ${data.utente.metodoPagamento.dataScadenzaCarta}\nCVV: ${data.utente.metodoPagamento.cvv}\n`, 10, 200)
         doc.save(`./public/pdf/${data.prenotazione._id}.pdf`)
         mailModel.inviaAnnullaPrenotazione({
             email: data.utente.email,
@@ -95,7 +95,7 @@ module.exports = {
         doc.text("Prenotazione modificata", 10, 40)
         doc.setFontSize(10)
         doc.text(
-            `ID PRENOTAZIONE: ${data.prenotazione._id}\nPrenotazione effettuata ${(new Date(data.prenotazione.dataPrenotazione)).toLocaleString("it-IT")}`, 10, 45)
+            `ID PRENOTAZIONE: ${data.prenotazione._id}\nPrenotazione effettuata ${(new Date(data.prenotazione.dataPrenotazione)).toLocaleString("it-IT")}\nPrenotazione modificata ${new Date().toLocaleString("it-IT")}`, 10, 45)
         doc.setFontSize(16)
         doc.text("Dati dell'utente", 10, 70)
         doc.setFontSize(10)
@@ -106,17 +106,15 @@ module.exports = {
         doc.text("Dati della prenotazione", 10, 110)
         doc.setFontSize(10)
         doc.text(
-            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.code}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}) ${data.prenotazione.mezzo.posti ? data.prenotazione.mezzo.posti : ""} ${data.prenotazione.mezzo.carburante ? data.prenotazione.mezzo.carburante : ""} ${data.prenotazione.mezzo.cambio ? data.prenotazione.mezzo.cambio : ""}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
         doc.setFontSize(16)
         doc.text("Dettagli pagamento", 10, 150)
         doc.setFontSize(10)
-        doc.text(
-            `TARIFFA ORARIA: € ${data.prenotazione.mezzo.tariffa}\nTOTALE IMPORTO AGGIORNATO: € ${data.prenotazione.pagamento.importoTotale}\nDIFFERENZA: € ${data.differenzaImporto}`, 10, 160)
+        doc.text(`TARIFFA ORARIA: € ${data.prenotazione.mezzo.tariffa}\nTOTALE IMPORTO AGGIORNATO: € ${data.prenotazione.pagamento.importoTotale}\nDIFFERENZA: € ${data.differenzaImporto}`, 10, 160)
         doc.setFontSize(14)
         doc.text("Metodo di pagamento", 10, 190)
         doc.setFontSize(10)
-        doc.text(
-            `TITOLARE: ${data.utente.metodoPagamento.titolare}\nNUMERO: ${data.utente.metodoPagamento.numeroCarta}\nDATA DI SCADENZA: ${new Date(data.utente.metodoPagamento.dataScadenzaCarta).toLocaleDateString("it-IT")}\nCVV: ${data.utente.metodoPagamento.cvv}\n`, 10, 200)
+        doc.text(`TITOLARE: ${data.utente.metodoPagamento.titolare}\nNUMERO: ${data.utente.metodoPagamento.numeroCarta}\nDATA DI SCADENZA: ${data.utente.metodoPagamento.dataScadenzaCarta}\nCVV: ${data.utente.metodoPagamento.cvv}\n`, 10, 200)
         doc.save(`./public/pdf/${data.prenotazione._id}.pdf`)
         mailModel.inviaModificaPrenotazione({
             email: data.utente.email,
@@ -145,7 +143,7 @@ module.exports = {
         doc.text("Dati della prenotazione", 10, 110)
         doc.setFontSize(10)
         doc.text(
-            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.code}), ${data.prenotazione.mezzo.posti} posti, ${data.prenotazione.mezzo.carburante}, cambio ${data.prenotazione.mezzo.cambio}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}) ${data.prenotazione.mezzo.posti ? data.prenotazione.mezzo.posti : "" } ${data.prenotazione.mezzo.carburante ? data.prenotazione.mezzo.carburante : ""} cambio ${data.prenotazione.mezzo.cambio ? data.prenotazione.mezzo.cambio : ""}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
         doc.setFontSize(16)
         doc.text("Dettagli pagamento", 10, 150)
         doc.setFontSize(10)

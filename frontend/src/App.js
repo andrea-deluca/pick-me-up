@@ -25,10 +25,15 @@ import RecuperoPasswordCompletato from './Components/Autenticazione/RecuperoPass
 import SchermataProfilo from './Components/GestioneAccount/SchermataProfilo';
 import SchermataWallet from './Components/GestioneAccount/SchermataWallet';
 import SchermataPatente from './Components/GestioneAccount/SchermataPatente';
-// Schermate Gestione Prenotazioni
-import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/SchermataPrenotazioniUtente';
 // Schermate Prenotazione
 import SchermataPrenotazione from './Components/Prenotazione/SchermataPrenotazione';
+// Schermate Gestione Prenotazioni
+import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/SchermataPrenotazioniUtente';
+
+
+//Schermata Gestione Mezzi
+import SchermataGestioneMezzi from './Components/Impiegato/GestioneMezzi/SchermataGestioneMezzi'
+
 
 // App
 function App() {
@@ -75,6 +80,9 @@ function App() {
             </Route>
             <Route exact path="/prenota" component={SchermataPrenotazione}>
               <SchermataPrenotazione />
+            </Route>
+            <Route exact path="/gestione-mezzi" component={SchermataPrenotazione}>
+              <SchermataGestioneMezzi />
             </Route>
           </AnimatePresence>
         </Switch>

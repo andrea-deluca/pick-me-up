@@ -82,8 +82,8 @@ export default function SchermataConfermaPrenotazione() {
                             autista={datiPrenotazione.autista}
                             localitaRitiro={datiPrenotazione.ritiro.nome}
                             localitaConsegna={datiPrenotazione.consegna.nome}
-                            dataRitiro={datiPrenotazione.ritiro.data.toLocaleString("it-IT")}
-                            dataConsegna={datiPrenotazione.consegna.data.toLocaleString("it-IT")}
+                            dataRitiro={new Date(datiPrenotazione.ritiro.data).toLocaleString("it-IT")}
+                            dataConsegna={new Date(datiPrenotazione.consegna.data).toLocaleString("it-IT")}
                             totale={importoTotale}
                         />
                     </Col>

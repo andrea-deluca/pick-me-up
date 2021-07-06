@@ -44,14 +44,20 @@ export default function TerminaNoleggioModal(props) {
     })
 
     async function handleSelect(value) {
-        
+
     }
 
     function terminaNoleggio(e) {
         e.preventDefault()
+        let utente
+        if (props.idUtente) {
+            utente = props.idUtente
+        } else {
+            utente = session.id
+        }
         setState({ ...state, submit: true })
         try {
-            axios.put("/gestione-prenotazione/terminaNoleggio", { _id: props.id, idUtente: session.id })
+            axios.put("/gestione-prenotazione/terminaNoleggio", { _id: props.idPrenotazione, idUtente: utente })
                 .then(res => {
                     window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
@@ -66,9 +72,15 @@ export default function TerminaNoleggioModal(props) {
 
     function terminaNoleggioDeposito(e) {
         e.preventDefault()
+        let utente
+        if (props.idUtente) {
+            utente = props.idUtente
+        } else {
+            utente = session.id
+        }
         const deposito = document.querySelector("#depositiSelect").value
         try {
-            axios.put("/gestione-prenotazione/terminaNoleggio", { _id: props.id, idUtente: session.id, consegna: deposito })
+            axios.put("/gestione-prenotazione/terminaNoleggio", { _id: props.idPrenotazione, idUtente: utente, consegna: deposito })
                 .then(res => {
                     window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })

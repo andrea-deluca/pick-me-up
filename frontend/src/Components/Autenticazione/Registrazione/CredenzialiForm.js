@@ -84,7 +84,7 @@ export default function CredenzialiForm() {
                     <Form onSubmit={onSubmit} onClick={() => setState({ ...state, error: { show: false } })}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputEmail controlId={"signupEmail"} />
+                                <InputEmail controlId={"signupEmail"} required/>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                 <Form.Group controlId="cellulare">

@@ -51,7 +51,7 @@ export default function PrenotazioneCard(props) {
                     })
                 })
                 .catch(err => {
-                    console.log(err)
+                    console.log(err.response.data)
                 })
         } catch (error) {
             console.log(error.response.data.msg)
@@ -88,7 +88,7 @@ export default function PrenotazioneCard(props) {
                     })
                 })
                 .catch(err => {
-
+                    console.log(err.response.data)
                 })
         } catch (error) {
             console.log(error.response.data.msg)
@@ -189,17 +189,17 @@ export default function PrenotazioneCard(props) {
                                         onClick={props.stato === "ATTIVA" ? iniziaNoleggio : terminaNoleggio}>
                                         {props.stato === "INIZIATA" ? "Termina noleggio" : "Inizia noleggio"}
                                     </Button>
-                                    <TerminaNoleggioModal id={props.id} depositi={showModals.terminaModal.depositi}
+                                    <TerminaNoleggioModal idPrenotazione={props.id} depositi={showModals.terminaModal.depositi}
                                         show={showModals.terminaModal.show}
                                         onHide={() => setShowModals({ ...showModals, terminaModal: { show: false } })} />
-                                    <EstendiNoleggioModal id={props.id} dataConsegna={props.dataConsegna} show={showModals.estendiModal} onHide={() => setShowModals({ ...showModals, estendiModal: false })} />
+                                    <EstendiNoleggioModal idPrenotazione={props.id} dataConsegna={props.dataConsegna} show={showModals.estendiModal} onHide={() => setShowModals({ ...showModals, estendiModal: false })} />
                                 </div>
                                 : props.stato === "PROGRAMMATA" ?
                                     <div className="buttonsGroup gy-3 justify-content-end mt-4">
                                         <Button onClick={cambiaMezzo} variant={"Light"}>Cambia mezzo</Button>
                                         <Button onClick={modificaPrenotazione} variant={"Light"}>Modifica</Button>
                                         <Button onClick={() => setShowModals({ ...showModals, deleteModal: true })} variant={"Danger"}>Annulla noleggio</Button>
-                                        <AnnullaPrenotazioneModal id={props.id} show={showModals.deleteModal} onHide={() => setShowModals({ ...showModals, deleteModal: false })} />
+                                        <AnnullaPrenotazioneModal idPrenotazione={props.id} show={showModals.deleteModal} onHide={() => setShowModals({ ...showModals, deleteModal: false })} />
                                     </div> : null}
                         </Row>
                     </Card.Body>

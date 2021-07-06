@@ -29,9 +29,15 @@ export default function EstendiNoleggioModal(props) {
         const dataConsegnaEstensione = document.querySelector("#dataConsegnaEstensione")
         const orarioConsegnaEstensione = document.querySelector("#orarioConsegnaEstensione")
         const dataConsegna = new Date(dataConsegnaEstensione.value + "T" + orarioConsegnaEstensione.value + ":00")
+        let utente
+        if (props.idUtente) {
+            utente = props.idUtente
+        } else {
+            utente = session.id
+        }
         setState({ ...state, submit: true })
         try {
-            axios.put("/gestione-prenotazione/estendiNoleggio", { _id: props.id, dataConsegna: dataConsegna, idUtente: session.id })
+            axios.put("/gestione-prenotazione/estendiNoleggio", { _id: props.idPrenotazione, dataConsegna: dataConsegna, idUtente: utente })
                 .then(res => {
                     window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
@@ -74,7 +80,7 @@ export default function EstendiNoleggioModal(props) {
                                 labelOrario={"Ora di consegna"}
                                 defaultOrario={"Seleziona nuova ora di consegna"}
                                 dataConsegna={props.dataConsegna} />
-                            <Col xs={{ span: 12 }} lg={{ span: 10, offset: 1 }} className="buttonsGroup justify-content-end">
+                            <Col xs={{ span: 12 }} className="buttonsGroup justify-content-end">
                                 <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>
                                 <Button spinner={state.submit} variant={"Primary"} submit>Conferma</Button>
                             </Col>

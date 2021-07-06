@@ -24,13 +24,11 @@ export default function ModificaPrenotazioneModal(props) {
 
     function onClick(e) {
         e.preventDefault()
-        const utente = {
-            id: session.id,
-            nome: session.nome,
-            cognome: session.cognome,
-            codiceFiscale: session.codiceFiscale,
-            cellulare: session.cellulare,
-            email: session.email,
+        let utente;
+        if(datiPrenotazione.idUtente){
+            utente = datiPrenotazione.idUtente
+        } else{
+            utente = session.id
         }
         setState({ ...state, submit: true })
         try {

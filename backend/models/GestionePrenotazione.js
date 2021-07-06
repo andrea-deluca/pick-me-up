@@ -64,6 +64,45 @@ module.exports = {
         }
     },
 
+    fetchPrenotazioni: async function (callback) {
+        const db = await makeDb(config);
+        try {
+            db.collection("Prenotazione").aggregate([
+                {
+                    $lookup: {
+                        from: "Utente",
+                        localField: "idUtente",
+                        foreignField: "_id",
+                        as: "datiUtente"
+                    }
+                },
+                {
+                    $project: {
+                        "dataPrenotazione": 1,
+                        "datiUtente._id": 1,
+                        "datiUtente.credenziali.email": 1,
+                        "stato": 1,
+                        "autista": 1,
+                        "ritiro": 1,
+                        "consegna": 1,
+                        "mezzo": 1
+                    }
+                }
+            ]).toArray().then(res => {
+                return callback({
+                    status: 200,
+                    prenotazioni: res
+                })
+            })
+                .catch(err => {
+                    return callback(500)
+                })
+        } catch (error) {
+            console.log(error)
+            return callback(500)
+        }
+    },
+
     modificaPrenotazione: async function (data, callback) {
         const db = await makeDb(config)
         const tempoTotale = (new Date(data.prenotazione.consegna.data) - new Date(data.prenotazione.ritiro.data)) / (1000 * 3600)
@@ -110,14 +149,28 @@ module.exports = {
                             if (err) return callback(500)
                             const prenotazione = res.value
                             db.collection("Utente").aggregate([
-                                { $match: { "_id": ObjectId(data.utente.id) } },
+                                { $match: { "_id": ObjectId(data.utente) } },
                                 { $unwind: "$metodiPagamento" },
                                 { $match: { "metodiPagamento._id": ObjectId(metodoPagamento) } },
-                                { $project: { "metodiPagamento": 1 } }
+                                {
+                                    $project: {
+                                        "metodiPagamento": 1,
+                                        "nome": 1,
+                                        "cognome": 1,
+                                        "codiceFiscale": 1,
+                                        "credenziali.cellulare": 1,
+                                        "credenziali.email": 1
+                                    }
+                                }
                             ]).toArray()
                                 .then(res => {
                                     const utente = {
-                                        ...data.utente,
+                                        id: res[0]._id,
+                                        nome: res[0].nome,
+                                        cognome: res[0].cognome,
+                                        codiceFiscale: res[0].codiceFiscale,
+                                        cellulare: res[0].credenziali.cellulare,
+                                        email: res[0].credenziali.email,
                                         metodoPagamento: res[0].metodiPagamento
                                     }
                                     pagamentoModel.generaModificaPrenotazione({
@@ -182,14 +235,28 @@ module.exports = {
                             if (err) return callback(500)
                             const prenotazione = res.value
                             db.collection("Utente").aggregate([
-                                { $match: { "_id": ObjectId(data.utente.id) } },
+                                { $match: { "_id": ObjectId(data.utente) } },
                                 { $unwind: "$metodiPagamento" },
                                 { $match: { "metodiPagamento._id": ObjectId(metodoPagamento) } },
-                                { $project: { "metodiPagamento": 1 } }
+                                {
+                                    $project: {
+                                        "metodiPagamento": 1,
+                                        "nome": 1,
+                                        "cognome": 1,
+                                        "codiceFiscale": 1,
+                                        "credenziali.cellulare": 1,
+                                        "credenziali.email": 1
+                                    }
+                                }
                             ]).toArray()
                                 .then(res => {
                                     const utente = {
-                                        ...data.utente,
+                                        id: res[0]._id,
+                                        nome: res[0].nome,
+                                        cognome: res[0].cognome,
+                                        codiceFiscale: res[0].codiceFiscale,
+                                        cellulare: res[0].credenziali.cellulare,
+                                        email: res[0].credenziali.email,
                                         metodoPagamento: res[0].metodiPagamento
                                     }
                                     pagamentoModel.generaModificaPrenotazione({
@@ -223,14 +290,29 @@ module.exports = {
                     if (err) return callback(500)
                     const prenotazione = res.value;
                     db.collection("Utente").aggregate([
-                        { $match: { "_id": ObjectId(data.utente.id) } },
+                        { $match: { "_id": ObjectId(data.utente) } },
                         { $unwind: "$metodiPagamento" },
                         { $match: { "metodiPagamento._id": ObjectId(prenotazione.pagamento._id) } },
-                        { $project: { "metodiPagamento": 1 } }
+                        {
+                            $project: {
+                                "metodiPagamento": 1,
+                                "nome": 1,
+                                "cognome": 1,
+                                "codiceFiscale": 1,
+                                "credenziali.cellulare": 1,
+                                "credenziali.email": 1
+
+                            }
+                        }
                     ]).toArray()
                         .then(res => {
                             const utente = {
-                                ...data.utente,
+                                id: res[0]._id,
+                                nome: res[0].nome,
+                                cognome: res[0].cognome,
+                                codiceFiscale: res[0].codiceFiscale,
+                                cellulare: res[0].credenziali.cellulare,
+                                email: res[0].credenziali.email,
                                 metodoPagamento: res[0].metodiPagamento
                             }
                             pagamentoModel.generaAnnullaPrenotazione({ utente: utente, prenotazione: prenotazione })

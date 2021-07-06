@@ -23,7 +23,13 @@ module.exports = {
                     const activatorKey = CryptoJS.SHA256(datiUtente.credenziali.email).toString();
                     // Inserisco l'utente nel DB
                     db.collection("Utente").insertOne({
-                        ...datiUtente, accountStatus: { activatorKey: activatorKey, active: false }, metodiPagamento: []
+                        ...datiUtente,
+                        accountStatus: {
+                            activatorKey: activatorKey,
+                            active: false
+                        },
+                        metodiPagamento: [],
+                        user: "CLIENTE"
                     }, (err, res) => {
                         if (err) return (callback(500));
                         // invio email di conferma all'utente passando la sua chiave di attivazione e la sua email
@@ -100,10 +106,11 @@ module.exports = {
                             cellulare: res.credenziali.cellulare,
                             email: res.credenziali.email,
                             codiceFiscale: res.codiceFiscale,
-                            metodiPagamento: res.metodiPagamento
+                            metodiPagamento: res.metodiPagamento,
+                            user: res.user
                         }
 
-                        gestionePrenotazioneModel.fetchPrenotazioniUtente({_id: res._id}, res => {
+                        gestionePrenotazioneModel.fetchPrenotazioniUtente({ _id: res._id }, res => {
                             if (res === 500) return callback(500)
                             // Ritorno il token di accesso e i dati associati all'utente
                             return (callback({
