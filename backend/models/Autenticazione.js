@@ -21,16 +21,26 @@ module.exports = {
                 if (!result) {
                     // Calcolo un hash sull'email (univoca nel DB) per settare la chiave di attivazione dell'account
                     const activatorKey = CryptoJS.SHA256(datiUtente.credenziali.email).toString();
-                    // Inserisco l'utente nel DB
-                    db.collection("Utente").insertOne({
-                        ...datiUtente,
+                    const utente = {
+                        nome: datiUtente.nome,
+                        cognome: datiUtente.cognome,
+                        dataNascita: datiUtente.dataNascita,
+                        sesso: datiUtente.sesso,
+                        luogoNascita: datiUtente.luogoNascita,
+                        codiceFiscale: datiUtente.codiceFiscale,
+                        patente: datiUtente.patente,
+                        credenziali: {
+                            ...datiUtente.credenziali,
+                        },
                         accountStatus: {
                             activatorKey: activatorKey,
                             active: false
                         },
                         metodiPagamento: [],
-                        user: "CLIENTE"
-                    }, (err, res) => {
+                        user: datiUtente.tipologiaUtente.toUpperCase()
+                    }
+                    // Inserisco l'utente nel DB
+                    db.collection("Utente").insertOne(utente, (err, res) => {
                         if (err) return (callback(500));
                         // invio email di conferma all'utente passando la sua chiave di attivazione e la sua email
                         mailModel.inviaConfermaRegistrazione({ "key": activatorKey, "email": datiUtente.credenziali.email })
@@ -161,6 +171,63 @@ module.exports = {
                         return (callback(404));
                     }
                 })
+        } catch (error) {
+            console.log(error);
+            return callback(500);
+        }
+    },
+
+    registraImpiegato: async function (userData, callback) {
+        const db = await makeDb(config);
+        try {
+            //Controllo se esiste un account associato all'email fornita
+            db.collection("Utente").findOne({
+                "credenziali.email": userData.credenziali.email
+            }, (err, result) => {
+                if (err) return (callback(500));
+                // Se non esiste un account, effettuo registrazione
+                if (!result) {
+                    const randomPassword = password.randomPassword({
+                        length: 12,
+                        characters: [
+                            password.lower,
+                            password.upper,
+                            password.digits,
+                            password.symbols
+                        ],
+                        predicate: x => x.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
+                    })
+
+                    const encryptedRandomPassword = CryptoJS.AES.encrypt(randomPassword, "pick-me-up").toString();
+                    const utente = {
+                        nome: userData.nome,
+                        cognome: userData.cognome,
+                        dataNascita: userData.dataNascita,
+                        sesso: userData.sesso,
+                        luogoNascita: userData.luogoNascita,
+                        codiceFiscale: userData.codiceFiscale,
+                        patente: userData.patente,
+                        credenziali: {
+                            ...userData.credenziali,
+                            password: encryptedRandomPassword
+                        },
+                        accountStatus: {
+                            activatorKey: null,
+                            active: true
+                        },
+                        user: userData.tipologiaUtente.toUpperCase()
+                    }
+                    db.collection("Utente").insertOne(utente, (err, res) => {
+                        if (err) return (callback(500));
+                        // invio email di conferma all'utente
+                        mailModel.inviaConfermaRegistrazioneImpiegato({ utente: utente, password: randomPassword })
+                            .catch(err => callback(500))
+                        return (callback(201))
+                    })
+                } else {
+                    return (callback(400))
+                }
+            })
         } catch (error) {
             console.log(error);
             return callback(500);

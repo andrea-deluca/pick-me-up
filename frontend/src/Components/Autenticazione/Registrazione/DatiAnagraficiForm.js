@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import useSession from '../../../Hooks/useSession';
 
 // Bootstrap Components
 import { ProgressBar, Container, Row, Col, Form } from 'react-bootstrap';
@@ -14,6 +15,7 @@ const CodiceFiscale = require("codice-fiscale-js");
 
 // Form Registrazione dati anagrafici
 export default function DatiAnagraficiForm() {
+    const { session, setSession } = useSession()
     const history = useHistory();
     const [checkValidate, setCheckValidate] = useState({
         nome: false,
@@ -92,6 +94,12 @@ export default function DatiAnagraficiForm() {
         if (!checkValidate.CF.valid) {
             return
         }
+        let tipologiaUtente
+        if(document.querySelector("#tipologiaImpiegato")){
+            tipologiaUtente = document.querySelector("#tipologiaImpiegato").value
+        } else{
+            tipologiaUtente = "CLIENTE"
+        }
         // Memorizzo i dati inseriti dall'utente
         const userData = {
             nome: document.querySelector("#nome").value,
@@ -105,16 +113,27 @@ export default function DatiAnagraficiForm() {
                 citta: document.querySelector("#comune").value,
             },
             codiceFiscale: document.querySelector("#CF").value,
+            tipologiaUtente: tipologiaUtente
         }
-        if (document.querySelector("#possessoPatente").value === "Y") {
+        if (document.querySelector("#possessoPatente") && document.querySelector("#possessoPatente").value === "Y") {
             // Se possiede una patente, visualizzo la richiesta di registrazione della stessa
             history.push("/signup", {
                 payload: userData,
                 type: "RICHIESTA_PATENTE"
             });
-        } else {
+        } else if (document.querySelector("#possessoPatente") && document.querySelector("#possessoPatente").value === "N") {
             // Altrimenti, se non possiede una patente, passo direttamente alla credenziali
             history.push("/signup", {
+                payload: userData,
+                type: "CREDENZIALI"
+            });
+        } else if (document.querySelector("#tipologiaImpiegato") && document.querySelector("#tipologiaImpiegato").value === "autista") {
+            history.push("/registrazione-impiegato", {
+                payload: userData,
+                type: "PATENTE"
+            });
+        } else {
+            history.push("/registrazione-impiegato", {
                 payload: userData,
                 type: "CREDENZIALI"
             });
@@ -161,16 +180,29 @@ export default function DatiAnagraficiForm() {
                                     <Form.Control type="text" placeholder="Inserisci il tuo codice fiscale" onBlur={() => setCheckValidate({ ...checkValidate, CF: { ...checkValidate.CF, check: true } })} required />
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 12 }} lg={{ span: 6 }}>
-                                <Form.Group controlId="possessoPatente">
-                                    <Form.Label>Hai la patente di guida? </Form.Label>
-                                    <Form.Control className="form-select" as="select" onBlur={() => setCheckValidate({ ...checkValidate, possessoPatente: true })} required>
-                                        <option value="" disabled selected>Seleziona...</option>
-                                        <option value="Y">Si</option>
-                                        <option value="N">No</option>
-                                    </Form.Control>
-                                </Form.Group>
-                            </Col>
+                            {!session &&
+                                <><Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                    <Form.Group controlId="possessoPatente">
+                                        <Form.Label>Hai la patente di guida? </Form.Label>
+                                        <Form.Control className="form-select" as="select" onBlur={() => setCheckValidate({ ...checkValidate, possessoPatente: true })} required>
+                                            <option value="" disabled selected>Seleziona...</option>
+                                            <option value="Y">Si</option>
+                                            <option value="N">No</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col></>}
+                            {session && session.user === "AMMINISTRATORE" &&
+                                <><Col xs={{ span: 12 }} lg={{ span: 6 }}>
+                                    <Form.Group controlId="tipologiaImpiegato">
+                                        <Form.Label>Tipologia impiegato</Form.Label>
+                                        <Form.Control className="form-select" as="select" required>
+                                            <option value="" disabled selected>Seleziona...</option>
+                                            <option value="amministratore">Amministratore</option>
+                                            <option value="gestore_mezzi">Gestore mezzi</option>
+                                            <option value="autista">Autista</option>
+                                        </Form.Control>
+                                    </Form.Group>
+                                </Col></>}
                             <Button variant={"Primary"} submit >Continua</Button>
                         </Row>
                     </Form>

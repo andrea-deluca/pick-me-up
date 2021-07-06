@@ -22,8 +22,14 @@ export default function EliminaAccountModal(props) {
 
     function onClick(e) {
         e.preventDefault();
+        let idUtente
+        if (props.id) {
+            idUtente = props.id
+        } else {
+            idUtente = session.id
+        }
         const data = {
-            id: session.id,
+            id: idUtente,
         }
         setState({ ...state, submit: true });
         try {

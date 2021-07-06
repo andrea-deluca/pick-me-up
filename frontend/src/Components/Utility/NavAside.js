@@ -66,7 +66,7 @@ export default function NavAside() {
                     <>
                         <NavAsideLink to={"/gestione-mezzi"} icon={faCar}>Gestione mezzi</NavAsideLink>
                         <NavAsideLink to={"/registrazione-impiegato"} icon={faUserPlus}>Registra impiegato</NavAsideLink>
-                        <NavAsideLink to={"/gestione-utente"} icon={faUserEdit}>Modifica Utente</NavAsideLink>
+                        <NavAsideLink to={"/gestione-utenti"} icon={faUserEdit}>Modifica Utente</NavAsideLink>
                         <NavAsideLink to={"/gestione-impiegati"} icon={faPeopleArrows}>Cambia ruoli</NavAsideLink>
                     </>
                 }

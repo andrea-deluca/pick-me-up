@@ -15,7 +15,7 @@ import { faMobileAlt, faEnvelope, faKey, faEdit } from '@fortawesome/free-solid-
 
 // Custom Components
 import Button from "../Utility/Button";
-import NavAside from './NavAside';
+import NavAside from '../Utility/NavAside';
 import RiepilogoProfilo from './Profilo/RiepilogoProfilo';
 import EmailModal from './Profilo/EmailModal';
 import CellulareModal from './Profilo/CellulareModal';

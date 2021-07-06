@@ -153,5 +153,39 @@ module.exports = {
             }]
         };
         await transporter.sendMail(mailOptions);
+    },
+
+    inviaConfermaRegistrazioneImpiegato: async function (userData) {
+        const mailOptions = {
+            from: mailConfig.email,
+            to: userData.utente.credenziali.email,
+            subject: "Registrazione Impiegato PickMeUp!",
+            html: `
+                <h1>Benvenuto nel nostro Team</h1>
+                <h3>Un amministratore ti ha registrato come impiegato</h3>
+                <p>
+                    Gentile ${userData.utente.nome} ${userData.utente.cognome}, nato il ${new Date(userData.utente.dataNascita).toLocaleDateString("it-IT")} 
+                    in ${userData.utente.luogoNascita.citta ? userData.utente.luogoNascita.citta + "(" + userData.utente.luogoNascita.provincia + ")" : userData.utente.luogoNascita.nazione},
+                    C.F. ${userData.utente.codiceFiscale}, sei stato registrato come ${userData.utente.user} di PickMeUp!
+                </p>
+                <p>
+                    ${userData.utente.patente ? "Patente n. " + userData.utente.patente.numeroPatente + ", rilasciata da " + userData.utente.patente.ufficioRilascio + " e in scadenza il" +
+                    new Date(userData.utente.patente.dataScadenza).toLocaleDateString("it-IT") : ""}
+                </p>
+                <p>
+                    Le tue credenziali di accesso al portale PickMeUp! sono le seguenti:
+                </p>
+                <p>
+                    email: ${userData.utente.credenziali.email}
+                </p>
+                <p>
+                    password: ${userData.password}
+                </p>
+                <p>
+                    Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+            `
+        };
+        await transporter.sendMail(mailOptions);
     }
 }

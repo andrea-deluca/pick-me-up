@@ -15,7 +15,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Custom Components
 import Button from "../Utility/Button";
-import NavAside from './NavAside';
+import NavAside from '../Utility/NavAside';
 import DrivingLicenseCard from './Patente/DrivingLicenseCard';
 import AggiungiPatenteModal from "./Patente/AggiungiPatenteModal";
 import AlertMessage from '../Utility/AlertMessage';

@@ -7,10 +7,10 @@ import { Table, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
-import AnnullaPrenotazioneModal from './AnnullaPrenotazioneModal';
-import TerminaNoleggioModal from './TerminaNoleggioModal';
-import AlertMessage from '../Utility/AlertMessage';
-import EstendiNoleggioModal from './EstendiNoleggioModal';
+import AnnullaPrenotazioneModal from '../AnnullaPrenotazioneModal';
+import TerminaNoleggioModal from '../TerminaNoleggioModal';
+import AlertMessage from '../../Utility/AlertMessage';
+import EstendiNoleggioModal from '../EstendiNoleggioModal';
 
 export default function ListaGestionePrenotazioni() {
     const [listaPrenotazioni, setListaPrenotazioni] = useState([])

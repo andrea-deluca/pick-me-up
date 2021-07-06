@@ -27,6 +27,12 @@ export default function EmailModal(props) {
     function onSubmit(e) {
         e.preventDefault();
         const emailInput = document.getElementById("modificaEmail");
+        let idUtente
+        if (props.id) {
+            idUtente = props.id
+        } else {
+            idUtente = session.id
+        }
         const data = {
             id: session.id,
             email: emailInput.value

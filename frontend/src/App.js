@@ -33,6 +33,9 @@ import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/Scher
 
 //Schermata Gestione Mezzi
 import SchermataGestioneMezzi from './Components/Impiegato/GestioneMezzi/SchermataGestioneMezzi'
+import SchermataRegistrazioneImpiegati from './Components/Impiegato/RegistrazioneImpiegati/SchermataRegistrazioneImpiegati';
+import SchermataGestioneUtenti from './Components/Impiegato/GestioneUtenti/SchermataGestioneUtenti';
+import SchermataGestioneImpiegati from './Components/Impiegato/GestioneImpiegati/SchermataGestioneImpiegati';
 
 
 // App
@@ -60,9 +63,6 @@ function App() {
             <Route exact path="/recupero-password/completato" component={RecuperoPasswordCompletato}>
               <RecuperoPasswordCompletato />
             </Route>
-            <Route exact path="/" component={SchermataPrincipale}>
-              <SchermataPrincipale />
-            </Route>
             <Route exact path="/home" component={SchermataPersonaleUtente}>
               <SchermataPersonaleUtente />
             </Route>
@@ -75,14 +75,26 @@ function App() {
             <Route exact path="/gestione-account/patente" component={SchermataPatente}>
               <SchermataPatente />
             </Route>
-            <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
-              <SchermataPrenotazioniUtente />
-            </Route>
             <Route exact path="/prenota" component={SchermataPrenotazione}>
               <SchermataPrenotazione />
             </Route>
-            <Route exact path="/gestione-mezzi" component={SchermataPrenotazione}>
+            <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
+              <SchermataPrenotazioniUtente />
+            </Route>
+            <Route exact path="/gestione-mezzi" component={SchermataGestioneMezzi}>
               <SchermataGestioneMezzi />
+            </Route>
+            <Route exact path="/registrazione-impiegato" component={SchermataRegistrazioneImpiegati}>
+              <SchermataRegistrazioneImpiegati />
+            </Route>
+            <Route exact path="/gestione-impiegati" component={SchermataGestioneImpiegati}>
+              <SchermataGestioneImpiegati />
+            </Route>
+            <Route exact path="/gestione-utenti" component={SchermataGestioneUtenti}>
+              <SchermataGestioneUtenti />
+            </Route>
+            <Route exact path="/" component={SchermataPrincipale}>
+              <SchermataPrincipale />
             </Route>
           </AnimatePresence>
         </Switch>

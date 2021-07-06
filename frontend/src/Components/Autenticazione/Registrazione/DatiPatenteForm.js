@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import useSession from '../../../Hooks/useSession';
 
 // Bootstrap Components
 import { ProgressBar, Container, Row, Col, Form } from 'react-bootstrap';
@@ -10,8 +11,9 @@ import Button from '../../Utility/Button';
 // Form dati patente
 export default function DatiPatenteForm() {
     const history = useHistory();
+    const { session, setSession } = useSession()
 
-    function onSubmit(e){
+    function onSubmit(e) {
         e.preventDefault();
         // Aggiorno i dati inseriti dall'utente
         const userData = {
@@ -24,10 +26,17 @@ export default function DatiPatenteForm() {
             }
         }
         // Visualizza la schermata per registrare le credenziali
-        history.push("/signup", {
-            payload: userData,
-            type: "CREDENZIALI"
-        });
+        if (userData.tipologiaUtente === "CLIENTE") {
+            history.push("/signup", {
+                payload: userData,
+                type: "CREDENZIALI"
+            });
+        } else {
+            history.push("/registrazione-impiegato", {
+                payload: userData,
+                type: "CREDENZIALI"
+            });
+        }
     }
 
     return (
@@ -41,7 +50,7 @@ export default function DatiPatenteForm() {
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                 <Form.Group controlId="tipologiaPatente">
                                     <Form.Label>Patente di guida</Form.Label>
-                                    <Form.Control className="form-select" as="select" required>
+                                    <Form.Control value={session && "B"} className="form-select" as="select" required>
                                         <option value="" disabled selected>Seleziona...</option>
                                         <option value="AM">AM</option>
                                         <option value="A1">A1</option>
@@ -68,9 +77,9 @@ export default function DatiPatenteForm() {
                                     <Form.Label>Ufficio di rilascio</Form.Label>
                                     <Form.Control className="form-select" as="select" required>
                                         <option value="" disabled selected>Seleziona...</option>
-                                        <option value="Ufficio competente">Ufficio competente</option>
-                                        <option value="Questura">Questura</option>
-                                        <option value="Motorizzazione">Motorizzazione</option>
+                                        <option value="Prefettura">Prefettura</option>
+                                        <option value="MCTC">MCTC</option>
+                                        <option value="MIT-UCO">MIT-UCO</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>

@@ -48,12 +48,24 @@ router.post("/recupero-password", function (req, res) {
     if (result === 404) {
       res.status(result).send(`Non è stato trovato nessun account associato
       all'email fornita.`)
-    } else if(result === 500){
+    } else if (result === 500) {
       res.status(result).send("Internal Server Error");
     } else {
       res.status(result).send();
     }
   })
 });
+
+router.post("/registraImpiegato", function (req, res) {
+  autenticazioneModel.registraImpiegato(req.body, function (result) {
+    if (result === 400) {
+      res.status(result).send("L'email fornita risulta essere già associata ad un account esistente.");
+    } else if (result === 201) {
+      res.status(result).send();
+    } else {
+      res.status(result).send("Internal Server Error.")
+    }
+  })
+})
 
 module.exports = router;

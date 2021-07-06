@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router';
 import useToken from '../Hooks/useToken';
+import useSession from '../Hooks/useSession';
 
 // Motion Framer Components
 import { motion } from 'framer-motion';
@@ -15,7 +16,6 @@ import { faAddressCard, faListUl, faCar, faWallet, faIdCard, faPeopleArrows, faU
 // Custom Components
 import View from "./Utility/View"
 import Button from "./Utility/Button";
-import useSession from '../Hooks/useSession';
 
 // Util Card
 function LinkCard(props) {
@@ -43,8 +43,8 @@ function LinkCard(props) {
 
 // Schermata personale utente
 export default function SchermataPersonaleUtente() {
-    const { token } = useToken();
-    const { session } = useSession();
+    const { token, setToken } = useToken();
+    const { session, setSession } = useSession();
 
     if (!token) {
         return (<Redirect to={"/login"} />)
@@ -73,12 +73,13 @@ export default function SchermataPersonaleUtente() {
                                 <FontAwesomeIcon className="me-2" icon={session.user === "CLIENTE" ? faListUl : faPeopleArrows} fixedWidth />
                                 {session.user === "CLIENTE" ? "Le mie prenotazioni" : "Cambia ruoli"}
                             </Button>
-                            <Button className="mt-2 m-lg-0"
-                                to={session.user === "AMMINISTRATORE" ? "gestione-utente" : null}
-                                variant={"Light"}>
-                                <FontAwesomeIcon className="me-2" icon={faUserEdit} fixedWidth />
-                                {session.user === "AMMINISTRATORE" ? "Modifica utente" : null}
-                            </Button>
+                            {session.user === "AMMINISTRATORE" &&
+                                <Button className="mt-2 m-lg-0"
+                                    to={"/gestione-utenti"}
+                                    variant={"Light"}>
+                                    <FontAwesomeIcon className="me-2" icon={faUserEdit} fixedWidth />
+                                    Modifica utente
+                                </Button>}
                         </div>
                     </motion.div>
                 </View>

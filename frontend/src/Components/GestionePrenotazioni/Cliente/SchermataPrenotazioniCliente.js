@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom';
-import useToken from '../../Hooks/useToken';
-import useSession from '../../Hooks/useSession';
+import useToken from '../../../Hooks/useToken';
+import useSession from '../../../Hooks/useSession';
 import axios from 'axios';
 
 import { motion } from 'framer-motion';
 
 import { Container, Row, Col, Image, CardColumns, Nav, Tab, Spinner } from 'react-bootstrap';
 
-import NavAside from "../GestioneAccount/NavAside"
+import NavAside from '../../Utility/NavAside';
 import PrenotazioneCard from './PrenotazioneCard';
 
 export default function SchermataPrenotazioniCliente() {

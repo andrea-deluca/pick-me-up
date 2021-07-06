@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
+import useSession from '../../../Hooks/useSession';
 import axios from 'axios';
 
 // Bootstrap Components
@@ -16,6 +17,7 @@ const CryptoJS = require("crypto-js");
 // Form credenziali di accesso
 export default function CredenzialiForm() {
     const history = useHistory();
+    const { session, setSession } = useSession()
     const [state, setState] = useState({
         error: {
             show: false,
@@ -23,7 +25,7 @@ export default function CredenzialiForm() {
         submit: false
     });
 
-    function onSubmit(e) {
+    function registrazioneCliente(e) {
         e.preventDefault();
         // Controllo che la password e la conferma combacino
         if (document.querySelector("#signupPassword").value !== document.querySelector("#confermaPassword").value) {
@@ -40,7 +42,7 @@ export default function CredenzialiForm() {
                     password: encryptedPassword,
                 }
             }
-            setState({...state, submit: true});
+            setState({ ...state, submit: true });
             try {
                 // Mando una richiesta al server per registrare l'utente, passando i dati inseriti
                 axios.post("/autenticazione/registraUtente", userData)
@@ -66,6 +68,40 @@ export default function CredenzialiForm() {
         }
     }
 
+    function registrazioneImpiegato(e) {
+        e.preventDefault()
+        const userData = {
+            ...history.location.state.payload,
+            credenziali: {
+                cellulare: document.querySelector("#cellulare").value,
+                email: document.querySelector("#signupEmail").value,
+            }
+        }
+        setState({ ...state, submit: true });
+        try {
+            // Mando una richiesta al server per registrare l'utente, passando i dati inseriti
+            axios.post("/autenticazione/registraImpiegato", userData)
+                .then((res) => {
+                    // 201 CREATED: visualizza la schermata di registrazione completata
+                    history.push("/registrazione-impiegato", {
+                        type: "COMPLETATO"
+                    });
+                })
+                .catch(err => {
+                    // 400 BAD REQUEST: visualizza messaggio di errore "Account già esistente"
+                    setState({
+                        error: {
+                            show: true,
+                            message: err.response.data
+                        },
+                        submit: false
+                    })
+                })
+        } catch (err) {
+            console.log(err.response.data.msg);
+        }
+    }
+
     return (
         <Container fluid className="d-flex align-items-center justify-content-center h-100">
             <Row className="gy-5">
@@ -75,16 +111,19 @@ export default function CredenzialiForm() {
                         variant={"danger"}
                         header={"Registrazione fallita!"}
                         body={state.error.message}
-                        to={"/login"}
-                        button={"Accedi"} />
+                        to={session && "/login"}
+                        button={!session ? "Accedi" : "Chiudi"}
+                        onClick={(session && session.user === "AMMINISTRATORE") ? () => setState({ ...state, error: { show: false } }) : null} />
                 </Col>
                 <Col xs={{ span: 10, offset: 1 }} lg={{ span: 8, offset: 2 }}>
                     <h1 className="h1 text-center t-bold mb-4">Registrazione</h1>
                     <ProgressBar now={80} className="mb-4" />
-                    <Form onSubmit={onSubmit} onClick={() => setState({ ...state, error: { show: false } })}>
+                    <Form
+                        onSubmit={history.location.state.payload.tipologiaUtente === "CLIENTE" ? registrazioneCliente : registrazioneImpiegato}
+                        onClick={() => setState({ ...state, error: { show: false } })}>
                         <Row className="gy-4" >
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputEmail controlId={"signupEmail"} required/>
+                                <InputEmail controlId={"signupEmail"} required />
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 6 }}>
                                 <Form.Group controlId="cellulare">
@@ -92,17 +131,18 @@ export default function CredenzialiForm() {
                                     <Form.Control type="tel" placeholder="Inserisci il numero di cellulare" pattern="^((00|\+)39[\. ]??)??3\d{2}[\. ]??\d{6,7}$" required />
                                 </Form.Group>
                             </Col>
-                            <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputPassword tooltip controlId={"signupPassword"} placeholder={"Inserisci la password"}>
-                                    Password
-                                </InputPassword>
-                            </Col>
-                            <Col xs={{ span: 6 }} lg={{ span: 6 }}>
-                                <InputPassword controlId={"confermaPassword"} placeholder={"Conferma la tua password"}>
-                                    Conferma password
-                                </InputPassword>
-                                <Form.Text id="confermaPasswordError" className="d-none text-danger">Le password non coincidono!</Form.Text>
-                            </Col>
+                            {!session &&
+                                <><Col xs={{ span: 6 }} lg={{ span: 6 }}>
+                                    <InputPassword tooltip controlId={"signupPassword"} placeholder={"Inserisci la password"}>
+                                        Password
+                                    </InputPassword>
+                                </Col>
+                                    <Col xs={{ span: 6 }} lg={{ span: 6 }}>
+                                        <InputPassword controlId={"confermaPassword"} placeholder={"Conferma la tua password"}>
+                                            Conferma password
+                                        </InputPassword>
+                                        <Form.Text id="confermaPasswordError" className="d-none text-danger">Le password non coincidono!</Form.Text>
+                                    </Col></>}
                             <Button spinner={state.submit} variant={"Primary"} submit>Continua</Button>
                         </Row>
                     </Form>

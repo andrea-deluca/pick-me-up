@@ -26,8 +26,14 @@ export default function CellulareModal(props) {
     function onSubmit(e) {
         e.preventDefault();
         const cellulareInput = document.getElementById("modificaCellulare");
+        let idUtente
+        if (props.id) {
+            idUtente = props.id
+        } else {
+            idUtente = session.id
+        }
         const data = {
-            id: session.id,
+            id: idUtente,
             cellulare: cellulareInput.value
         }
         setState({ ...state, submit: true });

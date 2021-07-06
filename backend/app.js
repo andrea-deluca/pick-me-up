@@ -14,6 +14,8 @@ var patenteRouter = require("./routes/patente")
 var prenotazioneRouter = require("./routes/prenotazione")
 var gestionePrenotazioneRouter = require("./routes/gestionePrenotazione")
 var gestioneMezziRouter = require("./routes/gestioneMezzi")
+var gestioneImpiegatiRouter = require("./routes/gestioneImpiegati")
+var gestioneUtentiRouter = require("./routes/gestioneUtenti")
 
 var app = express();
 
@@ -37,6 +39,8 @@ app.use('/patente', patenteRouter);
 app.use('/prenotazione', prenotazioneRouter);
 app.use('/gestione-prenotazione', gestionePrenotazioneRouter);
 app.use('/gestione-mezzi', gestioneMezziRouter);
+app.use('/gestione-impiegati', gestioneImpiegatiRouter);
+app.use('/gestione-utenti', gestioneUtentiRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

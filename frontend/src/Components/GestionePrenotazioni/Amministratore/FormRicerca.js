@@ -2,8 +2,8 @@ import React from 'react'
 
 import { Row, Col, Form } from 'react-bootstrap'
 
-import Button from '../Utility/Button';
-import InputEmail from '../Utility/FormsUtility/InputEmail'
+import Button from '../../Utility/Button';
+import InputEmail from '../../Utility/FormsUtility/InputEmail'
 
 export default function FormRicerca() {
 

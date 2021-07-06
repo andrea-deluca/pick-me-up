@@ -7,7 +7,7 @@ import { Modal, Form, Col, Row } from 'react-bootstrap';
 import AlertMessage from '../../Utility/AlertMessage';
 import Button from '../../Utility/Button';
 
-export default function SpostaMezzoModal(props) {
+export default function CambiaRuoloModal(props) {
     const history = useHistory()
     const [state, setState] = useState({
         error: {
@@ -21,13 +21,14 @@ export default function SpostaMezzoModal(props) {
 
     function onSubmit(e) {
         e.preventDefault()
-        const nuovoDeposito = document.querySelector("#nuovoDeposito").value
+        const ruolo = document.querySelector("#ruolo").value
         const data = {
-            ...props.data,
-            nuovoDeposito: nuovoDeposito
+            _id: props.id,
+            ruolo: ruolo
         }
+        setState({ ...state, submit: true })
         try {
-            axios.put("/gestione-mezzi/spostaMezzo", data)
+            axios.put("/gestione-impiegati/cambiaRuolo", data)
                 .then(res => {
                     setState({ ...state, submit: false, success: { show: true, message: res.data } })
                 })
@@ -43,11 +44,11 @@ export default function SpostaMezzoModal(props) {
         <Modal
             {...props}
             size="lg"
-            aria-labelledby="spostaMezzoModal"
+            aria-labelledby="cambiaRuoloModal"
             centered>
             <Modal.Header>
-                <Modal.Title className="t-bold" id="spostaMezzoModal">
-                    Sposta mezzo
+                <Modal.Title className="t-bold" id="cambiaRuoloModal">
+                    Cambia ruolo
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -61,15 +62,13 @@ export default function SpostaMezzoModal(props) {
                         onClick={() => { state.success.show ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
                     : <Form onSubmit={onSubmit}>
                         <Row className="gy-4">
-                            <Form.Group controlId="nuovoDeposito">
-                                <Form.Label>Nuovo deposito</Form.Label>
+                            <Form.Group controlId="ruolo">
+                                <Form.Label>Nuovo ruolo</Form.Label>
                                 <Form.Control as="select" className="form-select" required>
-                                    <option value="" disabled selected>Seleziona deposito</option>
-                                    {props.depositi && props.depositi.map(key => {
-                                        return (
-                                            <option value={key._id}>{key.nome}</option>
-                                        );
-                                    })}
+                                    <option value="" disabled selected>Seleziona ruolo</option>
+                                    <option value="AMMINISTRATORE">Amministratore</option>
+                                    <option value="GESTORE_MEZZI">Gestore mezzi</option>
+                                    <option value="AUTISTA">Autista</option>
                                 </Form.Control>
                             </Form.Group>
                             <Col xs={{ span: 12 }} className="buttonsGroup justify-content-end">

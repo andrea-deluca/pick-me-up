@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
-import useSession from '../../Hooks/useSession';
+import useSession from '../../../Hooks/useSession';
 import axios from 'axios';
 
 import { Row, Col, Card, Image } from 'react-bootstrap'
 
-import Button from '../Utility/Button';
-import AnnullaPrenotazioneModal from './AnnullaPrenotazioneModal';
-import AlertMessage from '../Utility/AlertMessage';
-import TerminaNoleggioModal from './TerminaNoleggioModal';
-import EstendiNoleggioModal from './EstendiNoleggioModal'
+import Button from '../../Utility/Button';
+import AnnullaPrenotazioneModal from '../AnnullaPrenotazioneModal';
+import AlertMessage from '../../Utility/AlertMessage';
+import TerminaNoleggioModal from '../TerminaNoleggioModal';
+import EstendiNoleggioModal from '../EstendiNoleggioModal'
 
 export default function PrenotazioneCard(props) {
     const history = useHistory()
