@@ -1,5 +1,6 @@
 const express = require('express');
 var router = express.Router();
+const withAuth = require("../middleware/auth")
 let autenticazioneModel = require("../models/Autenticazione");
 
 router.post('/registraUtente', function (req, res) {
@@ -38,7 +39,8 @@ router.post('/accedi', function (req, res) {
     } else if (result === 500) {
       res.status(result).send("Internal Server Error.")
     } else {
-      res.status(result.status).send(result);
+      res.cookie('token', result.token, { httpOnly: true })
+      res.status(result.status).send({ user: result.user, token: result.token });
     }
   })
 });
@@ -66,6 +68,11 @@ router.post("/registraImpiegato", function (req, res) {
       res.status(result).send("Internal Server Error.")
     }
   })
+})
+
+router.get("/logout", function (req, res) {
+  res.cookie('token', "", { maxAge: 1 })
+  res.status(200).send()
 })
 
 module.exports = router;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import useToken from '../../Hooks/useToken';
+import useAuthentication from '../../Hooks/useAuthentication';
 import useSession from '../../Hooks/useSession';
+import axios from 'axios';
 
 // Bootstrap Components
-import { Image, Container, Row, Col } from 'react-bootstrap';
+import { Image, Row, Col } from 'react-bootstrap';
 
 // FontAwesome Components
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,7 +17,7 @@ import Sidebar from './Sidebar';
 
 // Navbar
 export default function Navbar(props) {
-    const { token, setToken } = useToken();
+    const { auth, setAuth } = useAuthentication();
     const { session, setSession } = useSession()
     const history = useHistory();
 
@@ -26,11 +27,22 @@ export default function Navbar(props) {
     }
 
     function logout() {
-        window.sessionStorage.clear();
-        history.push("/")
+        try {
+            axios.get("/autenticazione/logout")
+                .then(res => {
+                    window.localStorage.clear();
+                    setAuth(false)
+                    history.push("/")
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                })
+        } catch (error) {
+            console.log(error.response.data.msg)
+        }
     }
 
-    if (token) {
+    if (auth) {
         return (
             <nav className="container-fluid navbar py-3 shadow">
                 <Row className="w-100 mx-auto align-items-center">
@@ -54,17 +66,23 @@ export default function Navbar(props) {
                     <Button to={"/home"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faHome} fixedWidth />Home</Button>
                     {
                         session.user === "CLIENTE" &&
-                        <Button to={"/prenota"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Prenota</Button>
+                        <>
+                            <Button to={"/prenota"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Prenota</Button>
+                            <Button to={"/gestione-prenotazioni"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth />Le mie prenotazioni</Button>
+                        </>
                     }
-                    <Button to={"/gestione-prenotazioni"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth />
-                        {session.user === "CLIENTE" ? "Le mie prenotazioni" : "Gestione prenotazioni"}
-                    </Button>
                     {session.user === "AMMINISTRATORE" &&
                         <>
+                            <Button to={"/gestione-prenotazioni"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faListUl} fixedWidth />Gestione prenotazioni</Button>
                             <Button to={"/gestione-mezzi"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Ricerca mezzi</Button>
                             <Button to={"/registrazione-impiegato"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faUserPlus} fixedWidth />Registra impiegato</Button>
                             <Button to={"/gestione-utenti"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faUserEdit} fixedWidth />Modifica utente</Button>
                             <Button to={"/gestione-impiegati"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faPeopleArrows} fixedWidth />Cambia ruoli</Button>
+                        </>
+                    }
+                    {session.user === "GESTORE_MEZZI" &&
+                        <>
+                            <Button to={"/gestione-mezzi"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faCar} fixedWidth />Ricerca mezzi</Button>
                         </>
                     }
                     <Button to={"/gestione-account/profilo"} variant={"Light"}><FontAwesomeIcon className="me-2" icon={faAddressCard} fixedWidth />Visualizza profilo</Button>
@@ -75,7 +93,6 @@ export default function Navbar(props) {
                         </>
                     }
                     <Button onClick={logout} variant={"Dark"}>Logout</Button>
-
                 </Sidebar>
             </nav>
         );

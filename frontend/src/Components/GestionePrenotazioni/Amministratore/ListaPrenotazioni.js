@@ -13,6 +13,7 @@ import AlertMessage from '../../Utility/AlertMessage';
 import EstendiNoleggioModal from '../EstendiNoleggioModal';
 
 export default function ListaGestionePrenotazioni() {
+    const history = useHistory()
     const [listaPrenotazioni, setListaPrenotazioni] = useState([])
     const [showModals, setShowModals] = useState({
         annullaPrenotazione: false,
@@ -27,7 +28,6 @@ export default function ListaGestionePrenotazioni() {
             show: false
         }
     })
-    const history = useHistory()
 
     useEffect(() => {
         const fetchPrenotazioni = async () => {
@@ -150,7 +150,7 @@ export default function ListaGestionePrenotazioni() {
                     </tr>
                 </thead>
                 <tbody className="t-light">
-                    {listaPrenotazioni.map(key => {
+                    {listaPrenotazioni.length > 0 && listaPrenotazioni.map(key => {
                         return (
                             <tr>
                                 <td>

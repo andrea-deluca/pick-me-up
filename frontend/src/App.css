@@ -145,7 +145,6 @@ a {
 
   .right-image {
     object-position: center right;
-    
   }
 }
 
@@ -174,10 +173,18 @@ a {
   background-color: rgb(255, 255, 255);
   background-image: url("https://webartdevelopers.com/blog/wp-content/uploads/2019/02/CSS-Background-Animation-1.gif");
 }
+
 @media screen and (min-width: 992.98px) {
   .scrollable {
     overflow: auto;
     height: 60vh;
+  }
+}
+
+@media screen and (min-width: 992.98px) {
+  .scrollable-table {
+    overflow: auto;
+    height: 45vh;
   }
 }
 

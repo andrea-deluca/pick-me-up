@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import useSession from '../../../Hooks/useSession';
-import useToken from '../../../Hooks/useToken';
+import useAuthentication from '../../../Hooks/useAuthentication';
 import axios from 'axios';
 
 
@@ -19,8 +19,8 @@ var CryptoJS = require("crypto-js");
 // Login Form
 export default function LoginForm() {
     const history = useHistory();
+    const { auth, setAuth } = useAuthentication()
     const { session, setSession } = useSession()
-    const { token, setToken } = useToken();
     const [state, setState] = useState({
         error: {
             show: false
@@ -40,9 +40,8 @@ export default function LoginForm() {
         try {
             axios.post("/autenticazione/accedi", credenziali)
                 .then((res) => {
+                    setAuth(true)
                     setSession(res.data.user)
-                    setToken(res.data.token);
-                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     history.push("/home");
                 })
                 .catch(err => {

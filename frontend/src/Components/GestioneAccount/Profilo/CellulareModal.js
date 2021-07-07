@@ -40,7 +40,6 @@ export default function CellulareModal(props) {
         try {
             axios.put("/profilo/modificaCellulare", data)
                 .then(res => {
-                    setSession({ ...session, cellulare: res.data.cellulare.toString() })
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {

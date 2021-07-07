@@ -60,10 +60,14 @@ export default function NavAside() {
                     <FontAwesomeIcon icon={faArrowRight} size={"lg"} color={"white"} flip={flipIcon} />
                     <h6 className="asideLink ms-3 t-bold text-light">Chiudi</h6>
                 </div>
-                {session.user === "CLIENTE" && <NavAsideLink to={"/prenota"} icon={faCar}>Prenota</NavAsideLink>}
-                <NavAsideLink to={"/gestione-prenotazioni"} icon={faListUl}>{session.user === "CLIENTE" ? "Le mie prenotazioni" : "Gestione prenotazioni"}</NavAsideLink>
+                {session.user === "CLIENTE" &&
+                    <>
+                        <NavAsideLink to={"/prenota"} icon={faCar}>Prenota</NavAsideLink>
+                        <NavAsideLink to={"/gestione-prenotazioni"} icon={faListUl}>Le mie prenotazioni</NavAsideLink>
+                    </>}
                 {session.user === "AMMINISTRATORE" &&
                     <>
+                        <NavAsideLink to={"/gestione-prenotazioni"} icon={faListUl}>Gestione prenotazioni</NavAsideLink>
                         <NavAsideLink to={"/gestione-mezzi"} icon={faCar}>Gestione mezzi</NavAsideLink>
                         <NavAsideLink to={"/registrazione-impiegato"} icon={faUserPlus}>Registra impiegato</NavAsideLink>
                         <NavAsideLink to={"/gestione-utenti"} icon={faUserEdit}>Modifica Utente</NavAsideLink>
@@ -75,6 +79,11 @@ export default function NavAside() {
                     <>
                         <NavAsideLink to={"/gestione-account/wallet"} icon={faWallet}>Visualizza Wallet</NavAsideLink>
                         <NavAsideLink to={"/gestione-account/patente"} icon={faIdCard}>Visualizza patente</NavAsideLink>
+                    </>
+                }
+                {session.user === "GESTORE_MEZZI" &&
+                    <>
+                        <NavAsideLink to={"/gestione-mezzi"} icon={faCar}>Gestione mezzi</NavAsideLink>
                     </>
                 }
             </Row>

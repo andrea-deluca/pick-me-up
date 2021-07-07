@@ -104,5 +104,5 @@ module.exports = {
             console.log(error)
             return callback(500);
         }
-    }
+    },
 }

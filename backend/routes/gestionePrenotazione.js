@@ -94,6 +94,20 @@ router.put("/terminaNoleggio", function (req, res) {
     })
 })
 
+router.put("/terminaNoleggioAltro", function (req, res) {
+    gestionePrenotazioneModel.terminaNoleggioAltro(req.body, function (result) {
+        if (result === 500) {
+            res.status(result).send("Internal Server Error")
+        } else {
+            res.status(result.status).send({
+                prenotazioni: result.prenotazioni,
+                message: `La tua prenotazione è terminata con successo.
+                Grazie per averci scelto. Alla prossima!`
+            })
+        }
+    })
+})
+
 router.put("/estendiNoleggio", function (req, res) {
     gestionePrenotazioneModel.estendiNoleggio(req.body, function (result) {
         if (result === 500) {

@@ -5,13 +5,13 @@ const withAuth = function (req, res, next) {
     const token = req.cookies.token;
 
     if (!token) {
-        res.status(403).send()
+        res.status(401).send("Non autorizzato: No token provided")
     } else {
         jwt.verify(token, tokenKey, (err, decoded) => {
             if (err) {
-                res.status(403).send()
+                res.status(401).send("Non autorizzato: Invalid token")
             } else{
-                req.email = decoded.email;
+                req.id = decoded.id;
                 next();
             }
         });

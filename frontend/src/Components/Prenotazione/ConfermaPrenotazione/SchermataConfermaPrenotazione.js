@@ -93,7 +93,7 @@ export default function SchermataConfermaPrenotazione() {
                         animate={{ translateX: 0, opacity: 1 }}
                         exit={{ translateX: 50, opacity: 0 }}
                         transition={{ duration: 0.4 }}>
-                        <Button variant="secondary"> Annulla </Button>
+                        <Button onClick={() => history.push("/prenota")} variant="secondary"> Annulla </Button>
                         <Button onClick={onClick} variant="primary"> Conferma</Button>
                     </motion.div>
                 </Row>

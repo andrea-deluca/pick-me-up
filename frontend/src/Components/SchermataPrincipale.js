@@ -1,15 +1,15 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import useToken from '../Hooks/useToken';
+import useAuthentication from '../Hooks/useAuthentication';
 
 // Custom Components
 import HomeCarousel from './Utility/HomeCarousel';
 
 // Schermata Principale
 export default function SchermataPrincipale() {
-    const { token, setToken } = useToken()
+    const { auth, setAuth } = useAuthentication()
 
-    if (token) {
+    if (auth) {
         return (<Redirect to={"/home"} />);
     } else {
         return <HomeCarousel />

@@ -17,6 +17,9 @@ export default function EliminaAccountModal(props) {
         error: {
             show: false,
         },
+        success: {
+            show: true,
+        },
         submit: false
     })
 
@@ -35,8 +38,12 @@ export default function EliminaAccountModal(props) {
         try {
             axios.post("/profilo/eliminaAccount", data)
                 .then(res => {
-                    window.sessionStorage.clear();
-                    history.push("/");
+                    if (!props.id) {
+                        window.sessionStorage.clear();
+                        history.push("/");
+                    } else {
+                        setState({ ...state, submit: false, success: { show: true, message: "Account eliminato correttamente" } });
+                    }
                 })
                 .catch(err => {
                     setState({ ...state, submit: false, error: { show: true, message: err.response.data } });
@@ -59,15 +66,15 @@ export default function EliminaAccountModal(props) {
             <Modal.Body>
                 {state.error.show ?
                     <AlertMessage
-                        show={state.error.show}
-                        variant={"danger"}
-                        header={"Operazione fallita!"}
-                        body={state.error.message}
+                        show={state.error.show || state.success.show}
+                        variant={state.error.show ? "danger" : "success"}
+                        header={state.error.show ? "Operazione fallita!" : "Operazione eseguita con successo"}
+                        body={state.error.show ? state.error.message : state.success.message }
                         button={"Indietro"}
-                        onClick={() => { setState({ ...state, error: { show: false } }) }} />
+                        onClick={state.error.show ? () => { setState({ ...state, error: { show: false } }) } : () => history.push(0)} />
                     : <Row className="gy-4" >
                         <Col >
-                            <h3 className="t-bold text-center h5">Sei sicuro di voler eliminare il tuo account?</h3>
+                            <h3 className="t-bold text-center h5">Sei sicuro di voler eliminare l'account?</h3>
                         </Col>
                         <div className="buttonsGroup mx-auto">
                             <Button variant={"Secondary"} onClick={props.onHide}>Annulla</Button>

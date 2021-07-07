@@ -59,4 +59,14 @@ router.post("/eliminaAccount", function (req, res) {
     })
 })
 
+router.post("/fetchDatiUtente", function (req, res) {
+    profiloModel.fetchDatiUtente(req.body, function (result) {
+        if (result === 500) {
+            res.status(result).send()
+        } else {
+            res.status(result.status).send(result.utente)
+        }
+    })
+})
+
 module.exports = router;

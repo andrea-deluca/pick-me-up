@@ -99,5 +99,54 @@ module.exports = {
             console.log(error)
             return callback(500)
         }
+    },
+
+    fetchDatiUtente: async function (data, callback) {
+        const db = await makeDb(config)
+        try {
+            db.collection("Utente").findOne(
+                { "_id": ObjectId(data.id) },
+                {
+                    projection: {
+                        "nome": 1,
+                        "cognome": 1,
+                        "dataNascita": 1,
+                        "sesso": 1,
+                        "luogoNascita": 1,
+                        "patente": 1,
+                        "credenziali.cellulare": 1,
+                        "credenziali.email": 1,
+                        "codiceFiscale": 1,
+                        "metodiPagamento": 1,
+                        "user": 1
+                    }
+                }, (err, res) => {
+                    if (err) return callback(500)
+                    const datiUtente = {
+                        id: res._id,
+                        nome: res.nome,
+                        cognome: res.cognome,
+                        dataNascita: res.dataNascita,
+                        sesso: res.sesso,
+                        luogoNascita: {
+                            ...res.luogoNascita
+                        },
+                        patente: res.patente,
+                        cellulare: res.credenziali.cellulare,
+                        email: res.credenziali.email,
+                        codiceFiscale: res.codiceFiscale,
+                        metodiPagamento: res.metodiPagamento,
+                        user: res.user
+                    }
+                    return callback({
+                        status: 200,
+                        utente: datiUtente
+                    })
+                }
+            )
+        } catch (error) {
+            console.log(error)
+            return callback(500)
+        }
     }
 }

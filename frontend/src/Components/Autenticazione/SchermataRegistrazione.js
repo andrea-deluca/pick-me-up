@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, Redirect } from 'react-router-dom';
-import useToken from '../../Hooks/useToken';
+import useAuthentication from '../../Hooks/useAuthentication';
 
 // Framer Motion Components
 import { motion } from 'framer-motion';
@@ -30,44 +30,45 @@ function RegistrazioneContainer(props) {
 
 // Dynamic SchermataRegistrazione
 export default function SchermataRegistrazione() {
-    const { token, setToken } = useToken();
     const history = useHistory();
-    if (token) {
-        return (<Redirect to={"/home"} />)
-    } else {
-        if (history.location.state) {
-            switch (history.location.state.type) {
-                case "RICHIESTA_PATENTE":
-                    return (
-                        <RegistrazioneContainer>
-                            <RichiestaRegistrazionePatente />
-                        </RegistrazioneContainer>
-                    );
-                case "PATENTE":
-                    return (
-                        <RegistrazioneContainer>
-                            <DatiPatenteForm />
-                        </RegistrazioneContainer>
-                    );
-                case "CREDENZIALI":
-                    return (
-                        <RegistrazioneContainer>
-                            <CredenzialiForm />
-                        </RegistrazioneContainer>
-                    );
-                case "COMPLETATO":
-                    return (
-                        <RegistrazioneContainer>
-                            <RegistrazioneCompletata />
-                        </RegistrazioneContainer>
-                    );
-            }
-        } else {
-            return (
-                <RegistrazioneContainer>
-                    <DatiAnagraficiForm />
-                </RegistrazioneContainer>
-            );
+    const {auth, setAuth} = useAuthentication()
+
+    if(auth){
+        return <Redirect to={"/home"}/>
+    }
+
+    if (history.location.state) {
+        switch (history.location.state.type) {
+            case "RICHIESTA_PATENTE":
+                return (
+                    <RegistrazioneContainer>
+                        <RichiestaRegistrazionePatente />
+                    </RegistrazioneContainer>
+                );
+            case "PATENTE":
+                return (
+                    <RegistrazioneContainer>
+                        <DatiPatenteForm />
+                    </RegistrazioneContainer>
+                );
+            case "CREDENZIALI":
+                return (
+                    <RegistrazioneContainer>
+                        <CredenzialiForm />
+                    </RegistrazioneContainer>
+                );
+            case "COMPLETATO":
+                return (
+                    <RegistrazioneContainer>
+                        <RegistrazioneCompletata />
+                    </RegistrazioneContainer>
+                );
         }
+    } else {
+        return (
+            <RegistrazioneContainer>
+                <DatiAnagraficiForm />
+            </RegistrazioneContainer>
+        );
     }
 }

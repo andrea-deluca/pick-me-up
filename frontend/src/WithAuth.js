@@ -1,66 +1,49 @@
 import React, { useEffect, useState } from 'react'
 import { Redirect } from 'react-router';
+import useAuthentication from './Hooks/useAuthentication';
 import axios from 'axios';
 
 export default function WithAuth(props) {
+    const { auth, setAuth } = useAuthentication()
     const [state, setState] = useState({
-        loading: true, // IMPOSTARE A TRUE
+        loading: true,
         redirect: false
     });
 
-    useEffect(() => {
-        const user = JSON.parse(window.localStorage.getItem("utente"));
-        if ((state.loading && (!user || user.length === 0))) {
-            setState({ loading: false, redirect: true })
-        } else {
-            setState({ ...state, loading: false });
-        }
-    }, [state.loading])
+    console.log(state)
 
+    useEffect(() => {
+        try {
+            // Invio una richiesta al server per verificare la validità
+            axios.get("/checkToken")
+                .then(res => {
+                    if (res.status === 200) {
+                        setAuth(true)
+                        setState({ ...state, loading: false });
+                    }
+                })
+                .catch(err => {
+                    window.localStorage.clear()
+                    setAuth(false)
+                    setState({ loading: false, redirect: true });
+                })
+        }
+        catch (err) {
+            console.log(err.response.data.msg)
+        }
+    }, [])
 
     if (state.loading) {
-        return null;
+        return null
     }
+
     if (state.redirect) {
         return (
-            <Redirect to="/login" />
+            <Redirect to={"/login"} />
         );
     }
-    return (props.children);
 
-    //const [loggedIn, setLoggedIn] = useState(false);
-
-    // useEffect(() => {
-    //     if (!loggedIn) {
-    //         try {
-    //             // Invio una richiesta al server per verificare la validità
-    //             axios.get("/token/verificaToken")
-    //                 .then(res => {
-    //                     switch (res.status) {
-    //                         case 200:
-    //                             setLoggedIn(true);
-    //                     }
-    //                 })
-    //                 .catch(err => {
-    //                     setLoggedIn(false);
-    //                 })
-    //         }
-    //         catch (err) {
-    //             console.log(err.response.data.msg)
-    //         }
-    //     }
-    //     console.log(loggedIn)
-    // }, [loggedIn])
-
-    // switch (loggedIn) {
-    //     case true:
-    //         return (
-    //             props.children
-    //         );
-    //     default:
-    //         return (
-    //             <Redirect to={"/login"} />
-    //         );
-    // }
-
+    return (
+        props.children
+    );
 }

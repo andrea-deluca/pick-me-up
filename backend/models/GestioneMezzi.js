@@ -21,6 +21,7 @@ module.exports = {
                 {
                     $project: {
                         "nome": 1,
+                        "auto.posizione": 1,
                         "auto.targhe": 1,
                         "datiAuto._id": 1,
                         "datiAuto.tipologia": 1,
@@ -34,6 +35,7 @@ module.exports = {
                         return {
                             idDeposito: key._id,
                             deposito: key.nome,
+                            posizione: key.auto.posizione,
                             targa: key.auto.targhe,
                             idMezzo: key.datiAuto[0]._id,
                             tipologia: key.datiAuto[0].tipologia,
@@ -55,6 +57,7 @@ module.exports = {
                         {
                             $project: {
                                 "nome": 1,
+                                "moto.posizione": 1,
                                 "moto.targhe": 1,
                                 "datiMoto._id": 1,
                                 "datiMoto.tipologia": 1,
@@ -68,6 +71,7 @@ module.exports = {
                                 return {
                                     idDeposito: key._id,
                                     deposito: key.nome,
+                                    posizione: key.moto.posizione,
                                     targa: key.moto.targhe,
                                     idMezzo: key.datiMoto[0]._id,
                                     tipologia: key.datiMoto[0].tipologia,
@@ -89,6 +93,7 @@ module.exports = {
                                 {
                                     $project: {
                                         "nome": 1,
+                                        "bici.posizione": 1,
                                         "bici.targhe": 1,
                                         "datiBici._id": 1,
                                         "datiBici.tipologia": 1,
@@ -102,6 +107,7 @@ module.exports = {
                                         return {
                                             idDeposito: key._id,
                                             deposito: key.nome,
+                                            posizione: key.bici.posizione,
                                             targa: key.bici.targhe,
                                             idMezzo: key.datiBici[0]._id,
                                             tipologia: key.datiBici[0].tipologia,
@@ -123,6 +129,7 @@ module.exports = {
                                         {
                                             $project: {
                                                 "nome": 1,
+                                                "monopattino.posizione": 1,
                                                 "monopattino.targhe": 1,
                                                 "datiMonopattino._id": 1,
                                                 "datiMonopattino.tipologia": 1,
@@ -136,6 +143,7 @@ module.exports = {
                                                 return {
                                                     idDeposito: key._id,
                                                     deposito: key.nome,
+                                                    posizione: key.monopattino.posizione,
                                                     targa: key.monopattino.targhe,
                                                     idMezzo: key.datiMonopattino[0]._id,
                                                     tipologia: key.datiMonopattino[0].tipologia,

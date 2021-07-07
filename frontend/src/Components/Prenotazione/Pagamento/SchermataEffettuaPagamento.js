@@ -80,6 +80,7 @@ export default function SchermataEffettuaPagamento() {
                                 </Form.Group>
                                 <div className="buttonsGroup mt-4 flex-column flex-lg-row align-items-end">
                                     <Button className="mb-3" onClick={() => setShowModal(true)} variant={"Light"}>Aggiungi metodo di pagamento</Button>
+                                    <Button className="mb-3" onClick={() => history.push("/prenota")} variant={"Secondary"} submit>Annulla</Button>
                                     <Button className="mb-3" spinner={state.submit} variant={"Primary"} submit>Effettua pagamento</Button>
                                     <AggiungiMetodoModal show={showModal} onHide={() => setShowModal(false)} />
                                 </div>

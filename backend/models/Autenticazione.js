@@ -92,7 +92,7 @@ module.exports = {
                             return callback(401);
                         }
                         // Genero un token di accesso
-                        const payload = { email: res.credenziali.email };
+                        const payload = { id: res._id };
                         const token = jwt.sign(payload, tokenKey, {
                             expiresIn: "1h",
                         });
@@ -119,17 +119,11 @@ module.exports = {
                             metodiPagamento: res.metodiPagamento,
                             user: res.user
                         }
-
-                        gestionePrenotazioneModel.fetchPrenotazioniUtente({ _id: res._id }, res => {
-                            if (res === 500) return callback(500)
-                            // Ritorno il token di accesso e i dati associati all'utente
-                            return (callback({
-                                token: token,
-                                status: 202,
-                                user: datiUtente,
-                                prenotazioni: res.prenotazioni
-                            }))
-                        })
+                        return (callback({
+                            token: token,
+                            status: 202,
+                            user: datiUtente,
+                        }))
                     } else {
                         return callback(404);
                     }

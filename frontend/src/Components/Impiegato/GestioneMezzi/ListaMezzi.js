@@ -48,7 +48,7 @@ export default function ListaMezzi() {
     }
 
     return (
-        <div className="scrollable my-5">
+        <div className="scrollable-table mt-4">
             <Table id="mezziTable" responsive striped bordered hover>
                 <thead>
                     <tr>
@@ -57,8 +57,7 @@ export default function ListaMezzi() {
                         <th>Marca</th>
                         <th>Modello</th>
                         <th>Targa</th>
-                        <th>Deposito</th>
-                        <th>Disponibilità</th>
+                        <th>Posizione</th>
                     </tr>
                 </thead>
                 <tbody className="t-light">
@@ -71,9 +70,6 @@ export default function ListaMezzi() {
                                             <FontAwesomeIcon icon={faEdit} />
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
-                                            <Dropdown.Item>
-                                                Rendi *
-                                            </Dropdown.Item>
                                             <Dropdown.Item onClick={() => spostaMezzo(key)}>Sposta mezzo</Dropdown.Item>
                                             <SpostaMezzoModal show={showModals.spostaMezzi.show}
                                                 data={showModals.spostaMezzi.data}
@@ -86,8 +82,7 @@ export default function ListaMezzi() {
                                 <td>{key.marca}</td>
                                 <td>{key.modello}</td>
                                 <td>{key.targa}</td>
-                                <td>{key.deposito}</td>
-                                <td>Disponibile</td>
+                                <td>{key.deposito || key.posizione}</td>
                             </tr>
                         );
                     })}

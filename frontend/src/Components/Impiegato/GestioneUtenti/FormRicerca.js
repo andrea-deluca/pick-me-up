@@ -48,37 +48,36 @@ export default function FormRicerca() {
     return (
         <Form onSubmit={onSubmit}>
             <Row className="gy-3 align-items-end">
-                <Col>
+                <Col lg={{span: 12}} xl={{span: 3}}>
                     <Form.Group controlId="idUtente">
                         <Form.Label>ID utente</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci ID" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 2}}>
                     <Form.Group controlId="nomeUtente">
                         <Form.Label>Nome</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci nome" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 2}}>
                     <Form.Group controlId="cognomeUtente">
                         <Form.Label>Cognome</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci cognome" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 3}}>
                     <Form.Group controlId="emailUtente">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci email" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 2}}>
                     <Form.Group controlId="codiceFiscaleUtente">
                         <Form.Label>Codice Fiscale</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci CF" />
                     </Form.Group>
                 </Col>
-
                 <Col xs={{ span: 12 }} className="d-flex justify-content-end">
                     <Button variant={"Primary"} submit>Cerca</Button>
                 </Col>

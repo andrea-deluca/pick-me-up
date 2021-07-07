@@ -88,12 +88,13 @@ module.exports = {
                         "mezzo": 1
                     }
                 }
-            ]).toArray().then(res => {
-                return callback({
-                    status: 200,
-                    prenotazioni: res
+            ]).toArray()
+                .then(res => {
+                    return callback({
+                        status: 200,
+                        prenotazioni: res
+                    })
                 })
-            })
                 .catch(err => {
                     return callback(500)
                 })
@@ -375,7 +376,8 @@ module.exports = {
                         prenotazione = {
                             ...prenotazione,
                             consegna: {
-                                idConsegna: data.consegna
+                                ...prenotazione.consegna,
+                                _id: data.consegna
                             }
                         }
                     }
@@ -466,6 +468,141 @@ module.exports = {
                     }
                 }
             )
+        } catch (error) {
+            console.log(error)
+            return callback(500)
+        }
+    },
+
+    terminaNoleggioAltro: async function (data, callback) {
+        const db = await makeDb(config)
+        try {
+            db.collection("Prenotazione").findOneAndUpdate(
+                { _id: ObjectId(data._id) },
+                { $set: { stato: "TERMINATA" } },
+                { returnDocument: "after" },
+                (err, res) => {
+                    if (err) return callback(500)
+                    let prenotazione = res.value
+                    if (data.consegna) {
+                        prenotazione = {
+                            ...prenotazione,
+                            consegna: {
+                                ...prenotazione.consegna,
+                                _id: data.consegna
+                            }
+                        }
+                    }
+                    if (prenotazione.mezzo.tipologia === "auto") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "auto.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
+                            (err, res) => {
+                                const auto = {
+                                    _id: ObjectId(prenotazione.mezzo._id),
+                                    targhe: [
+                                        prenotazione.mezzo.targa,
+                                    ],
+                                    posizione: data.consegna
+                                }
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "tipologia": "Altro" },
+                                    { $push: { "auto": auto } },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    } else if (prenotazione.mezzo.tipologia === "moto") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "moto.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
+                            (err, res) => {
+                                const moto = {
+                                    _id: ObjectId(prenotazione.mezzo._id),
+                                    targhe: [
+                                        prenotazione.mezzo.targa,
+                                    ],
+                                    posizione: data.consegna
+                                }
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "tipologia": "Altro" },
+                                    { $push: { "moto": moto } },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    } else if (prenotazione.mezzo.tipologia === "bici") {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "bici.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
+                            (err, res) => {
+                                const bici = {
+                                    _id: ObjectId(prenotazione.mezzo._id),
+                                    targhe: [
+                                        prenotazione.mezzo.targa,
+                                    ],
+                                    posizione: data.consegna
+                                }
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "tipologia": "Altro" },
+                                    { $push: { "bici": bici } },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    } else {
+                        db.collection("Deposito").findOneAndUpdate(
+                            { "_id": ObjectId(prenotazione.ritiro._id) },
+                            { $pull: { "monopattino.$[idMezzo].targhe": prenotazione.mezzo.targa } },
+                            { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
+                            (err, res) => {
+                                const monopattino = {
+                                    _id: ObjectId(prenotazione.mezzo._id),
+                                    targhe: [
+                                        prenotazione.mezzo.targa,
+                                    ],
+                                    posizione: data.consegna
+                                }
+                                db.collection("Deposito").findOneAndUpdate(
+                                    { "tipologia": "Altro" },
+                                    { $push: { "monopattino": monopattino } },
+                                    ((err, res) => {
+                                        if (err) return callback(500)
+                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
+                                            return callback({
+                                                status: 200,
+                                                prenotazioni: res.prenotazioni
+                                            })
+                                        })
+                                    })
+                                )
+                            })
+                    }
+                })
         } catch (error) {
             console.log(error)
             return callback(500)

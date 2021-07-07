@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router';
-import useToken from '../../Hooks/useToken';
 import useSession from '../../Hooks/useSession';
+import axios from 'axios';
 
 // Framer Motion Components
 import { motion } from 'framer-motion';
@@ -23,7 +23,6 @@ import PasswordModal from './Profilo/PasswordModal';
 
 // Schermata profilo
 export default function SchermataProfilo() {
-    const { token, setToken } = useToken();
     const { session, setSession } = useSession()
     const [modals, setModals] = useState({
         cellulareModal: false,
@@ -31,59 +30,54 @@ export default function SchermataProfilo() {
         passwordModal: false
     })
 
-    if (!token) {
-        return (<Redirect to={"/login"} />);
-    } else {
-        return (
-            <Container fluid className="p-0 h-100">
-                <Row className="g-0 h-100 align-items-center">
-                    <NavAside />
-                    <Col xs={{ span: 10, offset: 1 }} lg={{ span: 4, offset: 1 }} className="ms-lg-auto mt-5 mt-lg-0">
-                        <motion.div
-                            className="mb-5"
-                            initial={{ translateY: 100, opacity: 0 }}
-                            animate={{ translateY: 0, opacity: 1 }}
-                            exit={{ translateY: 100, opacity: 0 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="d-flex justify-content-start align-items-center mb-5">
-                                <Image fluid className="col-2 me-3" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
-                                <div className="d-flex flex-column">
-                                    <h6 className="t-light">USER ID #{session.id}</h6>
-                                    <h1 className="t-bold">{session.nome + " " + session.cognome}</h1>
-                                </div>
+    return (
+        <Container fluid className="p-0 h-100">
+            <Row className="g-0 h-100 align-items-center">
+                <NavAside />
+                <Col xs={{ span: 10, offset: 1 }} lg={{ span: 4, offset: 1 }} className="ms-lg-auto mt-5 mt-lg-0">
+                    <motion.div
+                        className="mb-5"
+                        initial={{ translateY: 100, opacity: 0 }}
+                        animate={{ translateY: 0, opacity: 1 }}
+                        exit={{ translateY: 100, opacity: 0 }}
+                        transition={{ duration: 0.3 }}>
+                        <div className="d-flex justify-content-start align-items-center mb-5">
+                            <Image fluid className="col-2 me-3" src={session.sesso === "M" ? "/assets/svg/avatar_male.svg" : "/assets/svg/avatar_female.svg"} />
+                            <div className="d-flex flex-column">
+                                <h6 className="t-light">USER ID #{session.id}</h6>
+                                <h1 className="t-bold">{session.nome + " " + session.cognome}</h1>
                             </div>
-                            <RiepilogoProfilo />
-                        </motion.div>
-                    </Col>
-                    <Col lg={{ span: 3, offset: 1 }} className="d-none d-lg-block me-auto">
-                        <motion.div
-                            initial={{ translateY: 100, opacity: 0 }}
-                            animate={{ translateY: 0, opacity: 1 }}
-                            exit={{ translateY: 100, opacity: 0 }}
-                            transition={{ duration: 0.3 }}>
-                            <div className="mb-5">
-                                <Button variant={"White"} onClick={() => setModals({ ...modals, cellulareModal: true })}>
-                                    <FontAwesomeIcon className="me-2" icon={faMobileAlt} fixedWidth />Modifica cellulare
-                                </Button>
-                                <CellulareModal show={modals.cellulareModal} onHide={() => setModals({ ...modals, cellulareModal: false })} />
-                            </div>
-                            <div className="mb-5">
-                                <Button variant={"White"} onClick={() => setModals({ ...modals, emailModal: true })}>
-                                    <FontAwesomeIcon className="me-2" icon={faEnvelope} fixedWidth />Modifica email
-                                </Button>
-                                <EmailModal show={modals.emailModal} onHide={() => setModals({ ...modals, emailModal: false })} />
-                            </div>
-                            <div className="mb-5">
-                                <Button variant={"White"} onClick={() => setModals({ ...modals, passwordModal: true })}>
-                                    <FontAwesomeIcon className="me-2" icon={faKey} fixedWidth />Modifica password
-                                </Button>
-                                <PasswordModal show={modals.passwordModal} onHide={() => setModals({ ...modals, passwordModal: false })} />
-                            </div>
-                        </motion.div>
-                    </Col>
-                </Row>
-            </Container>
-        );
-    }
-
+                        </div>
+                        <RiepilogoProfilo />
+                    </motion.div>
+                </Col>
+                <Col lg={{ span: 3, offset: 1 }} className="d-none d-lg-block me-auto">
+                    <motion.div
+                        initial={{ translateY: 100, opacity: 0 }}
+                        animate={{ translateY: 0, opacity: 1 }}
+                        exit={{ translateY: 100, opacity: 0 }}
+                        transition={{ duration: 0.3 }}>
+                        <div className="mb-5">
+                            <Button variant={"White"} onClick={() => setModals({ ...modals, cellulareModal: true })}>
+                                <FontAwesomeIcon className="me-2" icon={faMobileAlt} fixedWidth />Modifica cellulare
+                            </Button>
+                            <CellulareModal show={modals.cellulareModal} onHide={() => setModals({ ...modals, cellulareModal: false })} />
+                        </div>
+                        <div className="mb-5">
+                            <Button variant={"White"} onClick={() => setModals({ ...modals, emailModal: true })}>
+                                <FontAwesomeIcon className="me-2" icon={faEnvelope} fixedWidth />Modifica email
+                            </Button>
+                            <EmailModal show={modals.emailModal} onHide={() => setModals({ ...modals, emailModal: false })} />
+                        </div>
+                        <div className="mb-5">
+                            <Button variant={"White"} onClick={() => setModals({ ...modals, passwordModal: true })}>
+                                <FontAwesomeIcon className="me-2" icon={faKey} fixedWidth />Modifica password
+                            </Button>
+                            <PasswordModal show={modals.passwordModal} onHide={() => setModals({ ...modals, passwordModal: false })} />
+                        </div>
+                    </motion.div>
+                </Col>
+            </Row>
+        </Container>
+    );
 }

@@ -37,6 +37,9 @@ import SchermataRegistrazioneImpiegati from './Components/Impiegato/Registrazion
 import SchermataGestioneUtenti from './Components/Impiegato/GestioneUtenti/SchermataGestioneUtenti';
 import SchermataGestioneImpiegati from './Components/Impiegato/GestioneImpiegati/SchermataGestioneImpiegati';
 
+import SchermataNotFound from './Components/SchermataNotFound'
+
+import WithAuth from './WithAuth';
 
 // App
 function App() {
@@ -48,6 +51,9 @@ function App() {
         <Navbar />
         <Switch>
           <AnimatePresence exitBeforeEnter initial={true}>
+            <Route exact path="/" component={SchermataPrincipale}>
+              <SchermataPrincipale />
+            </Route>
             <Route exact path="/signup" component={SchermataRegistrazione}>
               <SchermataRegistrazione />
             </Route>
@@ -64,37 +70,34 @@ function App() {
               <RecuperoPasswordCompletato />
             </Route>
             <Route exact path="/home" component={SchermataPersonaleUtente}>
-              <SchermataPersonaleUtente />
+              <WithAuth><SchermataPersonaleUtente /></WithAuth>
             </Route>
             <Route exact path="/gestione-account/profilo" component={SchermataProfilo}>
-              <SchermataProfilo />
+              <WithAuth><SchermataProfilo /></WithAuth>
             </Route>
             <Route exact path="/gestione-account/wallet" component={SchermataWallet}>
-              <SchermataWallet />
+              <WithAuth><SchermataWallet /></WithAuth>
             </Route>
             <Route exact path="/gestione-account/patente" component={SchermataPatente}>
-              <SchermataPatente />
+              <WithAuth><SchermataPatente /></WithAuth>
             </Route>
             <Route exact path="/prenota" component={SchermataPrenotazione}>
-              <SchermataPrenotazione />
+              <WithAuth><SchermataPrenotazione /></WithAuth>
             </Route>
             <Route exact path="/gestione-prenotazioni" component={SchermataPrenotazioniUtente}>
-              <SchermataPrenotazioniUtente />
+              <WithAuth><SchermataPrenotazioniUtente /></WithAuth>
             </Route>
             <Route exact path="/gestione-mezzi" component={SchermataGestioneMezzi}>
-              <SchermataGestioneMezzi />
+              <WithAuth><SchermataGestioneMezzi /></WithAuth>
             </Route>
             <Route exact path="/registrazione-impiegato" component={SchermataRegistrazioneImpiegati}>
-              <SchermataRegistrazioneImpiegati />
+              <WithAuth><SchermataRegistrazioneImpiegati /></WithAuth>
             </Route>
             <Route exact path="/gestione-impiegati" component={SchermataGestioneImpiegati}>
-              <SchermataGestioneImpiegati />
+              <WithAuth><SchermataGestioneImpiegati /></WithAuth>
             </Route>
             <Route exact path="/gestione-utenti" component={SchermataGestioneUtenti}>
-              <SchermataGestioneUtenti />
-            </Route>
-            <Route exact path="/" component={SchermataPrincipale}>
-              <SchermataPrincipale />
+              <WithAuth><SchermataGestioneUtenti /></WithAuth>
             </Route>
           </AnimatePresence>
         </Switch>

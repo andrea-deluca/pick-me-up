@@ -45,31 +45,31 @@ export default function FormRicerca() {
     return (
         <Form onSubmit={onSubmit}>
             <Row className="gy-3 align-items-end">
-                <Col>
+                <Col lg={{span: 12}} xl={{span: 3}}>
                     <Form.Group controlId="idImpiegato">
                         <Form.Label>ID impiegato</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci ID" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 2}}>
                     <Form.Group controlId="nomeImpiegato">
                         <Form.Label>Nome</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci nome" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 2}}>
                     <Form.Group controlId="cognomeImpiegato">
                         <Form.Label>Cognome</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci cognome" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 3}}>
                     <Form.Group controlId="emailImpiegato">
                         <Form.Label>Email</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci email" />
                     </Form.Group>
                 </Col>
-                <Col>
+                <Col lg={{span: 6}} xl={{span: 2}}>
                     <Form.Group controlId="codiceFiscaleImpiegato">
                         <Form.Label>Codice Fiscale</Form.Label>
                         <Form.Control type="text" placeholder="Inserisci CF"/>

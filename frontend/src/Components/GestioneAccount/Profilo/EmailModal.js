@@ -41,7 +41,6 @@ export default function EmailModal(props) {
         try {
             axios.put("/profilo/modificaEmail", data)
                 .then(res => {
-                    setSession({ ...session, email: res.data.email.toString() })
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {

@@ -27,7 +27,7 @@ export default function ListaUtenti() {
     }, [])
 
     return (
-        <div className="scrollable my-5">
+        <div className="scrollable-table my-5">
             <Table id="utentiTable" responsive striped bordered hover>
                 <thead>
                     <tr>

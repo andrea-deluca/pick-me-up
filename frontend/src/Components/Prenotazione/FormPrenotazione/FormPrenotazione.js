@@ -191,7 +191,10 @@ export default function FormPrenotazione() {
                         controlOrarioId={"oraConsegna"}
                         defaultOrario={"Seleziona ora di consegna"}
                         labelOrario={"Ora di consegna"} />
-                    <Button spinner={state.submit} variant={"Primary"} submit >Continua</Button>
+                    <div className="d-flex justify-content-end mt-5">
+                        <Button onClick={() => history.push("/prenota")} variant={"Secondary"} >Annulla</Button>
+                        <Button spinner={state.submit} variant={"Primary"} submit >Continua</Button>
+                    </div>
                 </Row>
             </Form>
         </React.Fragment>
