@@ -28,8 +28,13 @@ router.post("/confermaPrenotazione", function (req, res) {
     prenotazioneModel.confermaPrenotazione(req.body, function (result) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
-        } else {
-            res.status(result.status).send(result.prenotazioni)
+        } else if(result === 404){
+            res.status(result).send(`Non sono stati trovati autisti
+            disponibili in base ai dati di prenotazione.`)
+        }
+        
+        else {
+            res.status(result).send()
         }
     })
 })

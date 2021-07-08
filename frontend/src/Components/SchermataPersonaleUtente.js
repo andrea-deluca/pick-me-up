@@ -188,6 +188,39 @@ export default function SchermataPersonaleUtente() {
                                         buttonLabel={"Visualizza profilo"}
                                         animationDuration={0.5} />
                                 </>}
+                            {session.user === "AUTISTA" &&
+                                <>
+                                    <LinkCard
+                                        imageSrc={"/assets/svg/corse-autista.svg"}
+                                        imageAlt={"Corse autista"}
+                                        imageCol={8}
+                                        title={"Le mie corse"}
+                                        text={"Accetta, rifiuta e gestisci le corse associate al tuo account."}
+                                        icon={faCar}
+                                        to={"/gestione-prenotazioni"}
+                                        buttonLabel={"Le mie corse"}
+                                        animationDuration={0.4} />
+                                    <LinkCard
+                                        imageSrc={"/assets/svg/profilo.svg"}
+                                        imageAlt={"Visualizza profilo"}
+                                        imageCol={6}
+                                        title={"Profilo"}
+                                        text={"Visualizza il tuo profilo e modifica i tuoi dati di accesso e il tuo cellulare"}
+                                        icon={faAddressCard}
+                                        to={"/gestione-account/profilo"}
+                                        buttonLabel={"Visualizza profilo"}
+                                        animationDuration={0.5} />
+                                    <LinkCard
+                                        imageSrc={"/assets/svg/patente_card.svg"}
+                                        imageAlt={"Carta patente"}
+                                        imageCol={8}
+                                        title={"Patente"}
+                                        text={"Gestisci la tua patente di guida oppure, se l'hai e se vuoi, aggiungila. Decidi tu!"}
+                                        icon={faIdCard}
+                                        to={"/gestione-account/patente"}
+                                        buttonLabel={"Visualizza Patente"}
+                                        animationDuration={0.5} />
+                                </>}
                         </Row>
                     </CardGroup>
                 </Container>

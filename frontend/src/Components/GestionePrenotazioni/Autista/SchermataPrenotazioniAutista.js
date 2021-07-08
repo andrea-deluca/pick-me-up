@@ -7,16 +7,16 @@ import { motion } from 'framer-motion';
 import { Container, Row, Col, Image, CardColumns, Nav, Tab, Spinner } from 'react-bootstrap';
 
 import NavAside from '../../Utility/NavAside';
-import PrenotazioneCard from './PrenotazioneCard';
+import CorsaCard from './CorsaCard';
 
-export default function SchermataPrenotazioniCliente() {
-    const { session, setSession } = useSession()
+export default function SchermataPrenotazioniAutista() {
     const [listaPrenotazioni, setListaPrenotazioni] = useState(null)
+    const { session, setSession } = useSession()
     const [submit, setSubmit] = useState(false)
 
     useEffect(() => {
         const fetchPrenotazioni = async () => {
-            const res = await axios.post("/gestione-prenotazione/fetchPrenotazioniUtente", { _id: session.id })
+            const res = await axios.post("/gestione-corse/fetchPrenotazioniAutista", { id: session.id })
             setListaPrenotazioni(res.data)
         }
         fetchPrenotazioni()
@@ -26,7 +26,7 @@ export default function SchermataPrenotazioniCliente() {
         e.preventDefault()
         setSubmit(true)
         try {
-            axios.post("/gestione-prenotazione/fetchPrenotazioniUtente", { _id: session.id })
+            axios.post("/gestione-corse/fetchPrenotazioniAutista", { id: session.id })
                 .then(res => {
                     setListaPrenotazioni(res.data)
                     setSubmit(false)
@@ -51,7 +51,7 @@ export default function SchermataPrenotazioniCliente() {
                             <Image fluid className="col-3 mx-3" src="/assets/svg/prenotazioni.svg" />
                             <div className="d-flex flex-column">
                                 <p className="h6 t-light">USER ID #{session.id}</p>
-                                <h1 className="h1 t-bold">Le mie prenotazioni</h1>
+                                <h1 className="h1 t-bold">Le mie corse</h1>
                             </div>
                         </div>
                         <Tab.Container defaultActiveKey="attive" id="listaPrenotazioni">
@@ -88,7 +88,7 @@ export default function SchermataPrenotazioniCliente() {
                                                 {listaPrenotazioni && (listaPrenotazioni.attive.length > 0 ?
                                                     listaPrenotazioni.attive.map(key => {
                                                         return (
-                                                            <PrenotazioneCard
+                                                            <CorsaCard
                                                                 id={key._id}
                                                                 dataPrenotazione={new Date(key.dataPrenotazione).toLocaleString("it-IT")}
                                                                 stato={key.stato}
@@ -116,7 +116,7 @@ export default function SchermataPrenotazioniCliente() {
                                                 {listaPrenotazioni && (listaPrenotazioni.programmate.length > 0 ?
                                                     listaPrenotazioni.programmate.map((key, index) => {
                                                         return (
-                                                            <PrenotazioneCard index={index}
+                                                            <CorsaCard index={index}
                                                                 id={key._id}
                                                                 dataPrenotazione={new Date(key.dataPrenotazione).toLocaleString("it-IT")}
                                                                 stato={key.stato}
@@ -146,7 +146,7 @@ export default function SchermataPrenotazioniCliente() {
                                                 {listaPrenotazioni && (listaPrenotazioni.passate.length > 0 ?
                                                     listaPrenotazioni.passate.map(key => {
                                                         return (
-                                                            <PrenotazioneCard
+                                                            <CorsaCard
                                                                 id={key._id}
                                                                 dataPrenotazione={new Date(key.dataPrenotazione).toLocaleString("it-IT")}
                                                                 stato={key.stato}

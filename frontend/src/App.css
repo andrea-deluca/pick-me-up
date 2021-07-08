@@ -184,8 +184,13 @@ a {
 @media screen and (min-width: 992.98px) {
   .scrollable-table {
     overflow: auto;
-    height: 45vh;
+    height: 39vh;
   }
+}
+
+.notifiche-scrollable {
+  overflow: auto;
+  height: 40vh;
 }
 
 #riepilogo-card-mobile {

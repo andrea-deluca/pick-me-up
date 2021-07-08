@@ -49,7 +49,7 @@ export default function ListaMezzi() {
 
     return (
         <div className="scrollable-table mt-4">
-            <Table id="mezziTable" responsive striped bordered hover>
+            <Table id="mezziTable" responsive striped bordered hover className="mb-5">
                 <thead>
                     <tr>
                         <th></th>

@@ -184,13 +184,7 @@ module.exports = {
                                         ritiro: prenotazione.ritiro.data,
                                         dataPrenotazione: new Date()
                                     })
-                                    this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
-                                        if (res === 500) return callback(500)
-                                        return callback({
-                                            status: 200,
-                                            prenotazioni: res.prenotazioni
-                                        })
-                                    })
+                                    return callback(200)
                                 })
                                 .catch(err => { return callback(500) })
                         }
@@ -265,13 +259,7 @@ module.exports = {
                                         prenotazione: prenotazione,
                                         differenzaImporto: differenzaImporto
                                     })
-                                    this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
-                                        if (res === 500) return callback(500)
-                                        return callback({
-                                            status: 200,
-                                            prenotazioni: res.prenotazioni
-                                        })
-                                    })
+                                    return callback(200)
                                 })
                                 .catch(err => { return callback(500) })
                         }
@@ -320,13 +308,7 @@ module.exports = {
                             timer.stopTimeoutAttivazionePrenotazione({
                                 _id: data.idPrenotazione
                             })
-                            this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
-                                if (res === 500) return callback(500)
-                                return callback({
-                                    status: 200,
-                                    prenotazioni: res.prenotazioni
-                                })
-                            })
+                            return callback(200)
                         })
                         .catch(err => {
                             return callback(500)
@@ -347,13 +329,7 @@ module.exports = {
                 { $set: { stato: "INIZIATA" } },
                 (err, res) => {
                     if (err) return callback(500)
-                    this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                        if (res === 500) return callback(500)
-                        return callback({
-                            status: 200,
-                            prenotazioni: res.prenotazioni
-                        })
-                    })
+                    return callback(200)
                 }
             )
         } catch (error) {
@@ -393,12 +369,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -414,12 +385,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -435,12 +401,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -456,12 +417,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -511,12 +467,7 @@ module.exports = {
                                     { $push: { "auto": auto } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -538,12 +489,7 @@ module.exports = {
                                     { $push: { "moto": moto } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -565,12 +511,7 @@ module.exports = {
                                     { $push: { "bici": bici } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -592,12 +533,7 @@ module.exports = {
                                     { $push: { "monopattino": monopattino } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        this.fetchPrenotazioniUtente({ _id: data.idUtente }, res => {
-                                            return callback({
-                                                status: 200,
-                                                prenotazioni: res.prenotazioni
-                                            })
-                                        })
+                                        return callback(200)
                                     })
                                 )
                             })
@@ -686,12 +622,7 @@ module.exports = {
                                                             },
                                                             differenzaImporto: differenzaImporto
                                                         })
-                                                        this.fetchPrenotazioniUtente({ _id: utente.id }, res => {
-                                                            return callback({
-                                                                status: 200,
-                                                                prenotazioni: res.prenotazioni
-                                                            })
-                                                        })
+                                                        return callback(200)
                                                     }
                                                 )
                                             }

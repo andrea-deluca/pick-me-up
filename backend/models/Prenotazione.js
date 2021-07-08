@@ -1,11 +1,10 @@
 const { config } = require("../db/config");
 const { makeDb } = require("../db/dbmiddleware");
 const createError = require("http-errors");
-const mailModel = require("./Mail")
 const pagamentoModel = require("./Pagamento")
 const { ObjectId } = require("mongodb");
-const gestionePrenotazioneModel = require("./GestionePrenotazione");
 const Timers = require("./Timers");
+const notificheModel = require("./Notifiche");
 
 const timer = new Timers()
 
@@ -364,7 +363,7 @@ module.exports = {
 
     confermaPrenotazione: async function (datiPrenotazione, callback) {
         const db = await makeDb(config);
-        const prenotazione = {
+        let prenotazione = {
             _id: new ObjectId(),
             dataPrenotazione: new Date(),
             ritiro: {
@@ -391,29 +390,97 @@ module.exports = {
             idUtente: ObjectId(datiPrenotazione.idUtente),
         }
         try {
-            db.collection("Utente").aggregate([
-                { $match: { "_id": prenotazione.idUtente } },
-                { $unset: ["credenziali.password", "accountStatus"] },
-                { $unwind: "$metodiPagamento" },
-                { $match: { "metodiPagamento._id": ObjectId(prenotazione.pagamento._id) } }
-            ]).toArray()
-                .then(res => {
-                    pagamentoModel.generaConfermaPrenotazione({ prenotazione: prenotazione, utente: res[0] });
-                    timer.startTimeoutAttivazionePrenotazione({
-                        _id: prenotazione._id,
-                        dataPrenotazione: prenotazione.dataPrenotazione,
-                        ritiro: prenotazione.ritiro.data,
-                    })
-                    db.collection("Prenotazione").insertOne(prenotazione, (err, res) => {
-                        if (err) return callback(500)
-                        gestionePrenotazioneModel.fetchPrenotazioniUtente({ _id: datiPrenotazione.idUtente }, res => {
-                            return callback({
-                                status: 201,
-                                prenotazioni: res.prenotazioni
+            if (prenotazione.autista) {
+                db.collection("Utente").find(
+                    { "user": "AUTISTA" },
+                    { projection: { "_id": 1 } }
+                ).toArray()
+                    .then(res => {
+                        const autisti = res.map(key => {
+                            return key._id
+                        })
+                        db.collection("Prenotazione").aggregate([
+                            {
+                                $match: {
+                                    $and: [
+                                        { "ritiro.data": { $lte: new Date(datiPrenotazione.consegna.data) } },
+                                        { "consegna.data": { $gte: new Date(datiPrenotazione.ritiro.data) } }
+                                    ]
+                                }
+                            },
+                            { $match: { "autista": { $in: autisti } } },
+                            { $project: { "_id": 0, "autista": 1 } }
+                        ]).toArray()
+                            .then(res => {
+                                const autistiImpegnati = res.map(key => {
+                                    return ObjectId(key.autista).toString()
+                                })
+                                const autistiDisponibili = autisti.filter(element => {
+                                    return !autistiImpegnati.includes(ObjectId(element).toString())
+                                })
+                                if (autistiDisponibili.length === 0) {
+                                    return callback(404)
+                                }
+                                prenotazione = {
+                                    ...prenotazione,
+                                    autista: autistiDisponibili[0]
+                                }
+                                db.collection("Utente").aggregate([
+                                    { $match: { "_id": prenotazione.idUtente } },
+                                    { $unset: ["credenziali.password", "accountStatus"] },
+                                    { $unwind: "$metodiPagamento" },
+                                    { $match: { "metodiPagamento._id": ObjectId(prenotazione.pagamento._id) } }
+                                ]).toArray()
+                                    .then(res => {
+                                        pagamentoModel.generaConfermaPrenotazione({ prenotazione: prenotazione, utente: res[0] });
+                                        timer.startTimeoutAttivazionePrenotazione({
+                                            _id: prenotazione._id,
+                                            dataPrenotazione: prenotazione.dataPrenotazione,
+                                            ritiro: prenotazione.ritiro.data,
+                                        })
+                                        db.collection("Prenotazione").insertOne(prenotazione, (err, res) => {
+                                            if (err) return callback(500)
+                                            notificheModel.inviaNotificaPrenotazioneAutista({ id: prenotazione.autista })
+                                            return callback(201)
+                                        })
+                                    })
+                                    .catch(err => {
+                                        console.log(err)
+                                        return callback(500)
+                                    })
                             })
+                            .catch(err => {
+                                console.log(err)
+                                return callback(500)
+                            })
+                    }).catch(err => {
+                        console.log(err)
+                        return callback(500)
+                    })
+            } else {
+                db.collection("Utente").aggregate([
+                    { $match: { "_id": prenotazione.idUtente } },
+                    { $unset: ["credenziali.password", "accountStatus"] },
+                    { $unwind: "$metodiPagamento" },
+                    { $match: { "metodiPagamento._id": ObjectId(prenotazione.pagamento._id) } }
+                ]).toArray()
+                    .then(res => {
+                        pagamentoModel.generaConfermaPrenotazione({ prenotazione: prenotazione, utente: res[0] });
+                        timer.startTimeoutAttivazionePrenotazione({
+                            _id: prenotazione._id,
+                            dataPrenotazione: prenotazione.dataPrenotazione,
+                            ritiro: prenotazione.ritiro.data,
+                        })
+                        db.collection("Prenotazione").insertOne(prenotazione, (err, res) => {
+                            if (err) return callback(500)
+                            return callback(201)
                         })
                     })
-                })
+                    .catch(err => {
+                        console.log(err)
+                        return callback(500)
+                    })
+            }
         } catch (error) {
             console.log(error)
             callback(500)

@@ -34,7 +34,6 @@ export default function CambiaMezzoModal(props) {
         try {
             axios.put("/gestione-prenotazione/cambiaMezzoPrenotazione", { utente: utente, prenotazione: datiPrenotazione })
                 .then(res => {
-                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {

@@ -74,16 +74,22 @@ export default function NavAside() {
                         <NavAsideLink to={"/gestione-impiegati"} icon={faPeopleArrows}>Cambia ruoli</NavAsideLink>
                     </>
                 }
-                <NavAsideLink to={"/gestione-account/profilo"} icon={faAddressCard}>Visualizza profilo</NavAsideLink>
-                {session.user === "CLIENTE" &&
+                {session.user === "AUTISTA" &&
                     <>
-                        <NavAsideLink to={"/gestione-account/wallet"} icon={faWallet}>Visualizza Wallet</NavAsideLink>
+                        <NavAsideLink to={"/gestione-prenotazioni"} icon={faCar}>Le mie corse</NavAsideLink>
                         <NavAsideLink to={"/gestione-account/patente"} icon={faIdCard}>Visualizza patente</NavAsideLink>
                     </>
                 }
                 {session.user === "GESTORE_MEZZI" &&
                     <>
                         <NavAsideLink to={"/gestione-mezzi"} icon={faCar}>Gestione mezzi</NavAsideLink>
+                    </>
+                }
+                <NavAsideLink to={"/gestione-account/profilo"} icon={faAddressCard}>Visualizza profilo</NavAsideLink>
+                {session.user === "CLIENTE" &&
+                    <>
+                        <NavAsideLink to={"/gestione-account/wallet"} icon={faWallet}>Visualizza Wallet</NavAsideLink>
+                        <NavAsideLink to={"/gestione-account/patente"} icon={faIdCard}>Visualizza patente</NavAsideLink>
                     </>
                 }
             </Row>

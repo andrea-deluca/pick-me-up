@@ -7,7 +7,7 @@ import SchermataRichiestaAutista from './RichiestaAutista/SchermataRichiestaAuti
 import SchermataFormPrenotazione from './FormPrenotazione/SchermataFormPrenotazione'
 import SchermataSelezioneMezzo from './SelezioneMezzo/SchermataSelezioneMezzo'
 import SchermataConfermaPrenotazione from './ConfermaPrenotazione/SchermataConfermaPrenotazione'
-import SchermataEffettuaPagamento from './Pagamento/SchermataEffettuaPagamento'
+import SchermataEffettuaPagamento from './EffettuaPagamento/SchermataEffettuaPagamento'
 import SchermataPrenotazioneCompletata from './SchermataPrenotazioneCompletata'
 
 import SchermataPermessoNegato from '../SchermataPermessoNegato';

@@ -51,7 +51,7 @@ export default function SchermataConfermaPrenotazione() {
                 <h1 className="t-bold text-center">Conferma Prenotazione</h1>
                 <h6 className="t-light text-center">Conferma i dati della prenotazione prima di procedere con il pagamento</h6>
             </motion.div>
-            <CardGroup>
+            <CardGroup className="mb-5">
                 <Row className="gy-5 align-items-center mt-2 mt-lg-5 mb-100">
                     <Col xs={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 0 }}>
                         <VeicoloCard

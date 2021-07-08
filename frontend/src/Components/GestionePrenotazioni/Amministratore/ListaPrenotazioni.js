@@ -138,7 +138,7 @@ export default function ListaGestionePrenotazioni() {
                 body={state.success.show ? state.success.message : state.error.message}
                 button={"Chiudi"}
                 onClick={() => { state.success ? history.go(0) : setState({ ...state, error: { show: false } }) }} />
-            <Table id="prenotazioniTable" responsive striped bordered hover className="mt-5">
+            <Table id="prenotazioniTable" responsive striped bordered hover className="my-5">
                 <thead>
                     <tr>
                         <th></th>

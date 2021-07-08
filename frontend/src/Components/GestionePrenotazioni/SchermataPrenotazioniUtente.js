@@ -3,6 +3,7 @@ import useSession from '../../Hooks/useSession'
 
 import SchermataPrenotazioniCliente from './Cliente/SchermataPrenotazioniCliente';
 import SchermataPrenotazioniAmministratore from './Amministratore/SchermataPrenotazioniAmministratore';
+import SchermataPrenotazioniAutista from './Autista/SchermataPrenotazioniAutista';
 
 import SchermataPermessoNegato from '../SchermataPermessoNegato';
 
@@ -17,6 +18,10 @@ export default function SchermataPrenotazioniUtente() {
         case "AMMINISTRATORE":
             return (
                 <SchermataPrenotazioniAmministratore />
+            );
+        case "AUTISTA":
+            return (
+                <SchermataPrenotazioniAutista />
             );
         default:
             return <SchermataPermessoNegato />

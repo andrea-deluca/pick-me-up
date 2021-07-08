@@ -30,7 +30,6 @@ import SchermataPrenotazione from './Components/Prenotazione/SchermataPrenotazio
 // Schermate Gestione Prenotazioni
 import SchermataPrenotazioniUtente from './Components/GestionePrenotazioni/SchermataPrenotazioniUtente';
 
-
 //Schermata Gestione Mezzi
 import SchermataGestioneMezzi from './Components/Impiegato/GestioneMezzi/SchermataGestioneMezzi'
 import SchermataRegistrazioneImpiegati from './Components/Impiegato/RegistrazioneImpiegati/SchermataRegistrazioneImpiegati';

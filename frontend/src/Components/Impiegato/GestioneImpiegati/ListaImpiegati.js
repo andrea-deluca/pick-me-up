@@ -26,7 +26,7 @@ export default function ListaImpiegati() {
 
     return (
         <div className="scrollable-table mt-4">
-            <Table id="impiegatiTable" responsive striped bordered hover>
+            <Table id="impiegatiTable" className="mb-5" responsive striped bordered hover>
                 <thead>
                     <tr>
                         <th></th>

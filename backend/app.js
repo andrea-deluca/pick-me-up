@@ -16,6 +16,8 @@ var gestionePrenotazioneRouter = require("./routes/gestionePrenotazione")
 var gestioneMezziRouter = require("./routes/gestioneMezzi")
 var gestioneImpiegatiRouter = require("./routes/gestioneImpiegati")
 var gestioneUtentiRouter = require("./routes/gestioneUtenti")
+var gestioneCorseRouter = require("./routes/gestioneCorse")
+var notificheRouter = require("./routes/notifiche")
 
 var app = express();
 
@@ -41,6 +43,8 @@ app.use('/gestione-prenotazione', gestionePrenotazioneRouter);
 app.use('/gestione-mezzi', gestioneMezziRouter);
 app.use('/gestione-impiegati', gestioneImpiegatiRouter);
 app.use('/gestione-utenti', gestioneUtentiRouter);
+app.use('/gestione-corse', gestioneCorseRouter);
+app.use('/notifiche', notificheRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -85,7 +85,6 @@ export default function TerminaNoleggioModal(props) {
         try {
             axios.put("/gestione-prenotazione/terminaNoleggio", { _id: props.idPrenotazione, idUtente: utente })
                 .then(res => {
-                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {

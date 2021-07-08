@@ -29,13 +29,12 @@ export default function SchermataEffettuaPagamento() {
         try {
             axios.post("/prenotazione/confermaPrenotazione", datiPrenotazione)
                 .then(res => {
-                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data))
                     history.push("/prenota", {
                         type: "PRENOTAZIONE_COMPLETATA"
                     })
                 })
                 .catch(err => {
-                    
+
                 })
         } catch (error) {
             console.log(error.response.data.msg)

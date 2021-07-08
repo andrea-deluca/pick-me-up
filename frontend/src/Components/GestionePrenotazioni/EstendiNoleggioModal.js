@@ -39,7 +39,6 @@ export default function EstendiNoleggioModal(props) {
         try {
             axios.put("/gestione-prenotazione/estendiNoleggio", { _id: props.idPrenotazione, dataConsegna: dataConsegna, idUtente: utente })
                 .then(res => {
-                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {

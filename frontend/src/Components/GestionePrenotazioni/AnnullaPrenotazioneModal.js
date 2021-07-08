@@ -35,7 +35,6 @@ export default function AnnullaPrenotazioneModal(props) {
         try {
             axios.delete("/gestione-prenotazione/annullaPrenotazione", { data: { utente: utente, idPrenotazione: props.idPrenotazione } })
                 .then(res => {
-                    window.sessionStorage.setItem("prenotazioni", JSON.stringify(res.data.prenotazioni))
                     setState({ ...state, submit: false, success: { show: true, message: res.data.message } })
                 })
                 .catch(err => {

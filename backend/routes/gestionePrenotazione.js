@@ -12,11 +12,11 @@ router.post("/fetchPrenotazioniUtente", function (req, res) {
     })
 })
 
-router.get("/fetchPrenotazioni", function(req, res){
+router.get("/fetchPrenotazioni", function (req, res) {
     gestionePrenotazioneModel.fetchPrenotazioni(function (result) {
-        if(result === 500){
+        if (result === 500) {
             res.status(result).send()
-        } else{
+        } else {
             res.status(result.status).send(result.prenotazioni)
         }
     })
@@ -27,8 +27,7 @@ router.put("/modificaPrenotazione", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `La tua prenotazione è stata modificata con successo.
                 Riceverai una email al tuo indirizzo di posta elettronica
                 con la conferma e la fattura del pagamento.`
@@ -42,8 +41,7 @@ router.put("/cambiaMezzoPrenotazione", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `La tua prenotazione è stata modificata con successo.
                 Riceverai una email al tuo indirizzo di posta elettronica
                 con la conferma e la fattura del pagamento.`
@@ -57,8 +55,7 @@ router.delete("/annullaPrenotazione", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `La tua prenotazione è stata annullata con successo.
                 Riceverai una email al tuo indirizzo di posta elettronica 
                 con la conferma e la fattura del rimborso.`
@@ -72,8 +69,7 @@ router.put("/iniziaNoleggio", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `Il tuo noleggio è iniziato con successo.`
             })
         }
@@ -85,8 +81,7 @@ router.put("/terminaNoleggio", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `La tua prenotazione è terminata con successo.
                 Grazie per averci scelto. Alla prossima!`
             })
@@ -99,8 +94,7 @@ router.put("/terminaNoleggioAltro", function (req, res) {
         if (result === 500) {
             res.status(result).send("Internal Server Error")
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `La tua prenotazione è terminata con successo.
                 Grazie per averci scelto. Alla prossima!`
             })
@@ -116,8 +110,7 @@ router.put("/estendiNoleggio", function (req, res) {
             res.status(result).send(`Mi dispiace! Non è possibile eseguire
             l'estensione del noleggio in base ai dati inseriti.`)
         } else {
-            res.status(result.status).send({
-                prenotazioni: result.prenotazioni,
+            res.status(result).send({
                 message: `Il tuo noleggio è stato esteso con successo.
                 Riceverai una email al tuo indirizzo di posta elettronica 
                 con la conferma dell'estensione, la fattura e i dettagli del pagamento.`
