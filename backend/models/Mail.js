@@ -187,5 +187,31 @@ module.exports = {
             `
         };
         await transporter.sendMail(mailOptions);
+    },
+
+    inviaRitardoConsegna: async function (data) {
+        const mailOptions = {
+            from: mailConfig.email,
+            to: data.email,
+            subject: `Ritardo consegna prenotazione #${data.prenotazione}`,
+            html: `
+            <h1>Sei in ritardo con la consegna!</h1>
+            <h3>Il tempo è scaduto...</h3>
+            <p>
+                Ti abbiamo addebitato un sovrapprezzo a causa della mancata consegna del mezzo in orario.
+                Prima del prossimo addebito, hai a disposizione i prossimi 30 minuti per la consegna del mezzo.
+                In allegato trovi la fattura e i dettagli del pagamento. 
+            </p>
+            <p>
+                Cordiali saluti dal team PickMeUp! | Gruppo Bytecoders.
+            </p>
+        `,
+            attachments: [{
+                filename: `${data.prenotazione}.pdf`,
+                path: `public/pdf/${data.prenotazione}.pdf`,
+                contentType: "application/pdf"
+            }]
+        };
+        await transporter.sendMail(mailOptions);
     }
 }

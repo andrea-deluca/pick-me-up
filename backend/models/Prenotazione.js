@@ -470,6 +470,7 @@ module.exports = {
                             _id: prenotazione._id,
                             dataPrenotazione: prenotazione.dataPrenotazione,
                             ritiro: prenotazione.ritiro.data,
+                            consegna: prenotazione.consegna.data
                         })
                         db.collection("Prenotazione").insertOne(prenotazione, (err, res) => {
                             if (err) return callback(500)

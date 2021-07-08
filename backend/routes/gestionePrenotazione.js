@@ -28,9 +28,8 @@ router.put("/modificaPrenotazione", function (req, res) {
             res.status(result).send("Internal Server Error")
         } else {
             res.status(result).send({
-                message: `La tua prenotazione è stata modificata con successo.
-                Riceverai una email al tuo indirizzo di posta elettronica
-                con la conferma e la fattura del pagamento.`
+                message: `La prenotazione è stata modificata con successo.
+                È stata inviata una email contenente la conferma e la fattura del pagamento.`
             })
         }
     })
@@ -42,9 +41,8 @@ router.put("/cambiaMezzoPrenotazione", function (req, res) {
             res.status(result).send("Internal Server Error")
         } else {
             res.status(result).send({
-                message: `La tua prenotazione è stata modificata con successo.
-                Riceverai una email al tuo indirizzo di posta elettronica
-                con la conferma e la fattura del pagamento.`
+                message: `La prenotazione è stata modificata con successo.
+                È stata inviata una email contenente la conferma e la fattura del pagamento.`
             })
         }
     })
@@ -56,9 +54,8 @@ router.delete("/annullaPrenotazione", function (req, res) {
             res.status(result).send("Internal Server Error")
         } else {
             res.status(result).send({
-                message: `La tua prenotazione è stata annullata con successo.
-                Riceverai una email al tuo indirizzo di posta elettronica 
-                con la conferma e la fattura del rimborso.`
+                message: `La prenotazione è stata annullata con successo.
+                È stata inviata una email contenente la conferma e la fattura del rimborso.`
             });
         }
     })
@@ -96,7 +93,8 @@ router.put("/terminaNoleggioAltro", function (req, res) {
         } else {
             res.status(result).send({
                 message: `La tua prenotazione è terminata con successo.
-                Grazie per averci scelto. Alla prossima!`
+                È stato applicato un sovrapprezzo a causa della consegna fuori da un nostro
+                deposito ed è stata inviata una email contenente la fattura e dettagli del pagamento.`
             })
         }
     })
@@ -111,9 +109,9 @@ router.put("/estendiNoleggio", function (req, res) {
             l'estensione del noleggio in base ai dati inseriti.`)
         } else {
             res.status(result).send({
-                message: `Il tuo noleggio è stato esteso con successo.
-                Riceverai una email al tuo indirizzo di posta elettronica 
-                con la conferma dell'estensione, la fattura e i dettagli del pagamento.`
+                message: `Il noleggio è stato esteso con successo.
+                È stata inviata una email contenente la conferma dell'estensione, 
+                la fattura e i dettagli del pagamento.`
             })
         }
     })

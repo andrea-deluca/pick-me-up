@@ -143,7 +143,7 @@ module.exports = {
         doc.text("Dati della prenotazione", 10, 110)
         doc.setFontSize(10)
         doc.text(
-            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}) ${data.prenotazione.mezzo.posti ? data.prenotazione.mezzo.posti : "" } ${data.prenotazione.mezzo.carburante ? data.prenotazione.mezzo.carburante : ""} cambio ${data.prenotazione.mezzo.cambio ? data.prenotazione.mezzo.cambio : ""}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
+            `TIPOLOGIA MEZZO: ${data.prenotazione.mezzo.tipologia}\nDETTAGLI: ${data.prenotazione.mezzo.marca} ${data.prenotazione.mezzo.modello} (Cod.${data.prenotazione.mezzo.targa}) ${data.prenotazione.mezzo.posti ? data.prenotazione.mezzo.posti : ""} ${data.prenotazione.mezzo.carburante ? data.prenotazione.mezzo.carburante : ""} cambio ${data.prenotazione.mezzo.cambio ? data.prenotazione.mezzo.cambio : ""}\nRITIRO: ${new Date(data.prenotazione.ritiro.data).toLocaleString("it-IT")} presso ${data.prenotazione.ritiro.nome}\nCONSEGNA: ${new Date(data.prenotazione.consegna.data).toLocaleString("it-IT")} presso ${data.prenotazione.consegna.nome}`, 10, 120)
         doc.setFontSize(16)
         doc.text("Dettagli pagamento", 10, 150)
         doc.setFontSize(10)
@@ -158,6 +158,40 @@ module.exports = {
         mailModel.inviaEstesioneNoleggio({
             email: data.utente.email,
             prenotazione: data.prenotazione._id
+        })
+    },
+
+    generaRitardoConsegna: async function (data) {
+        const doc = new jsPDF()
+
+        //immagine base64
+        var img = logoConfig.logo.uri
+        doc.addImage(img, 'png', 10, 10, 65, 18)
+        doc.setFontSize(18)
+        doc.text("Ritardo consegna", 10, 40)
+        doc.setFontSize(10)
+        doc.text(
+            `ID PRENOTAZIONE: ${data._id}\nPrenotazione effettuata ${(new Date(data.dataPrenotazione)).toLocaleString("it-IT")}`, 10, 45)
+        doc.setFontSize(16)
+        doc.text("Dati dell'utente", 10, 70)
+        doc.setFontSize(10)
+        doc.text(
+            `ID UTENTE: ${data.id}\nNOME E COGNOME: ${data.nome} ${data.cognome}\nCODICE FISCALE: ${data.codiceFiscale}\nCELLULARE: ${data.cellulare}\nEMAIL: ${data.email}`, 10, 80)
+        doc.setFontSize(14)
+        doc.setFontSize(16)
+        doc.text("Dettagli pagamento", 10, 110)
+        doc.setFontSize(10)
+        doc.text(
+            `TOTALE IMPORTO: € ${data.importoTotale}\nSOVRAPPREZZO AUTOMATICO (causa: RITARDO): € 10`, 10, 120)
+        doc.setFontSize(16)
+        doc.text("Metodo di pagamento", 10, 150)
+        doc.setFontSize(10)
+        doc.text(
+            `TITOLARE: ${data.metodoPagamento.titolare}\nNUMERO: ${data.metodoPagamento.numeroCarta}\nDATA DI SCADENZA: ${data.metodoPagamento.dataScadenzaCarta}\nCVV: ${data.metodoPagamento.cvv}\n`, 10, 160)
+        doc.save(`./public/pdf/${data.prenotazione._id}.pdf`)
+        mailModel.inviaRitardoConsegna({
+            email: data.email,
+            prenotazione: data._id
         })
     }
 }

@@ -179,7 +179,7 @@ module.exports = {
                                         prenotazione: prenotazione,
                                         differenzaImporto: differenzaImporto
                                     })
-                                    timer.updateTimeoutAttivazionePrenotazione({
+                                    timer.updateTimeoutPrenotazione({
                                         _id: prenotazione._id,
                                         ritiro: prenotazione.ritiro.data,
                                         dataPrenotazione: new Date()
@@ -305,7 +305,7 @@ module.exports = {
                                 metodoPagamento: res[0].metodiPagamento
                             }
                             pagamentoModel.generaAnnullaPrenotazione({ utente: utente, prenotazione: prenotazione })
-                            timer.stopTimeoutAttivazionePrenotazione({
+                            timer.stopTimeoutPrenotazione({
                                 _id: data.idPrenotazione
                             })
                             return callback(200)
@@ -329,7 +329,41 @@ module.exports = {
                 { $set: { stato: "INIZIATA" } },
                 (err, res) => {
                     if (err) return callback(500)
-                    return callback(200)
+                    const metodoPagamento = res.value.pagamento._id
+                    db.collection("Prenotazione").aggregate([
+                        { $match: { _id: ObjectId(data._id) } },
+                        {
+                            $lookup: {
+                                from: "Utente",
+                                localField: "idUtente",
+                                foreignField: "_id",
+                                as: "datiUtente"
+                            }
+                        },
+                        { $unwind: "$datiUtente" },
+                        { $unwind: "$datiUtente.metodiPagamento" },
+                        { $match: { "datiUtente.metodiPagamento._id": ObjectId(metodoPagamento) } },
+                    ]).toArray().then(res => {
+                        const prenotazione = res[0]
+                        timer.startTimoutPrenotazioneIniziata({
+                            _id: prenotazione._id,
+                            dataPrenotazione: prenotazione.dataPrenotazione,
+                            ritiro: prenotazione.ritiro.data,
+                            consegna: prenotazione.consegna.data,
+                            mezzo: prenotazione.mezzo.targa,
+                            idUtente: prenotazione.idUtente,
+                            nome: prenotazione.datiUtente.nome,
+                            cognome: prenotazione.datiUtente.cognome,
+                            codiceFiscale: prenotazione.datiUtente.codiceFiscale,
+                            cellulare: prenotazione.datiUtente.credenziali.cellulare,
+                            email: prenotazione.datiUtente.credenziali.email,
+                            metodoPagamento: prenotazione.datiUtente.metodiPagamento,
+                            importoTotale: prenotazione.pagamento.importoTotale
+                        })
+                        return callback(200)
+                    }).catch(err => {
+                        return callback(500)
+                    })
                 }
             )
         } catch (error) {
@@ -369,6 +403,12 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -385,6 +425,12 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -401,6 +447,12 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -417,6 +469,12 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -467,6 +525,12 @@ module.exports = {
                                     { $push: { "auto": auto } },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -489,6 +553,12 @@ module.exports = {
                                     { $push: { "moto": moto } },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -511,6 +581,12 @@ module.exports = {
                                     { $push: { "bici": bici } },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )
@@ -533,6 +609,12 @@ module.exports = {
                                     { $push: { "monopattino": monopattino } },
                                     ((err, res) => {
                                         if (err) return callback(500)
+                                        Timers.stopTimeoutPrenotazione({
+                                            _id: prenotazione._id
+                                        })
+                                        Timers.stopTimersRitardiAutomatici({
+                                            _id: prenotazione._id
+                                        })
                                         return callback(200)
                                     })
                                 )

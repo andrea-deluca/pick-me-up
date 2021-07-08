@@ -21,6 +21,23 @@ module.exports = {
         }
     },
 
+    inviaNotificaRitardoConsegna: async function(data){
+        const db = await makeDb(config)
+
+        const notifica = {
+            title: `Sei in ritardo per la consegna!`,
+            message: `Ti abbiamo addebitato un sovrapprezzo al metodo di pagamento associato alla prenotazione per usufruire dei prossimi 30 minuti.`,
+            user: data.id,
+            data: new Date()
+        }
+
+        try {
+            db.collection("Notifiche").insertOne(notifica)
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
     fetchNotificheUtente: async function (data, callback) {
         const db = await makeDb(config)
         try {

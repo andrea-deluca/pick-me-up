@@ -39,16 +39,20 @@ export default function Notifiche(props) {
                             Notifiche
                         </Popover.Title>
                         <Popover.Content>
-                            {listaNotifiche && (listaNotifiche.length > 0 ? listaNotifiche.map(key => {
-                                return (
-                                    <div className="notifiche-scrollable">
-                                        <h5 className="t-bold">{key.title}</h5>
-                                        <h6 className="t-light">{key.message}</h6>
-                                        <h6 className="t-light text-muted">{new Date(key.data).toLocaleString("it-IT")}</h6>
-                                        <Button to={"/gestione-prenotazioni"} variant={"Primary"} className="mt-3 mb-5">Le mie corse</Button>
-                                    </div>
-                                );
-                            }) : <h6 className="t-light text-muted">{listaNotifiche.message}</h6>)}
+                            <div className="notifiche-scrollable">
+                                {listaNotifiche && (listaNotifiche.length > 0 ? listaNotifiche.map(key => {
+                                    return (
+                                        <>
+                                            <h5 className="t-bold">{key.title}</h5>
+                                            <h6 className="t-light">{key.message}</h6>
+                                            <h6 className="t-light text-muted">{new Date(key.data).toLocaleString("it-IT")}</h6>
+                                            <Button to={"/gestione-prenotazioni"} variant={"Primary"} className="mt-3 mb-5">
+                                                {session.user === "CLIENTE" ? "Le mie prenotazioni" : "Le mie corse" }
+                                            </Button>
+                                        </>
+                                    );
+                                }) : <h6 className="t-light text-muted">{listaNotifiche.message}</h6>)}
+                            </div>
                         </Popover.Content>
                     </Popover>
                 }>
