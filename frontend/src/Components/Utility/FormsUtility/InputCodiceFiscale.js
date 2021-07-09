@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 // Bootstrap Components
-import { Form } from 'react-bootstrap';
+import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 // Codice Fiscale
 import { CodiceFiscale } from 'codice-fiscale-js'
+
 
 // Input CF
 export default function InputCodiceFiscale() {
@@ -26,8 +27,8 @@ export default function InputCodiceFiscale() {
             let inputCF = document.querySelector("#CF");
 
             let cf;
-            if ((sesso === "M" || sesso === "F") && (!isNaN(datadinascita.getTime())) && (nazionalita !== "default") && (comune !== "default")) { 
-                 cf = CodiceFiscale.compute({
+            if ((sesso === "M" || sesso === "F") && (!isNaN(datadinascita.getTime())) && (nazionalita !== "default") && (comune !== "default")) {
+                cf = CodiceFiscale.compute({
                     name: nome,
                     surname: cognome,
                     gender: sesso,
@@ -39,10 +40,10 @@ export default function InputCodiceFiscale() {
                 });
             }
 
-            if(cf !== inputCF.value.toUpperCase()){
+            if (cf !== inputCF.value.toUpperCase()) {
                 inputCF.classList.add("border-danger");
                 inputCF.classList.remove("border-success");
-            } else{
+            } else {
                 inputCF.classList.add("border-success");
                 inputCF.classList.remove("border-danger");
             }
@@ -53,7 +54,8 @@ export default function InputCodiceFiscale() {
     return (
         <Form.Group className="col-6" controlId="CF">
             <Form.Label>Codice fiscale</Form.Label>
-            <Form.Control type="text" placeholder="Inserisci il tuo codice fiscale" onBlur={() => setCheckCF(true)} required/>
+            
+            <Form.Control type="text" placeholder="Inserisci il tuo codice fiscale" onBlur={() => setCheckCF(true)} required />
         </Form.Group>
     );
 }

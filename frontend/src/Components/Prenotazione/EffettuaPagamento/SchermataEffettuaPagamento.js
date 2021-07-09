@@ -9,6 +9,7 @@ import { Container, Row, Col, Image, Form } from 'react-bootstrap';
 
 import Button from '../../Utility/Button';
 import AggiungiMetodoModal from '../../GestioneAccount/Wallet/AggiungiMetodoModal'
+import LasciaManciaModal from './LasciaManciaModal';
 
 export default function SchermataEffettuaPagamento() {
     const history = useHistory()
@@ -17,6 +18,7 @@ export default function SchermataEffettuaPagamento() {
     const [state, setState] = useState({
         submit: false
     })
+    const [mancia, setMancia] = useState(false)
 
     function onSubmit(e) {
         e.preventDefault()
@@ -79,10 +81,17 @@ export default function SchermataEffettuaPagamento() {
                                 </Form.Group>
                                 <div className="buttonsGroup mt-4 flex-column flex-lg-row align-items-end">
                                     <Button className="mb-3" onClick={() => setShowModal(true)} variant={"Light"}>Aggiungi metodo di pagamento</Button>
-                                    <Button className="mb-3" onClick={() => history.push("/prenota")} variant={"Secondary"} submit>Annulla</Button>
+                                    <Button className="mb-3" onClick={() => history.push("/prenota")} variant={"Secondary"}>Annulla</Button>
                                     <Button className="mb-3" spinner={state.submit} variant={"Primary"} submit>Effettua pagamento</Button>
                                     <AggiungiMetodoModal show={showModal} onHide={() => setShowModal(false)} />
                                 </div>
+                                {
+                                    history.location.state.payload.autista &&
+                                    <div className="d-flex justify-content-end">
+                                        <Button onClick={() => setMancia(true)} variant={"Primary"}>Lascia mancia</Button>
+                                        <LasciaManciaModal show={mancia} onHide={() => setMancia(false)} />
+                                    </div>
+                                }
                             </Form>
                         }
                     </Col>

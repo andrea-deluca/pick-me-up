@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
 // Bootstrap Components
-import { Form } from 'react-bootstrap';
+import { Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 // JSON
 import Nazioni from './Nazioni'
 import LuogoNascita from './LuogoNascita'
+//FontAwesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Input Luogo di nascita
 export default function InputLuogoNascita() {
@@ -60,14 +63,14 @@ export default function InputLuogoNascita() {
 
     // Popola la select dei comuni in base alla regione e alla provicia selezionate
     useEffect(() => {
-        if(renderComune){
+        if (renderComune) {
             setOptionsComune([]);
             let regione = document.querySelector("#regione").value;
             let provincia = document.querySelector("#provincia").value;
             for (let i = 0; i < LuogoNascita.regioni.length; i++) {
-                if (LuogoNascita.regioni[i].nome === regione){
+                if (LuogoNascita.regioni[i].nome === regione) {
                     for (let j = 0; j < LuogoNascita.regioni[i].province.length; j++) {
-                        if (LuogoNascita.regioni[i].province[j].code === provincia){
+                        if (LuogoNascita.regioni[i].province[j].code === provincia) {
                             for (let k = 0; k < LuogoNascita.regioni[i].province[j].comuni.length; k++) {
                                 const element = LuogoNascita.regioni[i].province[j].comuni[k].nome;
                                 setOptionsComune(optionsComune => [...optionsComune, <option value={element}>{element.toUpperCase()}</option>])
@@ -75,7 +78,7 @@ export default function InputLuogoNascita() {
                         }
                     }
                 }
-                
+
             }
         }
         setRenderComune(false);
@@ -110,7 +113,18 @@ export default function InputLuogoNascita() {
     return (
         <React.Fragment>
             <Form.Group className="col-6 col-lg-3" controlId="nazionalita">
-                <Form.Label>Nazionalità</Form.Label>
+                <Form.Label className="me-2">Nazione</Form.Label>
+                <OverlayTrigger
+                    placement={"top"}
+                    overlay={
+                        <Tooltip id="nazionalitàInfo">
+                            La nazionalità e i dati a seguire si riferiscono al luogo di nascita dell'utente.
+                            <br />Se la nazione di nascita dovesse essere diversa da quella italiana non verranno richiesti ulteriori dati.
+                        </Tooltip>
+                    }
+                >
+                    <FontAwesomeIcon icon={faInfoCircle} />
+                </OverlayTrigger>
                 <Form.Control className="form-select" as="select" onChange={() => setCheckNazionalita(true)} required>
                     <option value="" disabled selected>Seleziona...</option>
                     {optionsNazionalita}

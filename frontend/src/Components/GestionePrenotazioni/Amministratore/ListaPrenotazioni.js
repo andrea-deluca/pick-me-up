@@ -101,33 +101,33 @@ export default function ListaGestionePrenotazioni() {
         }
     }
 
-    function iniziaNoleggio(key) {
-        try {
-            axios.put("/gestione-prenotazione/iniziaNoleggio", { _id: key._id, idUtente: key.datiUtente[0]._id })
-                .then(res => {
-                    setState({ ...state, success: { show: true, message: res.data.message } })
-                })
-                .catch(err => {
-                    setState({ ...state, error: { show: true, message: err.response.data } })
-                })
-        } catch (error) {
-            console.log(error.response.data.msg)
-        }
-    }
+    // function iniziaNoleggio(key) {
+    //     try {
+    //         axios.put("/gestione-prenotazione/iniziaNoleggio", { _id: key._id, idUtente: key.datiUtente[0]._id })
+    //             .then(res => {
+    //                 setState({ ...state, success: { show: true, message: res.data.message } })
+    //             })
+    //             .catch(err => {
+    //                 setState({ ...state, error: { show: true, message: err.response.data } })
+    //             })
+    //     } catch (error) {
+    //         console.log(error.response.data.msg)
+    //     }
+    // }
 
-    function terminaNoleggio(key) {
-        try {
-            axios.post("/prenotazione/fetchDepositi", { tipologiaMezzo: key.mezzo.tipologia })
-                .then(res => {
-                    setShowModals({ ...showModals, terminaNoleggio: { show: true, depositi: res.data } })
-                })
-                .catch(err => {
-                    console.log(err.response.data)
-                })
-        } catch (error) {
-            console.log(error.response.data.msg)
-        }
-    }
+    // function terminaNoleggio(key) {
+    //     try {
+    //         axios.post("/prenotazione/fetchDepositi", { tipologiaMezzo: key.mezzo.tipologia })
+    //             .then(res => {
+    //                 setShowModals({ ...showModals, terminaNoleggio: { show: true, depositi: res.data } })
+    //             })
+    //             .catch(err => {
+    //                 console.log(err.response.data)
+    //             })
+    //     } catch (error) {
+    //         console.log(error.response.data.msg)
+    //     }
+    // }
 
     return (
         <React.Fragment className="my-5 scrollable">
@@ -166,34 +166,8 @@ export default function ListaGestionePrenotazioni() {
                                                 <AnnullaPrenotazioneModal idUtente={key.datiUtente[0]._id} idPrenotazione={key._id}
                                                     show={showModals.annullaPrenotazione}
                                                     onHide={() => setShowModals({ ...showModals, annullaPrenotazione: false })} />
-                                            </Dropdown.Menu></Dropdown></> : (key.stato === "ATTIVA" ?
-                                                <><Dropdown>
-                                                    <Dropdown.Toggle id="dropdownGestionePrenotazione" variant="white">
-                                                        <FontAwesomeIcon icon={faEdit} />
-                                                    </Dropdown.Toggle>
-                                                    <Dropdown.Menu>
-                                                        <Dropdown.Item onClick={() => setShowModals({ ...showModals, estendiNoleggio: true })}>Estendi noleggio</Dropdown.Item>
-                                                        <EstendiNoleggioModal idPrenotazione={key._id} dataConsegna={key.consegna.data} idUtente={key.datiUtente[0]._id}
-                                                            show={showModals.estendiNoleggio}
-                                                            onHide={() => setShowModals({ ...showModals, estendiNoleggio: false })} />
-                                                        <Dropdown.Item onClick={() => iniziaNoleggio(key)}>Inizia noleggio</Dropdown.Item>
-                                                    </Dropdown.Menu></Dropdown></> : (key.stato === "INIZIATA" ?
-                                                        <><Dropdown>
-                                                            <Dropdown.Toggle id="dropdownGestionePrenotazione" variant="white">
-                                                                <FontAwesomeIcon icon={faEdit} />
-                                                            </Dropdown.Toggle>
-                                                            <Dropdown.Menu>
-                                                                <Dropdown.Item onClick={() => setShowModals({ ...showModals, estendiNoleggio: true })}>Estendi noleggio</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => terminaNoleggio(key)}>Termina noleggio</Dropdown.Item>
-                                                                <EstendiNoleggioModal idPrenotazione={key._id} dataConsegna={key.consegna.data} idUtente={key.datiUtente[0]._id}
-                                                                    show={showModals.estendiNoleggio}
-                                                                    onHide={() => setShowModals({ ...showModals, estendiNoleggio: false })} />
-                                                                <TerminaNoleggioModal
-                                                                    idPrenotazione={key._id} idUtente={key.datiUtente[0]._id}
-                                                                    show={showModals.terminaNoleggio}
-                                                                    onHide={() => setShowModals({ ...showModals, terminaNoleggio: false })} />
-                                                            </Dropdown.Menu></Dropdown></> :
-                                                        <Dropdown.Toggle style={{ color: "lightgray" }} variant="white"><FontAwesomeIcon icon={faEdit} color={"lightgray"} /></Dropdown.Toggle>))}
+                                            </Dropdown.Menu></Dropdown></> :
+                                        <Dropdown.Toggle style={{ color: "lightgray" }} variant="white"><FontAwesomeIcon icon={faEdit} color={"lightgray"} /></Dropdown.Toggle>}
                                 </td>
                                 <td>{key._id}</td>
                                 <td>{key.datiUtente[0]._id}</td>

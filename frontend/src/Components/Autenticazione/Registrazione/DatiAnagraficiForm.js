@@ -3,12 +3,15 @@ import { useHistory } from 'react-router-dom';
 import useSession from '../../../Hooks/useSession';
 
 // Bootstrap Components
-import { ProgressBar, Container, Row, Col, Form } from 'react-bootstrap';
+import { ProgressBar, Container, Row, Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 // Custom Components
 import InputDataNascita from '../../Utility/FormsUtility/InputDataNascita';
 import InputLuogoNascita from '../../Utility/FormsUtility/InputLuogoNascita';
 import Button from '../../Utility/Button';
+//FontAwesome components
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 // Codice Fiscale
 const CodiceFiscale = require("codice-fiscale-js");
@@ -95,9 +98,9 @@ export default function DatiAnagraficiForm() {
             return
         }
         let tipologiaUtente
-        if(document.querySelector("#tipologiaImpiegato")){
+        if (document.querySelector("#tipologiaImpiegato")) {
             tipologiaUtente = document.querySelector("#tipologiaImpiegato").value
-        } else{
+        } else {
             tipologiaUtente = "CLIENTE"
         }
         // Memorizzo i dati inseriti dall'utente
@@ -176,7 +179,17 @@ export default function DatiAnagraficiForm() {
                             <InputLuogoNascita />
                             <Col xs={{ span: 12 }} lg={{ span: 6 }}>
                                 <Form.Group controlId="CF">
-                                    <Form.Label>Codice fiscale</Form.Label>
+                                    <Form.Label className="me-2">Codice fiscale</Form.Label>
+                                    <OverlayTrigger
+                                        placement={"top"}
+                                        overlay={
+                                            <Tooltip id="nazionalitàInfo">
+                                                Il Codice Fiscale inserito verrà confrontato con i dati inseriti nelle caselle precedenti.
+                                                <br /> Verrà mostrato quindi un errore se i dati saranno scorretti.
+                                            </Tooltip>
+                                        }>
+                                        <FontAwesomeIcon icon={faInfoCircle} />
+                                    </OverlayTrigger>
                                     <Form.Control type="text" placeholder="Inserisci il tuo codice fiscale" onBlur={() => setCheckValidate({ ...checkValidate, CF: { ...checkValidate.CF, check: true } })} required />
                                 </Form.Group>
                             </Col>

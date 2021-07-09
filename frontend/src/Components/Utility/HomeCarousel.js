@@ -56,8 +56,7 @@ export default function HomeCarousel() {
                         <p className="h3 t-extralight">Accedi o registrati per prenotare auto, moto, biciclette o monopattini on demand</p>
                     </Row>
                     <div className="buttonsGroup">
-                        <Button to={"/prenota"} variant={"primary"} submit>Prenota</Button>
-
+                        <Button to={"/login"} variant={"primary"}>Prenota</Button>
                     </div>
                 </Row>
             </Carousel.Caption>

@@ -16,7 +16,7 @@ export default function SchermataPrenotazione() {
     const history = useHistory();
     const { session, setSession } = useSession()
 
-    if (session.user !== "CLIENTE") {
+    if (session.user !== "CLIENTE" && session.user !== "AMMINISTRATORE") {
         return <SchermataPermessoNegato />
     }
 

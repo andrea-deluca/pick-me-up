@@ -21,7 +21,7 @@ router.get('/confermaRegistrazione/:key', function (req, res) {
       res.status(result).send("Internal Server Error.");
     } else {
       res.status(result);
-      res.redirect("http://localhost:3000/registrazione-confermata");
+      res.redirect("/registrazione-confermata");
     }
   })
 })
