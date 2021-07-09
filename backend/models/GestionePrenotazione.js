@@ -403,7 +403,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -425,7 +425,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -447,7 +447,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -469,7 +469,7 @@ module.exports = {
                                     { arrayFilters: [{ "idMezzo._id": ObjectId(prenotazione.mezzo._id) }] },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -525,7 +525,7 @@ module.exports = {
                                     { $push: { "auto": auto } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -553,7 +553,7 @@ module.exports = {
                                     { $push: { "moto": moto } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -581,7 +581,7 @@ module.exports = {
                                     { $push: { "bici": bici } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({
@@ -609,7 +609,7 @@ module.exports = {
                                     { $push: { "monopattino": monopattino } },
                                     ((err, res) => {
                                         if (err) return callback(500)
-                                        Timers.stopTimeoutPrenotazione({
+                                        timer.stopTimeoutPrenotazione({
                                             _id: prenotazione._id
                                         })
                                         Timers.stopTimersRitardiAutomatici({

@@ -47,7 +47,7 @@ class Timers {
 
     updateTimeoutPrenotazione(prenotazione) {
         this.prenotazione.forEach((element, index, arr) => {
-            if (element._id === prenotazione._id) {
+            if (ObjectId(element._id).toString() === ObjectId(prenotazione._id).toString()) {
                 clearTimeout(arr[index].timeout)
                 this.prenotazione.splice(index, 1)
                 this.startTimeoutAttivazionePrenotazione(prenotazione)

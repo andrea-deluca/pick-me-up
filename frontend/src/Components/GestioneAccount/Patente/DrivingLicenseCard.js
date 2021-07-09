@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import useSession from '../../../Hooks/useSession';
 
 // Bootstrap Components
 import { Row, Col, Card } from 'react-bootstrap';
@@ -14,6 +15,7 @@ import ModificaPatenteModal from './ModificaPatenteModal';
 
 // Card Patente di guida
 export default function DrivingLicenseCard(props) {
+    const { session, setSession } = useSession()
     const [modals, setModals] = useState({
         updateModal: false,
         deleteModal: false
@@ -44,11 +46,14 @@ export default function DrivingLicenseCard(props) {
                         <FontAwesomeIcon className="me-2" icon={faEdit} fixedWidth />
                         Modifica
                     </Button>
-                    <Button onClick={() => setModals({ ...modals, deleteModal: true })} variant={"Danger"}>
-                        <FontAwesomeIcon className="me-2" icon={faTrashAlt} fixedWidth />
-                        Elimina
-                    </Button>
-                    <RimuoviPatenteModal show={modals.deleteModal} onHide={() => setModals({ ...modals, deleteModal: false })} />
+                    {session.user === "CLIENTE" &&
+                        <>
+                            <Button onClick={() => setModals({ ...modals, deleteModal: true })} variant={"Danger"}>
+                                <FontAwesomeIcon className="me-2" icon={faTrashAlt} fixedWidth />
+                                Elimina
+                            </Button>
+                            <RimuoviPatenteModal show={modals.deleteModal} onHide={() => setModals({ ...modals, deleteModal: false })} />
+                        </>}
                     <ModificaPatenteModal show={modals.updateModal} onHide={() => setModals({ ...modals, updateModal: false })} />
                 </div>
             </Card.Body>

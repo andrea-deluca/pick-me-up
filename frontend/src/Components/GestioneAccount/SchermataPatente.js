@@ -82,7 +82,7 @@ export default function SchermataPatente() {
                         </CardColumns>
                     </motion.div>
                 </Col>
-                <Col lg={{ span: 3 }} className='d-none d-lg-block me-auto mt-5'>
+                {session.user === "CLIENTE" && <Col lg={{ span: 3 }} className='d-none d-lg-block me-auto mt-5'>
                     <motion.div
                         className="mb-5"
                         initial={{ translateY: 100, opacity: 0 }}
@@ -103,7 +103,7 @@ export default function SchermataPatente() {
                         body={"Non è possibile aggiungere più di una patente."}
                         button={"Chiudi"}
                         onClick={() => setModals({ ...modals, error: false })} />
-                </Col>
+                </Col>}
             </Row>
         </Container>
     );

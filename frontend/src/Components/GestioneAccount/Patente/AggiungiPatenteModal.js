@@ -132,13 +132,13 @@ export default function AggiungiMetodoModal(props) {
                                 </Form.Group>
                             </Col>
                             <Col xs={{ span: 6 }} lg={{ span: 5 }}>
-                                <Form.Group controlId="ufficioRilascio">
+                            <Form.Group controlId="ufficioRilascio">
                                     <Form.Label>Ufficio di rilascio</Form.Label>
                                     <Form.Control className="form-select" as="select" required>
                                         <option value="" disabled selected>Seleziona...</option>
-                                        <option value="Ufficio competente">Ufficio competente</option>
-                                        <option value="Questura">Questura</option>
-                                        <option value="Motorizzazione">Motorizzazione</option>
+                                        <option value="Prefettura">Prefettura</option>
+                                        <option value="MCTC">MCTC</option>
+                                        <option value="MIT-UCO">MIT-UCO</option>
                                     </Form.Control>
                                 </Form.Group>
                             </Col>

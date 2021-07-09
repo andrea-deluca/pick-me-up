@@ -1,5 +1,6 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom';
+import useSession from '../../../Hooks/useSession';
 
 import { motion } from 'framer-motion'
 
@@ -10,6 +11,7 @@ import RiepilogoCard from './RiepilogoCard';
 
 export default function SelezioneVeicolo() {
     const history = useHistory();
+    const { session, setSession } = useSession()
     const datiPrenotazione = history.location.state.payload.datiPrenotazione
     const veicoli = history.location.state.payload.veicoli
 
@@ -32,6 +34,9 @@ export default function SelezioneVeicolo() {
                     <Col xs={{ span: 12 }} lg={{ span: 8 }} xl={{ span: 9 }}>
                         <Row className="gy-4 mb-5">
                             {veicoli.map((key, index) => {
+                                if (session.patente.tipologiaPatente === "AM" && key.dati[0].cilindrata !== 50) {
+                                    return null
+                                }
                                 return (
                                     <Col xs={{ span: 10, offset: 1 }} md={{ span: 6, offset: 0 }} xl={{ span: 4 }}>
                                         <VeicoloCard
